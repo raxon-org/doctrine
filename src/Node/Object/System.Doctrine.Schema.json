@@ -53,7 +53,7 @@
             },
             "output": {
                 "filter": [
-                    "Package:R3m:Io:Doctrine:Output:Filter:System:Doctrine:environment"
+                    "Package:Raxon:Doctrine:Output:Filter:System:Doctrine:environment"
                 ]
             },
             "where": "",
