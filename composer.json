@@ -1,0 +1,26 @@
+{
+    "name" : "raxon/doctrine",
+    "description" : "raxon/doctrine see https://r3m.io for detailed usage",
+    "type" : "package",
+    "keywords" : ["node", "raxon", "library", "framework", "doctrine", "raxon.org", "sql"],
+    "homepage": "https://raxon.org",
+    "require" : {
+        "ext-posix": "*",
+        "ext-zlib": "*",
+        "ext-iconv": "*",
+        "ext-pdo": "*",
+        "raxon/framework": ">=2024.04.26",
+        "doctrine/orm": "3.0.1",
+        "symfony/cache": "*"
+    },
+    "license" : "MIT",
+    "authors" : [{
+        "name" : "Remco van der Velde",
+        "email" : "development@universeorange.com"
+    }],
+    "autoload" : {
+        "psr-4" : {
+            "R3m\\Io\\Doctrine\\" : "src/"
+        }
+    }
+}

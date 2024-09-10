@@ -1,0 +1,18 @@
+{
+  "System": {
+    "Route": [
+      {
+        "#class": "System.Route",
+        "name": "raxon-org-cli-doctrine",
+        "path": "raxon\/doctrine",
+        "controller": "Package.Raxon.Doctrine.Controller.Cli.run",
+        "request": {
+          "language": "en"
+        },
+        "method": [
+          "CLI"
+        ]
+      }
+    ]
+  }
+}

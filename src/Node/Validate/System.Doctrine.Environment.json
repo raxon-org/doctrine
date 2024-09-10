@@ -1,0 +1,68 @@
+{
+    "System": {
+        "Doctrine": {
+            "Environment": {
+                "create": {
+                    "validate": {
+                        "uuid": [
+                            {
+                                "is.uuid": true
+                            }
+                        ],
+                        "name": [
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Environment",
+                                    "attribute": [
+                                        "name",
+                                        "environment"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                "put": {
+                    "validate": {
+                        "uuid": [
+                            {
+                                "is.uuid": true
+                            }
+                        ],
+                        "name": [
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Environment",
+                                    "attribute": [
+                                        "name",
+                                        "environment"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                "patch": {
+                    "validate": {
+                        "uuid": [
+                            {
+                                "is.uuid": true
+                            }
+                        ],
+                        "name": [
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Environment",
+                                    "attribute": [
+                                        "name",
+                                        "environment"
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

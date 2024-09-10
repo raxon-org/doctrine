@@ -1,0 +1,238 @@
+{
+    "System": {
+        "Doctrine": {
+            "count": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "create": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "list": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "page": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "patch": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "put": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "read": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "record": {
+                "output": [
+                    {
+                        "role": "ROLE_SYSTEM",
+                        "property": [
+                            "uuid",
+                            "#class",
+                            "environment",
+                            "proxy",
+                            "paths",
+                            "entity"
+                        ],
+                        "object": {
+                            "proxy": {
+                                "multiple": false,
+                                "output": [
+                                    "dir"
+                                ]
+                            },
+                            "entity": {
+                                "multiple": false,
+                                "output": [
+                                    "prefix"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,611 @@
+{
+    "System": {
+        "Doctrine": {
+            "Schema": {
+                "count": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "import": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "create": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "list": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "page": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "patch": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "put": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "read": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "record": {
+                    "output": [
+                        {
+                            "role": "ROLE_SYSTEM",
+                            "property": [
+                                "uuid",
+                                "#class",
+                                "table",
+                                "entity",
+                                "column",
+                                "primary_key",
+                                "index",
+                                "environment"
+                            ],
+                            "object": {
+                                "column": {
+                                    "multiple": true,
+                                    "output": [
+                                        "name",
+                                        "type",
+                                        "options"
+                                    ],
+                                    "object": {
+                                        "options": {
+                                            "multiple": false,
+                                            "output": [
+                                                "id",
+                                                "unsigned",
+                                                "autoincrement",
+                                                "unique",
+                                                "nullable",
+                                                "default",
+                                                "length",
+                                                "precision",
+                                                "scale",
+                                                "cascade",
+                                                "map",
+                                                "target",
+                                                "join",
+                                                "definition",
+                                                "comment"
+                                            ],
+                                            "object": {
+                                                "join": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "table",
+                                                        "column"
+                                                    ],
+                                                    "object": {
+                                                        "column": {
+                                                            "multiple": true,
+                                                            "output": [
+                                                                "name",
+                                                                "reference"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

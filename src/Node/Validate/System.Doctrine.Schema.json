@@ -1,0 +1,146 @@
+{
+    "System": {
+        "Doctrine": {
+            "Schema": {
+                "create": {
+                    "validate": {
+                        "uuid": [
+                            {
+                                "is.uuid": true
+                            }
+                        ],
+                        "table": [
+                            {
+                                "string.length": ">=2"
+                            },
+                            {
+                                "string.length": "<=63"
+                            },
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Schema",
+                                    "attribute": [
+                                        "table"
+                                    ]
+                                }
+                            }
+                        ],
+                        "entity": [
+                            {
+                                "string.length": ">=2"
+                            },
+                            {
+                                "string.length": "<=255"
+                            },
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Schema",
+                                    "attribute": [
+                                        "entity"
+                                    ]
+                                }
+                            }
+                        ],
+                        "environment": [
+                            {
+                                "is.array": true
+                            }
+                        ]
+                    }
+                },
+                "put": {
+                    "validate": {
+                        "uuid": [
+                            {
+                                "is.uuid": true
+                            }
+                        ],
+                        "table": [
+                            {
+                                "string.length": ">=2"
+                            },
+                            {
+                                "string.length": "<=63"
+                            },
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Schema",
+                                    "attribute": [
+                                        "table"
+                                    ]
+                                }
+                            }
+                        ],
+                        "entity": [
+                            {
+                                "string.length": ">=2"
+                            },
+                            {
+                                "string.length": "<=255"
+                            },
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Schema",
+                                    "attribute": [
+                                        "entity"
+                                    ]
+                                }
+                            }
+                        ],
+                        "environment": [
+                            {
+                                "is.array": true
+                            }
+                        ]
+                    }
+                },
+                "patch": {
+                    "validate": {
+                        "uuid": [
+                            {
+                                "is.uuid": true
+                            }
+                        ],
+                        "?table": [
+                            {
+                                "string.length": ">=2"
+                            },
+                            {
+                                "string.length": "<=63"
+                            },
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Schema",
+                                    "attribute": [
+                                        "table"
+                                    ]
+                                }
+                            }
+                        ],
+                        "?entity": [
+                            {
+                                "string.length": ">=2"
+                            },
+                            {
+                                "string.length": "<=255"
+                            },
+                            {
+                                "is.unique": {
+                                    "class": "System.Doctrine.Schema",
+                                    "attribute": [
+                                        "entity"
+                                    ]
+                                }
+                            }
+                        ],
+                        "?environment": [
+                            {
+                                "is.array": true
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

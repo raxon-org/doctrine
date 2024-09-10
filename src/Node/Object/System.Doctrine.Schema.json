@@ -1,0 +1,64 @@
+{
+    "Node": {
+        "#class": "System.Doctrine.Schema",
+        "type": "object",
+        "property": [
+            {
+                "name": "table",
+                "type": "string"
+            },
+            {
+                "name": "entity",
+                "type": "string"
+            },
+            {
+                "name": "column",
+                "type": "object"
+            },
+            {
+                "name": "primary_key",
+                "type": "array"
+            },
+            {
+                "name": "index",
+                "type": "array"
+            },
+            {
+                "name": "environment",
+                "type": "array",
+                "relation": true,
+                "is_multiple": true
+            },
+            {
+                "name": "uuid",
+                "type": "uuid"
+            },
+            {
+                "name": "#class",
+                "type": "string"
+            }
+        ]
+    },
+    "is.unique": [
+        "table",
+        "entity"
+    ],
+    "relation": [
+        {
+            "type": "one-many",
+            "class": "System.Doctrine.Environment",
+            "attribute": "environment",
+            "sort": {
+                "name": "ASC"
+            },
+            "output": {
+                "filter": [
+                    "Package:R3m:Io:Doctrine:Output:Filter:System:Doctrine:environment"
+                ]
+            },
+            "where": "",
+            "filter": [],
+            "limit": "*"
+        }
+    ]
+}

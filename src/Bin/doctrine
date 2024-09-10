@@ -1,0 +1,2 @@
+#!/bin/bash
+_=doctrine php /Application/Bin/Doctrine.php "$@"
