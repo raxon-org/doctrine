@@ -59,7 +59,7 @@
             },
             "output": {
                 "filter":[
-                    "RaXon:Output:Filter:System:Doctrine:environment"
+                    "Raxon:Output:Filter:System:Doctrine:environment"
                 ]
             },
             "where": "",
