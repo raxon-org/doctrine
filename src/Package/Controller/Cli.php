@@ -22,8 +22,8 @@ class Cli extends Controller {
     const DIR = __DIR__ . '/';
     const MODULE_INFO = 'Info';
     const INFO = [
-        '{{binary()}} r3m_io/doctrine                | Doctrine options',
-        '{{binary()}} r3m_io/doctrine setup          | Setup Doctrine database support',
+        '{{binary()}} raxon/doctrine                | Doctrine options',
+        '{{binary()}} raxon/doctrine setup          | Setup Doctrine database support',
     ];
 
     /**

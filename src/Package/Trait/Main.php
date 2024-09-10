@@ -84,10 +84,10 @@ trait Main {
         ){
             throw new Exception('Access denied...');
         }
-        $url_bin = $object->config('project.dir.vendor') . 'r3m_io/doctrine/src/Bin/Doctrine.php';
+        $url_bin = $object->config('project.dir.vendor') . 'raxon/doctrine/src/Bin/Doctrine.php';
         $url_target = $object->config('project.dir.binary') . 'Doctrine.php';
         File::copy($url_bin, $url_target);
-        $url_bin_source = $object->config('project.dir.vendor') . 'r3m_io/doctrine/src/Bin/doctrine';
+        $url_bin_source = $object->config('project.dir.vendor') . 'raxon/doctrine/src/Bin/doctrine';
         $url_bin_target = '/usr/bin/doctrine';
         File::copy($url_bin_source, $url_bin_target);
         $command = 'chmod +x ' . $url_bin_target;
@@ -512,7 +512,7 @@ trait Main {
             foreach($actions as $action){
                 $events[] = (object) [
                     '#class' => 'System.Event',
-                    'action' => 'r3m.io.node.' . $action,
+                    'action' => 'raxon.node.' . $action,
                     'options' => (object) [
                         'priority' => 10,
                         'command' => [],
@@ -525,12 +525,12 @@ trait Main {
             $action = 'delete';
             $events[] = (object) [
                 '#class' => 'System.Event',
-                'action' => 'r3m.io.node.' . $action,
+                'action' => 'raxon.node.' . $action,
                 'options' => (object) [
                     'priority' => 10,
                     'command' => [],
                     'controller' => [
-                        'Event:R3m:Io:Doctrine:Schema:' . $action
+                        'Event:Raxon:Doctrine:Schema:' . $action
                     ]
                 ]
             ];

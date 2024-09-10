@@ -1,6 +1,6 @@
 {
     "name" : "raxon/doctrine",
-    "description" : "raxon/doctrine see https://r3m.io for detailed usage",
+    "description" : "raxon/doctrine see https://raxon.org for detailed usage",
     "type" : "package",
     "keywords" : ["node", "raxon", "library", "framework", "doctrine", "raxon.org", "sql"],
     "homepage": "https://raxon.org",
@@ -9,7 +9,7 @@
         "ext-zlib": "*",
         "ext-iconv": "*",
         "ext-pdo": "*",
-        "raxon/framework": ">=2024.04.26",
+        "raxon/framework": ">=2024.09.04",
         "doctrine/orm": "3.0.1",
         "symfony/cache": "*"
     },
