@@ -20,7 +20,7 @@
     }],
     "autoload" : {
         "psr-4" : {
-            "R3m\\Io\\Doctrine\\" : "src/"
+            "Raxon\\Doctrine\\" : "src/"
         }
     }
 }
