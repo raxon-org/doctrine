@@ -50,7 +50,7 @@ class Column extends Main
                     $record = $column->toArray();
                     $record['type'] = File::basename(get_class($column->getType()));
                     $explode = explode('Type', $record['type'], 2);
-                    $record['type'] = strtolower($explode[0]);
+                    $record['type'] = mb_strtolower($explode[0]);
                     $list[]= $record;
                 }
                 return $list;

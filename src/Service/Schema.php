@@ -215,7 +215,7 @@ class Schema extends Main
                         property_exists($column->options, 'autoincrement')
                     ){
                         if(is_string($column->options->autoincrement)){
-                            $data_columns[] = '#[ORM\GeneratedValue(strategy: "' . strtoupper($column->options->autoincrement) . '")]';
+                            $data_columns[] = '#[ORM\GeneratedValue(strategy: "' . mb_strtoupper($column->options->autoincrement) . '")]';
                         }
                         elseif(
                             is_bool($column->options->autoincrement) &&
@@ -355,7 +355,7 @@ class Schema extends Main
                                 $set[] = '        } else {';
                                 $set[] = '            $this->' . $column->name . ' = Crypto::encrypt($this->' . $column->name . ', $key);';
                                 $set[] = '        }';
-                                $set[] = '        $this->is_encrypted_' . strtolower($column->name) . ' = true;';
+                                $set[] = '        $this->is_encrypted_' . mb_strtolower($column->name) . ' = true;';
                                 $set[] = '    } else {';
                                 $set[] = '        throw new Exception(\'Key not found...\');';
                                 $set[] = '    }';
@@ -382,7 +382,7 @@ class Schema extends Main
                                 $get[] = '        if(!$object){';
                                 $get[] = '            throw new Exception(\'Object not set...\');';
                                 $get[] = '        }';
-                                $get[] = '        if(!$this->is_encrypted_' . strtolower($column->name) . '){';
+                                $get[] = '        if(!$this->is_encrypted_' . mb_strtolower($column->name) . '){';
                                 $get[] = '            return $this->' . $column->name . ';';
                                 $get[] = '        }';
                                 $get[] = '        $url = $object->config(\'project.dir.data\') . \'Defuse/Email.key\';';
@@ -396,7 +396,7 @@ class Schema extends Main
                                 $get[] = '             } else {';
                                 $get[] = '                 $this->' . $column->name . ' = Crypto::decrypt($this->' . $column->name . ', $key);';
                                 $get[] = '             }';
-                                $get[] = '             $this->is_encrypted_' . strtolower($column->name) . ' = false;';
+                                $get[] = '             $this->is_encrypted_' . mb_strtolower($column->name) . ' = false;';
                                 $get[] = '        } else {';
                                 $get[] = '            throw new Exception(' . "'Key not found...'" . ');';
                                 $get[] = '        }';
@@ -463,7 +463,7 @@ class Schema extends Main
                                 $set[] = '        } else {';
                                 $set[] = '            $this->' . $column->name . ' = Crypto::encrypt($this->' . $column->name . ', $key);';
                                 $set[] = '        }';
-                                $set[] = '        $this->is_encrypted_' . strtolower($column->name) . ' = true;';
+                                $set[] = '        $this->is_encrypted_' . mb_strtolower($column->name) . ' = true;';
                                 $set[] = '    } else {';
                                 $set[] = '        throw new Exception(\'Key not found...\');';
                                 $set[] = '    }';
@@ -490,7 +490,7 @@ class Schema extends Main
                                 $get[] = '        if(!$object){';
                                 $get[] = '            throw new Exception(\'Object not set...\');';
                                 $get[] = '        }';
-                                $get[] = '        if(!$this->is_encrypted_' . strtolower($column->name) . '){';
+                                $get[] = '        if(!$this->is_encrypted_' . mb_strtolower($column->name) . '){';
                                 $get[] = '            return $this->' . $column->name . ';';
                                 $get[] = '        }';
                                 $get[] = '        $url = $object->config(\'project.dir.data\') . \'Defuse/Email.key\';';
@@ -504,7 +504,7 @@ class Schema extends Main
                                 $get[] = '             } else {';
                                 $get[] = '                 $this->' . $column->name . ' = Crypto::decrypt($this->' . $column->name . ', $key);';
                                 $get[] = '             }';
-                                $get[] = '             $this->is_encrypted_' . strtolower($column->name) . ' = false;';
+                                $get[] = '             $this->is_encrypted_' . mb_strtolower($column->name) . ' = false;';
                                 $get[] = '        } else {';
                                 $get[] = '            throw new Exception(' . "'Key not found...'" . ');';
                                 $get[] = '        }';
@@ -559,7 +559,7 @@ class Schema extends Main
                 $data_functions[] = $record_object_set;
                 $data_functions[] = $record_object_get;
                 foreach($encrypted as $nr => $column){
-                    $data_columns[] = 'protected bool $is_encrypted_' . strtolower($column) . ' = true;';
+                    $data_columns[] = 'protected bool $is_encrypted_' . mb_strtolower($column) . ' = true;';
                 }
             }
             $use[] = '';
@@ -669,7 +669,7 @@ class Schema extends Main
                     $data[] = '        $object = $this->getObject();';
                     $data[] = '        if($object){';
                     foreach($encrypted as $nr => $column){
-                        $data[] = '            if($this->is_encrypted_' . strtolower($column) . ' === false){';
+                        $data[] = '            if($this->is_encrypted_' . mb_strtolower($column) . ' === false){';
                         $data[] = '                $this->set' . str_replace('.', '', Controller::name($column)) . '($this->get' . str_replace('.', '', Controller::name($column)) . '());';
                         $data[] = '            }';
                     }
@@ -870,7 +870,7 @@ class Schema extends Main
                             property_exists($column->options, 'autoincrement')
                         ){
                             if(is_string($column->options->autoincrement)){
-                                $data_columns[] = '#[ORM\GeneratedValue(strategy: "' . strtoupper($column->options->autoincrement) . '")]';
+                                $data_columns[] = '#[ORM\GeneratedValue(strategy: "' . mb_strtoupper($column->options->autoincrement) . '")]';
                             }
                             elseif(
                                 is_bool($column->options->autoincrement) &&
@@ -1010,7 +1010,7 @@ class Schema extends Main
                                     $set[] = '        } else {';
                                     $set[] = '            $this->' . $column->name . ' = Crypto::encrypt($this->' . $column->name . ', $key);';
                                     $set[] = '        }';
-                                    $set[] = '        $this->is_encrypted_' . strtolower($column->name) . ' = true;';
+                                    $set[] = '        $this->is_encrypted_' . mb_strtolower($column->name) . ' = true;';
                                     $set[] = '    } else {';
                                     $set[] = '        throw new Exception(\'Key not found...\');';
                                     $set[] = '    }';
@@ -1037,7 +1037,7 @@ class Schema extends Main
                                     $get[] = '        if(!$object){';
                                     $get[] = '            throw new Exception(\'Object not set...\');';
                                     $get[] = '        }';
-                                    $get[] = '        if(!$this->is_encrypted_' . strtolower($column->name) . '){';
+                                    $get[] = '        if(!$this->is_encrypted_' . mb_strtolower($column->name) . '){';
                                     $get[] = '            return $this->' . $column->name . ';';
                                     $get[] = '        }';
                                     $get[] = '        $url = $object->config(\'project.dir.data\') . \'Defuse/Email.key\';';
@@ -1051,7 +1051,7 @@ class Schema extends Main
                                     $get[] = '             } else {';
                                     $get[] = '                 $this->' . $column->name . ' = Crypto::decrypt($this->' . $column->name . ', $key);';
                                     $get[] = '             }';
-                                    $get[] = '             $this->is_encrypted_' . strtolower($column->name) . ' = false;';
+                                    $get[] = '             $this->is_encrypted_' . mb_strtolower($column->name) . ' = false;';
                                     $get[] = '        } else {';
                                     $get[] = '            throw new Exception(' . "'Key not found...'" . ');';
                                     $get[] = '        }';
@@ -1119,7 +1119,7 @@ class Schema extends Main
                                     $set[] = '        } else {';
                                     $set[] = '            $this->' . $column->name . ' = Crypto::encrypt($this->' . $column->name . ', $key);';
                                     $set[] = '        }';
-                                    $set[] = '        $this->is_encrypted_' . strtolower($column->name) . ' = true;';
+                                    $set[] = '        $this->is_encrypted_' . mb_strtolower($column->name) . ' = true;';
                                     $set[] = '    } else {';
                                     $set[] = '        throw new Exception(\'Key not found...\');';
                                     $set[] = '    }';
@@ -1146,7 +1146,7 @@ class Schema extends Main
                                     $get[] = '        if(!$object){';
                                     $get[] = '            throw new Exception(\'Object not set...\');';
                                     $get[] = '        }';
-                                    $get[] = '        if(!$this->is_encrypted_' . strtolower($column->name) . '){';
+                                    $get[] = '        if(!$this->is_encrypted_' . mb_strtolower($column->name) . '){';
                                     $get[] = '            return $this->' . $column->name . ';';
                                     $get[] = '        }';
                                     $get[] = '        $url = $object->config(\'project.dir.data\') . \'Defuse/Email.key\';';
@@ -1160,7 +1160,7 @@ class Schema extends Main
                                     $get[] = '             } else {';
                                     $get[] = '                 $this->' . $column->name . ' = Crypto::decrypt($this->' . $column->name . ', $key);';
                                     $get[] = '             }';
-                                    $get[] = '             $this->is_encrypted_' . strtolower($column->name) . ' = false;';
+                                    $get[] = '             $this->is_encrypted_' . mb_strtolower($column->name) . ' = false;';
                                     $get[] = '        } else {';
                                     $get[] = '            throw new Exception(' . "'Key not found...'" . ');';
                                     $get[] = '        }';
@@ -1215,7 +1215,7 @@ class Schema extends Main
                     $data_functions[] = $record_object_set;
                     $data_functions[] = $record_object_get;
                     foreach($encrypted as $nr => $column){
-                        $data_columns[] = 'protected bool $is_encrypted_' . strtolower($column) . ' = true;';
+                        $data_columns[] = 'protected bool $is_encrypted_' . mb_strtolower($column) . ' = true;';
                     }
                 }
                 $use[] = '';
@@ -1299,7 +1299,7 @@ class Schema extends Main
                     $data[] = '        $object = $this->getObject();';
                     $data[] = '        if($object){';
                     foreach($encrypted as $nr => $column){
-                        $data[] = '            if($this->is_encrypted_' . strtolower($column) . ' === false){';
+                        $data[] = '            if($this->is_encrypted_' . mb_strtolower($column) . ' === false){';
                         $data[] = '                $this->set' . str_replace('.', '', Controller::name($column)) . '($this->get' . str_replace('.', '', Controller::name($column)) . '());';
                         $data[] = '            }';
                     }

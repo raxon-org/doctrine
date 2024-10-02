@@ -565,7 +565,7 @@ class Entity extends Main
             if($validate->success === true) {
                 $entityName1 = $object->config('doctrine.entity.prefix') . $entity1;
                 $repository = $entityManager->getRepository($entityName1);
-                $node1_id = strtolower($entity1) . '_id';
+                $node1_id = mb_strtolower($entity1) . '_id';
                 if(array_key_exists($node1_id, $request)){
                     $node1 = $repository->findOneBy([
                         'id' => $request[$node1_id]
@@ -578,7 +578,7 @@ class Entity extends Main
                 }
                 $entityName2 = $object->config('doctrine.entity.prefix') . $entity2;
                 $repository = $entityManager->getRepository($entityName2);
-                $node2_id = strtolower($entity2) . '_id';
+                $node2_id = mb_strtolower($entity2) . '_id';
                 if(array_key_exists($node2_id, $request)){
                     $node2 = $repository->findOneBy([
                         'id' => $request[$node2_id]
@@ -695,7 +695,7 @@ class Entity extends Main
                 }
             }
             foreach($order as $key => $value){
-                $qb->orderBy($alias . '.' . $key, strtoupper($value));
+                $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
             }
             $qb->setParameters($parameters);
             $result = $qb->getQuery()->getResult();
@@ -788,7 +788,7 @@ class Entity extends Main
                 }
             }
             foreach($order as $key => $value){
-                $qb->orderBy($alias . '.' . $key, strtoupper($value));
+                $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
             }
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
@@ -896,7 +896,7 @@ class Entity extends Main
             }
         }
         foreach($order as $key => $value){
-            $qb->orderBy($alias . '.' . $key, strtoupper($value));
+            $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
         }
         $qb->setParameters($parameters)
             ->setFirstResult($firstResult)
