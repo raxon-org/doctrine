@@ -8,7 +8,7 @@ use Raxon\Module\Database;
 use Raxon\Module\Event;
 use Raxon\Module\File;
 
-use Raxon\Node\Model\Node;
+use Raxon\Node\Module\Node;
 
 use Raxon\Doctrine\Service\Table;
 use Raxon\Doctrine\Service\Index;
