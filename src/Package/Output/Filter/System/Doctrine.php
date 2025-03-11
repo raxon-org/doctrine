@@ -53,7 +53,6 @@ class Doctrine extends Controller {
                 }
             }
         }
-        ddd($result);
         return (object) $result;
     }
 }
