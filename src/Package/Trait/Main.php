@@ -516,12 +516,12 @@ trait Main {
             foreach($actions as $action){
                 $events[] = (object) [
                     '#class' => 'System.Event',
-                    'action' => 'raxon.node.' . $action,
+                    'action' => 'raxon.org.node.' . $action,
                     'options' => (object) [
                         'priority' => 10,
                         'command' => [],
                         'controller' => [
-                            'Event:System:Doctrine:Schema:create'
+                            'Event:Raxon:Doctrine:Schema:create'
                         ]
                     ]
                 ];
@@ -529,12 +529,12 @@ trait Main {
             $action = 'delete';
             $events[] = (object) [
                 '#class' => 'System.Event',
-                'action' => 'raxon.node.' . $action,
+                'action' => 'raxon.org.node.' . $action,
                 'options' => (object) [
                     'priority' => 10,
                     'command' => [],
                     'controller' => [
-                        'Event:System:Doctrine:Schema:' . $action
+                        'Event:Raxon:Doctrine:Schema:' . $action
                     ]
                 ]
             ];
