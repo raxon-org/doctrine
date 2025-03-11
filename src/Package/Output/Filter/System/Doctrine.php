@@ -11,7 +11,6 @@ class Doctrine extends Controller {
 
     public static function environment(App $object, $response=null): object
     {
-        ddd($response);
         $result = [];
         if(
             !empty($response) &&
@@ -54,6 +53,7 @@ class Doctrine extends Controller {
                 }
             }
         }
+        ddd($result);
         return (object) $result;
     }
 }
