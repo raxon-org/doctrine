@@ -502,13 +502,6 @@ trait Main {
                 'environment' => $options->connection
             ]
         ];
-
-
-
-
-
-
-        /*
         if(
             property_exists($options, 'event') &&
             $options->event === true
@@ -528,7 +521,7 @@ trait Main {
                         'priority' => 10,
                         'command' => [],
                         'controller' => [
-                            'Event:Raxon:Doctrine:Schema:create'
+                            'Event:System:Doctrine:Schema:create'
                         ]
                     ]
                 ];
@@ -541,7 +534,7 @@ trait Main {
                     'priority' => 10,
                     'command' => [],
                     'controller' => [
-                        'Event:Raxon:Doctrine:Schema:' . $action
+                        'Event:System:Doctrine:Schema:' . $action
                     ]
                 ]
             ];
@@ -554,7 +547,7 @@ trait Main {
             // - r3m.io.node.put (schema) -> create entity, patch table(s)
             // - r3m.io.node.delete (schema) -> delete entity, drop table(s)
         }
-        */
+
         $class = 'System.Doctrine.Schema';
         $role = $node->role_system();
         $import = $node->import($class, $role, $options);
