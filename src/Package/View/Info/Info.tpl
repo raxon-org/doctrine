@@ -25,7 +25,7 @@ Submodule: {{$request.submodule|string.uppercase.first}}
 Commands:
 {{foreach($files as $file)}}
 {{$file.basename = file.basename($file.name, config('extension.tpl'))}}
-{{binary()}} {{$request.package}} {{$select}} {{$file.basename|string.lowercase}}
+{{binary()}} {{$request.package}} {{$select|string.lowercase}} {{$file.basename|string.lowercase}}
 
 {{/foreach}}
 {{/foreach}}
