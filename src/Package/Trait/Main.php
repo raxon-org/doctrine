@@ -106,12 +106,14 @@ trait Main {
         $record = false;
         $object = $this->object();
         if(
+            is_object($options) &&
             property_exists($options, 'connection') &&
             is_string($options->connection)
         ){
             $options->connection = [$options->connection];
         }
         if(
+            is_object($options) &&
             property_exists($options, 'connection') &&
             is_array($options->connection)
         ) {
