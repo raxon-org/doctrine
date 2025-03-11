@@ -7,13 +7,26 @@ Module: {{$request.module|string.uppercase.first}}
 Submodule: {{$request.submodule|string.uppercase.first}}
 {{/if}}
 {{if($request.module === 'info')}}
-{{$files = dir.read(config('controller.dir.view'))}}
+{{$selected = [
+'Database',
+'Schema',
+'Sequence',
+'Table/Column',
+'Table/Foreign',
+'Table/Index',
+'Table',
+]}}
+
+
+{{foreach($selected as $select)}}
+{{$files = dir.read(config('controller.dir.view') + $select)}}
 {{$files = data.sort($files, ['url' => 'ASC'])}}
-{{dd($files)}}
+{{$files = data.filter($files, ['type' => 'file'])}}
 Commands:
 {{foreach($files as $file)}}
 {{$file.basename = file.basename($file.name, config('extension.tpl'))}}
 {{binary()}} {{$request.package}} object {{$file.basename|string.lowercase}}
 
+{{/foreach}}
 {{/foreach}}
 {{/if}}
