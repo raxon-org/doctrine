@@ -27,6 +27,7 @@ class Schema {
         $is_repository = false;
         if(array_key_exists('node', $options)){
             $node = $options['node'];
+            d($node);
             if(property_exists($node, 'environment')){
                 if(
                     is_array($node->environment) ||
