@@ -33,9 +33,7 @@ class Schema {
                     is_array($node->environment) ||
                     is_object($node->environment)
                 ){
-                    ddd($node->environment);
                     foreach($node->environment as $name => $environments){
-
                         foreach($environments as $environment => $config){
                             d($config);
                             $config->table = Table::all($object, $config->name, $config->environment);
