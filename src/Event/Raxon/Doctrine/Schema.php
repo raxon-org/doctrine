@@ -26,6 +26,8 @@ class Schema {
         $is_entity = false;
         $is_repository = false;
 
+        ddd($options);
+
         if(array_key_exists('node', $options)){
             $node = $options['node'];
             ddd($node);
