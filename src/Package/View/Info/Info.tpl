@@ -6,7 +6,6 @@ Module: {{$request.module|string.uppercase.first}}
 {{if(!is.empty($request.submodule))}}
 Submodule: {{$request.submodule|string.uppercase.first}}
 {{/if}}
-{{if($request.module === 'info')}}
 {{$selected = [
 'Database',
 'Schema',
@@ -16,8 +15,6 @@ Submodule: {{$request.submodule|string.uppercase.first}}
 'Table/Index',
 'Table',
 ]}}
-
-
 {{foreach($selected as $select)}}
 {{$files = dir.read(config('controller.dir.view') + $select)}}
 {{$files = data.sort($files, ['url' => 'ASC'])}}
@@ -29,4 +26,3 @@ Commands:
 
 {{/foreach}}
 {{/foreach}}
-{{/if}}
