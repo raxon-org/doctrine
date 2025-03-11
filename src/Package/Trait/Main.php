@@ -521,7 +521,7 @@ trait Main {
                         'priority' => 10,
                         'command' => [],
                         'controller' => [
-                            'Event:R3m:Io:Doctrine:Schema:create'
+                            'Event:Raxon:Doctrine:Schema:create'
                         ]
                     ]
                 ];
