@@ -22,7 +22,7 @@ class Schema {
     public static function create(App $object, $event, $options=[]): void
     {
         //if exist rename table
-//        d($options);
+        d($options);
         $node = false;
         $is_entity = false;
         $is_repository = false;

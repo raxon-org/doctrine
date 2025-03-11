@@ -502,6 +502,13 @@ trait Main {
                 'environment' => $options->connection
             ]
         ];
+
+
+
+
+
+
+        /*
         if(
             property_exists($options, 'event') &&
             $options->event === true
@@ -547,9 +554,11 @@ trait Main {
             // - r3m.io.node.put (schema) -> create entity, patch table(s)
             // - r3m.io.node.delete (schema) -> delete entity, drop table(s)
         }
+        */
         $class = 'System.Doctrine.Schema';
         $role = $node->role_system();
         $import = $node->import($class, $role, $options);
+        ddd($import);
         echo Core::object($import, Core::OBJECT_JSON) . PHP_EOL;
     }
 }
