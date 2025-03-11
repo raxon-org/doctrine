@@ -180,7 +180,6 @@ trait Main {
      */
     public function database_all($flags=null, $options=null): array
     {
-        d($this->config());
         if(!property_exists($options, 'connection')){
             throw new Exception('Option: connection not set...');
         }
