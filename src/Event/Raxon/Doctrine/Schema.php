@@ -28,6 +28,7 @@ class Schema {
 
         if(array_key_exists('node', $options)){
             $node = $options['node'];
+            ddd($node);
             if(property_exists($node, 'environment')){
                 if(
                     is_array($node->environment) ||
