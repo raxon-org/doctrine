@@ -41,7 +41,7 @@ Options:
 {{continue()}}
 {{/if}}
 {{$file.basename = file.basename($file.name, config('extension.tpl'))}}
-{{if(!is.empty($options[$file.basename|lowercase]) || !is.empty($is.all))}}
+{{if(!is.empty($options[$file.basename|string.lowercase]) || !is.empty($is.all))}}
 {{require($file.url)}}
 {{/if}}
 {{/for.each}}
