@@ -9,6 +9,7 @@ Submodule: {{$request.submodule|string.uppercase.first}}
 {{if($request.module === 'info')}}
 {{$files = dir.read(config('controller.dir.view') + 'Object/')}}
 {{$files = data.sort($files, ['url' => 'ASC'])}}
+{{dd($files)}}
 Commands:
 {{foreach($files as $file)}}
 {{$file.basename = file.basename($file.name, config('extension.tpl'))}}
