@@ -1399,7 +1399,7 @@ class Schema extends Main
                 throw new Exception('Platform not found, are you connected?');
             }
         }
-        ddd($node);
+        d($node);
         $schema = new \Doctrine\DBAL\Schema\Schema();
         $schema_table = $schema->createTable($node->get('table'));
         $columns = $node->get('column');
