@@ -1420,8 +1420,38 @@ class Schema extends Main
                     }
                     d($schema_options);
                     if(!empty($schema_options)) {
-                        d($column);
-                        $schema_table->addColumn($column->name, $column->type, $schema_options);
+                        switch($column->type){
+                            case 'one-to-one':
+                                if(
+                                    property_exists($column->options, 'foreign_key') &&
+                                    property_exists($column->options->foreign_key, 'table')
+                                ){
+                                    //nothing
+                                } else {
+                                    throw new Exception('Foreign key property table not set (profile for example)...');
+                                }
+                                if(
+                                    property_exists($column->options, 'foreign_key') &&
+                                    property_exists($column->options->foreign_key, 'column')
+                                ){
+                                    //nothing
+                                } else {
+                                    throw new Exception('Foreign key property column not set (user_id for example)...');
+                                }
+                                if(
+                                    property_exists($column->options, 'foreign_key') &&
+                                    property_exists($column->options->foreign_key, 'origin')
+                                ){
+                                    //nothing
+                                } else {
+                                    throw new Exception('Foreign key property origin not set (id for example)...');
+                                }
+                                $schema_table->addForeignKeyConstraint($column->options->foreign_key->table, $column->options->foreign_key->column, $column->options->foreign_key->origin, (array) $column->options->foreign_key->action);
+                            break;
+                            default:
+                                $schema_table->addColumn($column->name, $column->type, $schema_options);
+                            break;
+                        }
                     }
                 } else {
                     $schema_table->addColumn($column->name, $column->type);
