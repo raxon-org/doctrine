@@ -14,6 +14,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -81,6 +82,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -148,6 +150,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -215,6 +218,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -282,6 +286,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -349,6 +354,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -416,6 +422,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -483,6 +490,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
@@ -550,6 +558,7 @@
                                 "column",
                                 "primary_key",
                                 "index",
+                                "unique",
                                 "environment"
                             ],
                             "object": {
