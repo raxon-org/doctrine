@@ -1419,6 +1419,7 @@ class Schema extends Main
                         unset($schema_options['definition']);
                     }
                     d($schema_options);
+                    d($column);
                     if(!empty($schema_options)) {
                         switch($column->type){
                             case 'one-to-one':
