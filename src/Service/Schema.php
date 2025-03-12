@@ -1420,6 +1420,7 @@ class Schema extends Main
                     }
                     d($schema_options);
                     if(!empty($schema_options)) {
+                        d($column);
                         $schema_table->addColumn($column->name, $column->type, $schema_options);
                     }
                 } else {
