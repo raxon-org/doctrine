@@ -1452,7 +1452,7 @@ class Schema extends Main
         if($sql){
             foreach($sql as $line){
                 //add to log
-//                echo $line . ';' . PHP_EOL;
+                echo $line . ';' . PHP_EOL;
             }
             $connection = Database::connection($object, $config->name, $config->environment);
             if($connection){

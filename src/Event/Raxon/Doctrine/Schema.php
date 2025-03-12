@@ -104,9 +104,6 @@ class Schema {
                                     $is_repository = true;
                                 }
                                 try {
-                                    ddd(\Doctrine\DBAL\Types\Type::getTypesMap());
-
-
                                     SchemaService::sql($object,
                                         $options['class'],
                                         $options['role'],
