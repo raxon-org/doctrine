@@ -1460,7 +1460,6 @@ class Schema extends Main
         if($node->has('primary_key')){
             $schema_table->setPrimaryKey($node->get('primary_key'));
         }
-        /*
         if($node->has('unique')){
             foreach($node->get('unique') as $index){
                 if(is_array($index)){
@@ -1470,7 +1469,6 @@ class Schema extends Main
                 }
             }
         }
-        */
         if($node->has('index')){
             foreach($node->get('index') as $index){
                 if(is_array($index)){
