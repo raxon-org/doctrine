@@ -1442,6 +1442,18 @@ class Schema extends Main
                                 property_exists($column->options->join, 'table')
                             ){
                                 //create column (bigint user_id for example)
+
+                                /*
+                                $myForeign = $schema->createTable("my_foreign");
+                                $myForeign->addColumn("id", "integer");
+                                $myForeign->addColumn("user_id", "integer");
+                                $myForeign->addForeignKeyConstraint($myTable, ["user_id"], ["id"], ["onUpdate" => "CASCADE"]);
+                                */
+
+                                $schema_table_foreign = $schema->createTable($column->options->join->table);
+                                foreach($column->options->column as $foreign_column) {
+                                    $schema_table_foreign->addColumn($foreign_column->name, $foreign_column->type);
+                                }
                             }
                         break;
                         default:
