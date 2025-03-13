@@ -1454,7 +1454,7 @@ class Schema extends Main
                                 foreach($column->options->join->column as $foreign_column) {
                                     $schema_table_foreign->addColumn($foreign_column->name, $foreign_column->type);
                                 }
-                                $schema_table_foreign->addForeignKeyConstraint($schema_table, $column->options->join->column[0], $column->options->join->column[1]);
+                                $schema_table_foreign->addForeignKeyConstraint($node->get('table'), $column->options->join->column[0], $column->options->join->column[1]);
                             }
                         break;
                         default:
