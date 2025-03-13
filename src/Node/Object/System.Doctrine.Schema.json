@@ -24,6 +24,14 @@
                 "type": "array"
             },
             {
+                "name": "unique",
+                "type": "array"
+            },
+            {
+                "name": "sql",
+                "type": "object"
+            },
+            {
                 "name": "environment",
                 "type": "array",
                 "relation": true,
