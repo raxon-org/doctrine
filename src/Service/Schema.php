@@ -1460,6 +1460,7 @@ class Schema extends Main
                         break;
                         default:
                             if(empty($schema_options)){
+                                ddd(\Doctrine\DBAL\Types\Type::getTypesMap());
                                 $schema_table->addColumn($column->name, $column->type);
                             } else {
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
