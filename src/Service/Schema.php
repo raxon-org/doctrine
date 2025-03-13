@@ -1508,15 +1508,19 @@ class Schema extends Main
         $sql_drop = $schema->toDropSql($platform);
         $sql_to = $schema->toSql($platform);
 
-        $model = new Node($object);
-        $record = (object) [];
-        $record->uuid = $node->get('uuid');
-        $record->sql = (object) [
+//        $model = new Node($object);
+//        $record = (object) [];
+//        $record->uuid = $node->get('uuid');
+//        $record->sql = (object) [
+//            'drop' => $sql_drop,
+//            'to' => $sql_to
+//        ];
+//        $patch = $model->patch($node->get('#class'), $model->role_system(), $record);
+//        d($patch);
+        $node->set('sql', (object) [
             'drop' => $sql_drop,
             'to' => $sql_to
-        ];
-        $patch = $model->patch($node->get('#class'), $model->role_system(), $record);
-        d($patch);
+        ]);
         if($sql_to){
             foreach($sql_to as $line){
                 //add to log
