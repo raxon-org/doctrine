@@ -1505,7 +1505,7 @@ class Schema extends Main
                 }
             }
         }
-        $sql_drop = $schema->dropSql($platform);
+        $sql_drop = $schema->toDropSql($platform);
         $sql_to = $schema->toSql($platform);
 
         $model = new Node($object);
