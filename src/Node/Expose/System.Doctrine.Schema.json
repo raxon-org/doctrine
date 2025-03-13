@@ -32,7 +32,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -57,6 +56,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -100,7 +100,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -125,6 +124,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -168,7 +168,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -193,6 +192,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -236,7 +236,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -261,6 +260,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -304,7 +304,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -329,6 +328,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -372,7 +372,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -397,6 +396,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -440,7 +440,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -465,6 +464,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -508,7 +508,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -533,6 +532,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
@@ -576,7 +576,6 @@
                                                 "id",
                                                 "unsigned",
                                                 "autoincrement",
-                                                "unique",
                                                 "nullable",
                                                 "default",
                                                 "length",
@@ -601,6 +600,7 @@
                                                             "multiple": true,
                                                             "output": [
                                                                 "name",
+                                                                "type",
                                                                 "reference"
                                                             ]
                                                         }
