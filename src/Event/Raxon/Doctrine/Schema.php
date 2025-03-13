@@ -116,8 +116,6 @@ class Schema {
                                 catch(Exception $exception){
                                     echo $exception;
                                 }
-
-                                d('sql');
 //                            Table::import($object, $config->name, $config->environment, $config->table);
                             }
                         }

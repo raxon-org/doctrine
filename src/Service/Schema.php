@@ -12,6 +12,7 @@ use Raxon\Module\File;
 use Exception;
 
 use Raxon\Exception\FileWriteException;
+use Raxon\Node\Module\Node;
 
 class Schema extends Main
 
@@ -1504,15 +1505,26 @@ class Schema extends Main
                 }
             }
         }
-        $sql = $schema->toSql($platform);
-        if($sql){
-            foreach($sql as $line){
+        $sql_down = $schema->downSql($platform);
+        $sql_up = $schema->toSql($platform);
+
+        $model = new Node($object);
+        $record = (object) [];
+        $record->uuid = $node->get('uuid');
+        $record->sql = (object) [
+            'down' => $sql_down,
+            'up' => $sql_up
+        ];
+        $patch = $model->patch($node->get('#class'), $model->role_system(), $record);
+        d($patch);
+        if($sql_up){
+            foreach($sql_up as $line){
                 //add to log
                 echo $line . ';' . PHP_EOL;
             }
             $connection = Database::connection($object, $config->name, $config->environment);
             if($connection){
-                foreach($sql as $line){
+                foreach($sql_up as $line){
                     $stmt = $connection->prepare($line);
                     $result = $stmt->executeQuery();
                 }
