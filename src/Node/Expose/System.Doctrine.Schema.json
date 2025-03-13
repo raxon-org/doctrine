@@ -15,7 +15,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -65,6 +66,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -83,7 +91,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -133,6 +142,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -151,7 +167,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -201,6 +218,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -219,7 +243,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -269,6 +294,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -287,7 +319,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -337,6 +370,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -355,7 +395,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -405,6 +446,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -423,7 +471,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -473,6 +522,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -491,7 +547,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -541,6 +598,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
@@ -559,7 +623,8 @@
                                 "primary_key",
                                 "index",
                                 "unique",
-                                "environment"
+                                "environment",
+                                "sql"
                             ],
                             "object": {
                                 "column": {
@@ -609,6 +674,13 @@
                                             }
                                         }
                                     }
+                                },
+                                "sql": {
+                                    "multiple": false,
+                                    "output": [
+                                        "down",
+                                        "up"
+                                    ]
                                 }
                             }
                         }
