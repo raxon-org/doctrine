@@ -1482,6 +1482,15 @@ class Schema extends Main
                 }
             }
         }
+        if($node->has('unique')){
+            foreach($node->get('unique') as $index){
+                if(is_array($index)){
+                    $schema_table->addUniqueIndex($index);
+                } else {
+                    $schema_table->addUniqueIndex([$index]);
+                }
+            }
+        }
         $sql = $schema->toSql($platform);
         if($sql){
             foreach($sql as $line){
@@ -1494,22 +1503,6 @@ class Schema extends Main
                     $stmt = $connection->prepare($line);
                     $result = $stmt->executeQuery();
                 }
-            }
-        }
-        if($node->has('unique')){
-            foreach($node->get('unique') as $index){
-                if(is_array($index)){
-                    $schema_table->addUniqueIndex($index);
-                } else {
-                    $schema_table->addUniqueIndex([$index]);
-                }
-            }
-        }
-        $sql = $schema->toSql($platform);
-        if($sql) {
-            foreach ($sql as $line) {
-                //add to log
-                echo $line . ';' . PHP_EOL;
             }
         }
     }
