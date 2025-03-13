@@ -1429,8 +1429,22 @@ class Schema extends Main
                                 ){
                                     //create column (bigint user_id for example)
                                 }
-
                             break;
+                            case 'one-to-many':
+                                if(
+                                    property_exists($column->options, 'join') &&
+                                    property_exists($column->options->join, 'column')
+                                ){
+                                    //create column (bigint user_id for example)
+                                }
+                            case 'many-to-many':
+                                if(
+                                    property_exists($column->options, 'join') &&
+                                    property_exists($column->options->join, 'column') &&
+                                    property_exists($column->options->join, 'table')
+                                ){
+                                    //create column (bigint user_id for example)
+                                }
                             default:
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
                             break;
