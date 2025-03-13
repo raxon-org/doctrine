@@ -1437,6 +1437,7 @@ class Schema extends Main
                                 ){
                                     //create column (bigint user_id for example)
                                 }
+                            break;
                             case 'many-to-many':
                                 if(
                                     property_exists($column->options, 'join') &&
@@ -1445,6 +1446,7 @@ class Schema extends Main
                                 ){
                                     //create column (bigint user_id for example)
                                 }
+                            break;
                             default:
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
                             break;
