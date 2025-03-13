@@ -1451,7 +1451,6 @@ class Schema extends Main
                                 */
 
                                 $schema_table_foreign = $schema->createTable($column->options->join->table);
-                                ddd($column);
                                 foreach($column->options->join->column as $foreign_column) {
                                     $schema_table_foreign->addColumn($foreign_column->name, $foreign_column->type);
                                 }
