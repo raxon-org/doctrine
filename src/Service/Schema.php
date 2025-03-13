@@ -1418,40 +1418,42 @@ class Schema extends Main
                         $schema_options['columnDefinition'] = $schema_options['definition'];
                         unset($schema_options['definition']);
                     }
-                    d($schema_options);
-                    d($column);
-                    if(!empty($schema_options)) {
-                        switch($column->type){
-                            case 'one-to-one':
-                                if(
-                                    property_exists($column->options, 'join') &&
-                                    property_exists($column->options->join, 'column')
-                                ){
-                                    //create column (bigint user_id for example)
-                                }
-                            break;
-                            case 'one-to-many':
-                                if(
-                                    property_exists($column->options, 'join') &&
-                                    property_exists($column->options->join, 'column')
-                                ){
-                                    //create column (bigint user_id for example)
-                                }
-                            break;
-                            case 'many-to-many':
-                                if(
-                                    property_exists($column->options, 'join') &&
-                                    property_exists($column->options->join, 'column') &&
-                                    property_exists($column->options->join, 'table')
-                                ){
-                                    //create column (bigint user_id for example)
-                                }
-                            break;
-                            default:
+                    switch($column->type){
+                        case 'one-to-one':
+                            if(
+                                property_exists($column->options, 'join') &&
+                                property_exists($column->options->join, 'column')
+                            ){
+                                //create column (bigint user_id for example)
+                            }
+                        break;
+                        case 'one-to-many':
+                            if(
+                                property_exists($column->options, 'join') &&
+                                property_exists($column->options->join, 'column')
+                            ){
+                                //create column (bigint user_id for example)
+                            }
+                        break;
+                        case 'many-to-many':
+                            if(
+                                property_exists($column->options, 'join') &&
+                                property_exists($column->options->join, 'column') &&
+                                property_exists($column->options->join, 'table')
+                            ){
+                                //create column (bigint user_id for example)
+                            }
+                        break;
+                        default:
+                            if(empty($schema_options)){
+                                $schema_table->addColumn($column->name, $column->type);
+                            } else {
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
-                            break;
-                        }
+                            }
+
+                        break;
                     }
+
                 } else {
                     $schema_table->addColumn($column->name, $column->type);
                 }
