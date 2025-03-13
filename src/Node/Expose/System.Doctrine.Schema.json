@@ -70,8 +70,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -146,8 +146,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -222,8 +222,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -298,8 +298,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -374,8 +374,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -450,8 +450,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -526,8 +526,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -602,8 +602,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
@@ -678,8 +678,8 @@
                                 "sql": {
                                     "multiple": false,
                                     "output": [
-                                        "down",
-                                        "up"
+                                        "drop",
+                                        "to"
                                     ]
                                 }
                             }
