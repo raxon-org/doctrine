@@ -10,7 +10,7 @@
         "ext-iconv": "*",
         "ext-pdo": "*",
         "raxon/framework": ">=2024.09.04",
-        "doctrine/orm": "3.0.1",
+        "doctrine/orm": "3.2.3",
         "symfony/cache": "*"
     },
     "license" : "MIT",
