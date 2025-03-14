@@ -162,7 +162,12 @@ class Schema extends Main
                                 if(is_numeric($column->options->default)){
                                     $options_default_value = $column->options->default + 0;
                                     $options_default = '"default" => ' . $options_default_value;
-                                } else {
+                                }
+                                elseif(is_bool($column->options->default)){
+                                    $options_default_value = (bool) $column->options->default;
+                                    $options_default = '"default" => ' . $options_default_value;
+                                }
+                                else {
                                     $options_default_value = $column->options->default;
                                     $options_default = '"default" => "' .  $options_default_value . '"';
                                 }
