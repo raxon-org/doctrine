@@ -635,6 +635,22 @@ class Entity extends Main
      * @throws NonUniqueResultException
      * @throws Exception
      */
+    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): object
+    {
+        ddd($role);
+        $list = Entity::list($object, $entityManager, $role, $entity, $options);
+
+        d($list);
+        return (object) [];
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws QueryException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
+     */
     public static function list(App $object, EntityManager $entityManager, Role $role, $entity, $options=[]): array
     {
         if(!array_key_exists('function', $options)){
