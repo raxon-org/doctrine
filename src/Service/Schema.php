@@ -106,7 +106,28 @@ class Schema extends Main
                         $is_both = false;
                         $is_null = true;
                     }
-                    if (
+                    if(
+                        property_exists($column, 'type') &&
+                        $column->type === 'one-to-one'
+                    ){
+                        ddd($column);
+                        /*
+                        $data_columns[] = '#[ORM\OneToOne(' .
+                            PHP_EOL .
+                            '        ' .
+                            implode(
+                                ', ' .
+                                PHP_EOL .
+                                '        '
+                                ,
+                                $column_value
+                            ) .
+                            PHP_EOL .
+                            '    ' .
+                            ')]';
+                        */
+                    }
+                    elseif (
                         property_exists($column, 'type')
                     ) {
                         $column_value = [];
