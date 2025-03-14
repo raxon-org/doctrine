@@ -110,7 +110,7 @@ class Schema extends Main
                         property_exists($column, 'type') &&
                         $column->type === 'one-to-one'
                     ){
-                        ddd($column);
+                        d($column);
                         /*
                         $data_columns[] = '#[ORM\OneToOne(' .
                             PHP_EOL .
