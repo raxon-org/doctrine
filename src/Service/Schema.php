@@ -438,7 +438,7 @@ class Schema extends Main
                                         $options_default_value = $options_default_value + 0;
                                         $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = ' . $options_default_value . ';';
                                     } else {
-                                        ddd($options_default_value);
+                                        d($options_default_value);
                                         $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = "' . $options_default_value . '";';
                                     }
                                 }
