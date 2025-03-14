@@ -111,6 +111,7 @@ class Schema extends Main
                         $column->type === 'one-to-one'
                     ){
                         d($column);
+                        continue;
                         /*
                         $data_columns[] = '#[ORM\OneToOne(' .
                             PHP_EOL .
