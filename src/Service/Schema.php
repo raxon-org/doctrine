@@ -165,7 +165,11 @@ class Schema extends Main
                                 }
                                 elseif(is_bool($column->options->default)){
                                     $options_default_value = (bool) $column->options->default;
-                                    $options_default = '"default" => ' . $options_default_value;
+                                    if($options_default_value === true){
+                                        $options_default = '"default" => true';
+                                    } else {
+                                        $options_default = '"default" => false';
+                                    }
                                 }
                                 else {
                                     $options_default_value = $column->options->default;
@@ -1089,6 +1093,7 @@ class Schema extends Main
                                             $options_default_value = $options_default_value + 0;
                                             $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = ' . $options_default_value . ';';
                                         } else {
+                                            dd($options_default_value);
                                             $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = "' . $options_default_value . '";';
                                         }
                                     }
