@@ -201,7 +201,7 @@ class Schema extends Main
                         if (array_key_exists(0, $options_all)) {
                             $column_value[] = 'options: [' . implode(', ', $options_all) . ']';
                         }
-                        $data_columns[] = '#[ORM\column(' .
+                        $data_columns[] = '#[ORM\Column(' .
                             PHP_EOL .
                             '        ' .
                             implode(
