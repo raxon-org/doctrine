@@ -796,9 +796,11 @@ class Entity extends Main
             }
             $count_where = count($where);
             if($count_where >= 1){
+                d($where[0]);
                 $qb->where($where[0]);
                 if($count_where > 1){
                     for($i = 1; $i < $count_where; $i++){
+                        d($where[$i]);
                         $qb->andWhere($where[$i]);
                     }
                 }
@@ -808,10 +810,11 @@ class Entity extends Main
             }
             d($order);
             d($parameters);
+            d($firstResult);
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($limit);
-            d($qb->getQuery()->getSQL());
+//            d($qb->getQuery()->getSQL());
             d($alias);
             ddd($options);
             $paginator = new Paginator($qb->getQuery(), $options['fetchJoinCollection']);
