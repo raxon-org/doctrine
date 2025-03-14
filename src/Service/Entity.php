@@ -806,7 +806,8 @@ class Entity extends Main
             foreach($order as $key => $value){
                 $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
             }
-            dd($parameters);
+            d($order);
+            d($parameters);
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($limit);
