@@ -637,6 +637,7 @@ class Entity extends Main
      */
     public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
     {
+        d($options);
         $list = Entity::list($object, $entityManager, $role, $entity, $options);
         $record = $list;
         $record['node'] = $record['nodeList'][0] ?? null;
