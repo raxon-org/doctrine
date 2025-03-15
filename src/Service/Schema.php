@@ -121,12 +121,12 @@ class Schema extends Main
                         ){
                             $column_join = $column->options->join->column[0];
                             $data_columns[] = '#[ORM\OneToOne(';
-                            $data_columns[] = '    targetEntity: ' . $column->options->target;
+                            $data_columns[] = '    targetEntity: "' . $column->options->target .'",';
                             $data_columns[] = '    cascade: ["persist", "remove"]';
                             $data_columns[] = ')]';
                             $data_columns[] = '#[ORM\JoinColumn(';
-                            $data_columns[] = '    name: "' . $column_join->name . '"';
-                            $data_columns[] = '    referencedColumnName: "' . $column_join->reference . '"';
+                            $data_columns[] = '    name: "' . $column_join->name . '",';
+                            $data_columns[] = '    referencedColumnName: "' . $column_join->reference . '",';
                             $data_columns[] = '    nullable: ' . ($column_join->nullable === true ? 'true' : 'false');
                             $data_columns[] = ')]';
                         } else {
