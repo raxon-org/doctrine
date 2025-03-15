@@ -58,7 +58,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -134,7 +135,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -210,7 +212,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -286,7 +289,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -362,7 +366,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -438,7 +443,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -514,7 +520,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -590,7 +597,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
@@ -666,7 +674,8 @@
                                                             "output": [
                                                                 "name",
                                                                 "type",
-                                                                "reference"
+                                                                "reference",
+                                                                "nullable"
                                                             ]
                                                         }
                                                     }
