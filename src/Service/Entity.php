@@ -635,7 +635,7 @@ class Entity extends Main
      * @throws NonUniqueResultException
      * @throws Exception
      */
-    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): object
+    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
     {
         $list = Entity::list($object, $entityManager, $role, $entity, $options);
         $record = $list;
