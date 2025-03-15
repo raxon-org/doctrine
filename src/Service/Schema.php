@@ -876,7 +876,16 @@ class Schema extends Main
                                 property_exists($column->options, 'join') &&
                                 property_exists($column->options->join, 'column')
                             ){
-                                ddd($schema_options);
+                                $schema_options_join = [];
+                                if(property_exists($column->options->join->column, 'nullable')){
+                                    $schema_options_join['notnull'] = !$column->options->join->column->nullable;
+                                }
+                                d($schema_options_join);
+                                if(empty($schema_options_join)){
+                                    $schema_table->addColumn($column->options->join->name, $column->options->join->type);
+                                } else {
+                                    $schema_table->addColumn($column->options->join->name, $column->options->join->type, $schema_options_join);
+                                }
                                 //create column (bigint user_id for example)
                             }
                         break;
