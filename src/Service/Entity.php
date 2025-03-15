@@ -8,6 +8,7 @@ use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Mapping\Driver\AttributeReader;
 use Doctrine\ORM\Query\Parameter;
 use Entity\Role;
+use Raxon\Module\Data;
 use ReflectionObject;
 
 use Doctrine\ORM\EntityManager;
@@ -52,7 +53,7 @@ class Entity extends Main
      * @throws AuthorizationException
      * @throws FileWriteException
      */
-    public static function create(App $object, EntityManager $entityManager, Role $role, $entity=null, $request=[]): array
+    public static function create(App $object, EntityManager $entityManager, $role, string $entity=null, array $request=[]): array
     {
         $function = __FUNCTION__;
         if(empty($request)){
@@ -250,7 +251,7 @@ class Entity extends Main
      */
     public static function updateById(App $object, $entity, $id): array
     {
-        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entityManager = Database::entityManager($object, ['name' => DATABASE::SYSTEM]);
         $repository = $entityManager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'id' => $id
@@ -333,7 +334,7 @@ class Entity extends Main
      */
     public static function deleteByUuid(App $object, $entity, $uuid): array
     {
-        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entityManager = Database::entityManager($object, ['name' => DATABASE::SYSTEM]);
         $repository = $entityManager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'uuid' => $uuid
@@ -352,7 +353,7 @@ class Entity extends Main
      */
     public static function deleteById(App $object, $entity, $id): array
     {
-        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
         $repository = $entityManager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'id' => $id
@@ -395,7 +396,7 @@ class Entity extends Main
         if(empty($request)){
             throw new Exception('Request is empty...');
         }
-        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
         $validate_url = Entity::getValidatorUrl($object, $entity);
@@ -488,7 +489,7 @@ class Entity extends Main
         if(empty($request)){
             throw new Exception('Request is empty...');
         }
-        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
 
@@ -548,7 +549,7 @@ class Entity extends Main
         if(count($request) < 2){
             throw new Exception('Request need more data...');
         }
-        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
         $validate_url = Entity::getValidatorUrl($object, $entity);
@@ -1453,7 +1454,7 @@ class Entity extends Main
     /**
      * @throws Exception
      */
-    public static function getValidatorUrl(App $object, $entity): string
+    public static function getValidatorUrl(App $object, string $entity): string
     {
         return $object->config('project.dir.source') .
             'Validate' .
