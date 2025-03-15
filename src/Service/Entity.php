@@ -77,7 +77,6 @@ class Entity extends Main
                         $class,
                         $request
                     );
-                    ddd($node);
                     try {
                         $entityManager->persist($node);
                         $entityManager->flush();
