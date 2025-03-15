@@ -53,7 +53,7 @@ class Entity extends Main
      * @throws AuthorizationException
      * @throws FileWriteException
      */
-    public static function create(App $object, EntityManager $entityManager, $role, string $entity=null, array $request=[]): array
+    public static function create(App $object, EntityManager $entityManager, mixed $role, string $entity=null, array $request=[]): array
     {
         $function = __FUNCTION__;
         if(empty($request)){
