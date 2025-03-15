@@ -876,6 +876,7 @@ class Schema extends Main
                                 property_exists($column->options, 'join') &&
                                 property_exists($column->options->join, 'column')
                             ){
+                                ddd($schema_options);
                                 //create column (bigint user_id for example)
                             }
                         break;
