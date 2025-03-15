@@ -121,25 +121,25 @@ class Schema extends Main
                             $column_join = $column->options->join->column[0];
                             $data_columns[] = '#[ORM\OneToOne(';
                             $data_columns_parameters = [];
-                            $data_columns_parameters[] = '    targetEntity: "' . $column->options->target .'"';
+                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target .'"';
                             if(property_exists($column->options, 'inversed')){
                                 $data_columns_parameters[] = '    inversedBy: "' . $column->options->inversed .'"';
                             }
                             if(property_exists($column->options, 'cascade')){
-                                $data_columns_parameters[] = '    cascade: ["' . implode('", "', $column->options->cascade) . '"]';
+                                $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
                             }
                             $data_columns[] = '    ' . implode(',' . PHP_EOL, $data_columns_parameters);
                             $data_columns[] = ')]';
                             $data_columns[] = '#[ORM\JoinColumn(';
                             $data_columns_parameters = [];
-                            $data_columns_parameters[] = '    name: "' . $column_join->name . '"';
+                            $data_columns_parameters[] = 'name: "' . $column_join->name . '"';
                             if(property_exists($column_join, 'reference')){
-                                $data_columns_parameters[] = '    referencedColumnName: "' . $column_join->reference . '"';
+                                $data_columns_parameters[] = 'referencedColumnName: "' . $column_join->reference . '"';
                             }
                             if(property_exists($column_join, 'nullable')){
-                                $data_columns_parameters[] = '    nullable: ' . ($column_join->nullable === true ? 'true' : 'false');
+                                $data_columns_parameters[] = 'nullable: ' . ($column_join->nullable === true ? 'true' : 'false');
                             }
-                            $data_columns[] = implode(',' . PHP_EOL, $data_columns_parameters);
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '    ', $data_columns_parameters);
                             $data_columns[] = ')]';
                         }
                         elseif(
@@ -153,9 +153,9 @@ class Schema extends Main
                             //#[OneToOne(targetEntity: Cart::class, mappedBy: 'customer')]
                             $data_columns[] = '#[ORM\OneToOne(';
                             $data_columns_parameters = [];
-                            $data_columns_parameters[] = '    targetEntity: "' . $column->options->target->entity .'"';
-                            $data_columns_parameters[] = '    mappedBy: "' . $column->options->mapped->by .'"';
-                            $data_columns[] = implode(',' . PHP_EOL, $data_columns_parameters);
+                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
+                            $data_columns_parameters[] = 'mappedBy: "' . $column->options->mapped->by .'"';
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '    ', $data_columns_parameters);
                             $data_columns[] = ')]';
                         } else {
                             continue;
@@ -760,8 +760,8 @@ class Schema extends Main
                     $data[] = '        $this->setIsUpdated(new ' . $type_is_updated . '());';
                 }
                 $data[] = '    }';
-                $data[] = '}';
             }
+            $data[] = '}';
             File::write($target, implode(PHP_EOL, $data));
             echo 'Write: ' . $target . PHP_EOL;
         }
