@@ -638,9 +638,10 @@ class Entity extends Main
     public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): object
     {
         $list = Entity::list($object, $entityManager, $role, $entity, $options);
-
-        ddd($list);
-        return (object) [];
+        $record = $list;
+        $record['node'] = $record['nodeList'][0] ?? null;
+        unset($record['nodeList']);
+        return $record;
     }
 
     /**
@@ -787,7 +788,6 @@ class Entity extends Main
             $data['count'] = (int) $count;
             $data['page'] = $page;
             $data['limit'] = $limit;
-            d($data);
             $qb = $entityManager->createQueryBuilder();
             $qb->select([$alias])
                 ->from($entityName, $alias);
