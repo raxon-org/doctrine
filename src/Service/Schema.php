@@ -877,16 +877,20 @@ class Schema extends Main
                                 property_exists($column->options->join, 'column')
                             ){
                                 $schema_options_join = [];
-                                if(property_exists($column->options->join->column, 'nullable')){
-                                    $schema_options_join['notnull'] = !$column->options->join->column->nullable;
+                                if(property_exists($column->options->join->column[0], 'nullable')){
+                                    $schema_options_join['notnull'] = !$column->options->join->column[0]->nullable;
                                 }
-                                d($schema_options_join);
-                                if(empty($schema_options_join)){
-                                    $schema_table->addColumn($column->options->join->name, $column->options->join->type);
-                                } else {
-                                    $schema_table->addColumn($column->options->join->name, $column->options->join->type, $schema_options_join);
+                                if(
+                                    property_exists($column->options->join->column[0], 'name') &&
+                                    property_exists($column->options->join->column[0], 'type')
+                                ){
+                                    if(empty($schema_options_join)){
+                                        $schema_table->addColumn($column->options->join->column[0]->name, $column->options->join->column[0]->type);
+                                    } else {
+                                        $schema_table->addColumn($column->options->join->column[0]->name, $column->options->join->column[0]->type, $schema_options_join);
+                                    }
+                                    //create column (bigint user_id for example)
                                 }
-                                //create column (bigint user_id for example)
                             }
                         break;
                         case 'one-to-many':
