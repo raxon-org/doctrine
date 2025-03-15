@@ -117,17 +117,45 @@ class Schema extends Main
                             is_array($column->options->join->column) &&
                             array_key_exists(0, $column->options->join->column) &&
                             property_exists($column->options, 'target')
-
                         ){
                             $column_join = $column->options->join->column[0];
                             $data_columns[] = '#[ORM\OneToOne(';
-                            $data_columns[] = '    targetEntity: "' . $column->options->target .'",';
-                            $data_columns[] = '    cascade: ["persist", "remove"]';
+                            $data_columns_parameters = [];
+                            $data_columns_parameters[] = '    targetEntity: "' . $column->options->target .'"';
+                            if(property_exists($column->options, 'inversed')){
+                                $data_columns_parameters[] = '    inversedBy: "' . $column->options->inversed .'"';
+                            }
+                            if(property_exists($column->options, 'cascade')){
+                                $data_columns_parameters[] = '    cascade: [' . implode(', ', $column->options->cascade) . ']';
+                            }
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL, $data_columns_parameters);
                             $data_columns[] = ')]';
                             $data_columns[] = '#[ORM\JoinColumn(';
-                            $data_columns[] = '    name: "' . $column_join->name . '",';
-                            $data_columns[] = '    referencedColumnName: "' . $column_join->reference . '",';
-                            $data_columns[] = '    nullable: ' . ($column_join->nullable === true ? 'true' : 'false');
+                            $data_columns_parameters = [];
+                            $data_columns_parameters[] = '    name: "' . $column_join->name . '"';
+                            if(property_exists($column_join, 'reference')){
+                                $data_columns_parameters[] = '    referencedColumnName: "' . $column_join->reference . '"';
+                            }
+                            if(property_exists($column_join, 'nullable')){
+                                $data_columns_parameters[] = '    nullable: ' . ($column_join->nullable === true ? 'true' : 'false');
+                            }
+                            $data_columns[] = implode(',' . PHP_EOL, $data_columns_parameters);
+                            $data_columns[] = ')]';
+                        }
+                        elseif(
+                            property_exists($column, 'options') &&
+                            property_exists($column->options, 'mapped') &&
+                            property_exists($column->options->mapped, 'by') &&
+                            property_exists($column->options, 'target') &&
+                            property_exists($column->options->target, 'entity')
+
+                        ){
+                            //#[OneToOne(targetEntity: Cart::class, mappedBy: 'customer')]
+                            $data_columns[] = '#[ORM\OneToOne(';
+                            $data_columns_parameters = [];
+                            $data_columns_parameters[] = '    targetEntity: "' . $column->options->target->entity .'"';
+                            $data_columns_parameters[] = '    mappedBy: "' . $column->options->mapped->by .'"';
+                            $data_columns[] = implode(',' . PHP_EOL, $data_columns_parameters);
                             $data_columns[] = ')]';
                         } else {
                             continue;
