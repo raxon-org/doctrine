@@ -158,7 +158,7 @@ class Schema extends Main
                             $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
                             $data_columns[] = ')]';
                         } else {
-                            d($column)
+                            d($column);
                             continue;
                         }
                         /*
