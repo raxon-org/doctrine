@@ -641,6 +641,12 @@ class Entity extends Main
         $record = $list;
         $record['node'] = $record['nodeList'][0] ?? null;
         unset($record['nodeList']);
+        unset($record['max']);
+        unset($record['sort']);
+        unset($record['list']);
+        unset($record['page']);
+        unset($record['limit']);
+        unset($record['count']);
         return $record;
     }
 
