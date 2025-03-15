@@ -128,7 +128,7 @@ class Schema extends Main
                             if(property_exists($column->options, 'cascade')){
                                 $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
                             }
-                            $data_columns[] = '    ' . implode(',' . PHP_EOL, $data_columns_parameters);
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
                             $data_columns[] = ')]';
                             $data_columns[] = '#[ORM\JoinColumn(';
                             $data_columns_parameters = [];
@@ -155,10 +155,10 @@ class Schema extends Main
                             $data_columns_parameters = [];
                             $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
                             $data_columns_parameters[] = 'mappedBy: "' . $column->options->mapped->by .'"';
-                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '    ', $data_columns_parameters);
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
                             $data_columns[] = ')]';
                         } else {
-                            d($column);
+                            d($column)
                             continue;
                         }
                         /*
