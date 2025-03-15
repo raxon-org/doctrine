@@ -126,7 +126,7 @@ class Schema extends Main
                                 $data_columns_parameters[] = '    inversedBy: "' . $column->options->inversed .'"';
                             }
                             if(property_exists($column->options, 'cascade')){
-                                $data_columns_parameters[] = '    cascade: [' . implode(', ', $column->options->cascade) . ']';
+                                $data_columns_parameters[] = '    cascade: ["' . implode('", "', $column->options->cascade) . '"]';
                             }
                             $data_columns[] = '    ' . implode(',' . PHP_EOL, $data_columns_parameters);
                             $data_columns[] = ')]';
