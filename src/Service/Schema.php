@@ -107,9 +107,10 @@ class Schema extends Main
                         $is_null = true;
                     }
                     if(
-                        property_exists($column, 'nullable')
+                        property_exists($column, 'options') &&
+                        property_exists($column->options, 'nullable')
                     ){
-                        $is_null = $column->nullable;
+                        $is_null = $column->options->nullable;
                     }
                     if(
                         property_exists($column, 'type') &&
