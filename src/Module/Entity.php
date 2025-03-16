@@ -225,6 +225,7 @@ class Entity {
         $nodes = [];
         $validate_url = Entity::get_validate_url($object, $entity);
         $validation = Entity::get_validation($object, $validate_url, $entity . '.create');
+        ddd($object->config());
         foreach ($data as $node) {
             if(File::exist($validate_url)) {
                 $validate = Entity::validate($object, $validation, $node);
