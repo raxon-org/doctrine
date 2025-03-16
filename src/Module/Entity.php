@@ -8,15 +8,203 @@ use Doctrine\ORM\OptimisticLockException;
 use Exception;
 
 use Raxon\App;
+use Raxon\Config;
 
+use Raxon\Module\Core;
 use Raxon\Module\Controller;
 use Raxon\Module\Data;
 use Raxon\Module\File;
 use Raxon\Module\Parse;
 
+use Raxon\Exception\FileWriteException;
+use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
 
+
 class Entity {
+
+    /**
+     * @throws LocateException
+     * @throws Exception
+     */
+    public static function validate(App $object, object $validation, array $record=[], array $options=[]): object
+    {
+        $method = $options['function'] ?? false;
+        $extra = $options['extra'] ?? false;
+        $extension = $object->config('extension.php');
+        $test = [];
+        $data = new Data($record);
+        foreach($validation as $field => $list){
+            $is_optional = false;
+            if($field == 'test'){
+                continue;
+            }
+            if(substr($field, 0, 1) === '?'){
+                $field = substr($field, 1);
+                $is_optional = true;
+            }
+            $test[$field] = [];
+            if(is_object($list)){
+                $validation->{$field} = Entity::validate($object, $list, ['extra' => $field, 'function' => $options['function'] ?? false]);
+                if(property_exists($validation->{$field}, 'test')){
+                    $validation->test[$field] = $validation->{$field}->test;
+                }
+            }
+            elseif(is_array($list)){
+                $field_request = str_replace('[]', '', $field);
+                if($extra !== false){
+                    $field_request = $extra . '.' . $field_request;
+                }
+                $value = $data->get($field_request);
+                if(
+                    is_string($value) &&
+                    substr($value, 0, 1) === '[' &&
+                    substr($value, -1, 1) === ']'
+                ){
+                    $value = Core::object($value, Core::OBJECT_ARRAY);
+                }
+                if(
+                    $is_optional &&
+                    empty($value)
+                ){
+                    $function = 'optional';
+                    if(empty($test[$field][$function])){
+                        $test[$field][$function] = [];
+                    }
+                    $test[$field][$function][] = true;
+                } else {
+                    foreach($list as $nr => $record){
+                        foreach($record as $key => $argument){
+                            if(substr($key, 0, 1) === '#'){
+                                continue;
+                            }
+                            $name = Controller::name($key);
+                            $key = 'validate' . '.' . $key;
+                            $function = str_replace('.', '_', $key);
+                            if(function_exists($function)){
+                                $test[$field][$function][] = $function($object, $value, $field, $argument, $method);
+                            } else {
+                                $url_list = (array) $object->config('validate.dir.validator');
+                                if(empty($url_list)){
+                                    $url_list = [];
+                                } else {
+                                    foreach($url_list as $url_nr => $url_value){
+                                        $url_list[$url_nr] .= $name . $extension;
+                                    }
+                                }
+                                $url_list[] = $object->config('controller.dir.validator') .
+                                    $name .
+                                    $extension
+                                ;
+                                $url_list[] = $object->config('project.dir.validator') .
+                                    $name .
+                                    $extension
+                                ;
+                                $url_list[] = $object->config('package.raxon/node.dir.validator') .
+                                    $name .
+                                    $extension
+                                ;
+                                $url_list[] = $object->config('project.dir.source') .
+                                    'Validator' .
+                                    $object->config('ds') .
+                                    $name .
+                                    $extension
+                                ;
+                                $url_list[] = $object->config('framework.dir.validator') .
+                                    $name .
+                                    $extension
+                                ;
+                                $url_list = Config::parameters($object, $url_list);
+                                if(empty($test[$field][$function])){
+                                    $test[$field][$function] = [];
+                                }
+                                $is_found = false;
+                                foreach($url_list as $url){
+                                    if(File::exist($url)){
+                                        require_once $url;
+                                        $test[$field][$function][] = $function($object, $value, $field, $argument, $method);
+                                        $is_found = true;
+                                        break;
+                                    }
+                                }
+                                if($is_found === false){
+                                    throw new LocateException('validator (' . $function . ') not found.', $url_list);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(
+            property_exists($validation, 'test') &&
+            is_array($validation->test)
+        ){
+            $validation->test = array_merge($test, $validation->test);
+        } else {
+            $validation->test = $test;
+        }
+        foreach($validation as $field => $value) {
+            if (
+                is_object($value) &&
+                property_exists($value, 'success') &&
+                $value->success === false
+            ) {
+                $validation->success = $value->success;
+            }
+        }
+        if(
+            property_exists($validation, 'success') &&
+            $validation->success === false
+        ){
+            return $validation;
+        } else {
+            $validation->success = true;
+            foreach($test as $field => $list){
+                foreach($list as $key => $subList){
+                    foreach($subList as $nr => $status){
+                        if(empty($status)){
+                            $validation->success = false;
+                        }
+                    }
+                }
+            }
+            return $validation;
+        }
+    }
+
+    /**
+     * @throws FileWriteException
+     * @throws ObjectException
+     * @throws Exception
+     */
+    protected static function get_validation(App $object, $url, $type): object | false
+    {
+        $data = $object->data(sha1($url));
+        if($data === null){
+            $data = $object->parse_read($url, sha1($url));
+        }
+        if($data){
+            $validation = $data->data($type . '.validate');
+            if(empty($validation)){
+                return false;
+            }
+            return $validation;
+        }
+        return false;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function get_validate_url(App $object, string $entity): string
+    {
+        return $object->config('project.dir.source') .
+            'Validate' .
+            $object->config('ds') .
+            $entity .
+            $object->config('extension.json');
+    }
 
     public static function create(App $object, EntityManager $em, object $role, string $entity, array $request): ?object
     {
@@ -26,27 +214,42 @@ class Entity {
         return $response[0] ?? null;
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws Exception
+     */
     public static function create_many(App $object, EntityManager $em, object $role, string $entity, array $data): array
     {
         $function = 'create';
         $nodes = [];
+        $validate_url = Entity::get_validate_url($object, $entity);
+        $validation = Entity::get_validation($object, $validate_url, $entity . '.create');
         foreach ($data as $node) {
-            $className = $object->config('doctrine.entity.prefix') . $entity;
-            $class = new $className();
-            if(method_exists($class, 'setObject')){
-                $class->setObject($object);
+            if(File::exist($validate_url)) {
+                $validate = Entity::validate($object, $validation, $node);
+                if ($validate) {
+                    if ($validate->success === true) {
+                        $className = $object->config('doctrine.entity.prefix') . $entity;
+                        $class = new $className();
+                        if(method_exists($class, 'setObject')){
+                            $class->setObject($object);
+                        }
+                        if(method_exists($class, 'setEntityManager')){
+                            $class->setEntityManager($em);
+                        }
+                        $node = Entity::import(
+                            $class,
+                            $node
+                        );
+                        ddd($node);
+                        $em->persist($record);
+                        $em->flush();
+                        $nodes[] = $node;
+                    }
+                }
             }
-            if(method_exists($class, 'setEntityManager')){
-                $class->setEntityManager($em);
-            }
-            $node = Entity::import(
-                $class,
-                $node
-            );
-            ddd($node);
-            $em->persist($record);
-            $em->flush();
-            $nodes[] = $node;
+
         }
         return $nodes;
     }
