@@ -60,7 +60,7 @@ class Entity extends Main
         }
         $validate_url = Entity::getValidatorUrl($object, $entity);
         if(File::exist($validate_url)){
-            $validate = Main::validate($object, $validate_url,  $entity . '.create');
+            $validate = Main::validate($object, $request, $validate_url,  $entity . '.create');
             if($validate) {
                 $data = [];
                 if($validate->success === true) {
@@ -169,7 +169,7 @@ class Entity extends Main
         }
         $validate_url = Entity::getValidatorUrl($object, $entity);
         if(File::exist($validate_url)) {
-            $validate = Main::validate($object, $validate_url, $entity . '.update');
+            $validate = Main::validate($object, $request, $validate_url, $entity . '.update');
             if ($validate) {
                 if (
                     property_exists($validate, 'success') &&
@@ -407,7 +407,7 @@ class Entity extends Main
                 throw new Exception('Cannot validate entity at: ' . Entity::getValidatorUrl($object, $entity));
             }
         }
-        $validate = Main::validate($object, $validate_url,  $type . '.' . $function);
+        $validate = Main::validate($object, $request, $validate_url,  $type . '.' . $function);
         if($validate) {
             if(
                 property_exists($validate, 'success') &&
@@ -560,7 +560,7 @@ class Entity extends Main
                 throw new Exception('Cannot validate entity at: ' . Entity::getValidatorUrl($object, $entity));
             }
         }
-        $validate = Main::validate($object, $validate_url,  $type . '.delete');
+        $validate = Main::validate($object, $request, $validate_url,  $type . '.delete');
         if($validate) {
             if($validate->success === true) {
                 $entityName1 = $object->config('doctrine.entity.prefix') . $entity1;

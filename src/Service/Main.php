@@ -21,7 +21,7 @@ class Main {
      * @throws FileWriteException
      * @throws Exception
      */
-    protected static function validate(App $object, $url, $type): object | false
+    protected static function validate(App $object, $request, $url, $type): object | false
     {
         $data = $object->data(sha1($url));
         if($data === null){
@@ -32,7 +32,7 @@ class Main {
             if(empty($validate)){
                 return false;
             }
-            return Validate::validate($object, $validate);
+            return Validate::validate($object, $validate, $request);
         }
         return false;
     }
