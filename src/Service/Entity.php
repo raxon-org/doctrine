@@ -806,14 +806,9 @@ class Entity extends Main
             foreach($order as $key => $value){
                 $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
             }
-
-            d($parameters);
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($limit);
-//            d($qb->getQuery()->getSQL());
-            d($alias);
-            ddd($options);
             $paginator = new Paginator($qb->getQuery(), $options['fetchJoinCollection']);
             $expose = Entity::expose_get(
                 $object,
