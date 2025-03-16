@@ -90,7 +90,6 @@ class Entity {
         $record = [];
         $is_expose = false;
         $permissions = $role->permission;
-        ddd($expose);
         if (is_array($permissions)) {
             foreach ($permissions as $permission) {
                 foreach ($expose as $action) {
