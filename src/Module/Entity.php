@@ -32,7 +32,7 @@ class Entity {
             $toArray = Entity::expose_get(
                 $object,
                 $entity,
-                $entity . '.read.expose'
+                $entity . '.read.output'
             );
             $record = Entity::expose(
                 $object,
@@ -61,7 +61,7 @@ class Entity {
             $toArray = Entity::expose_get(
                 $object,
                 $entity,
-                $entity . '.read.expose'
+                $entity . '.read.output'
             );
             $record = Entity::expose(
                 $object,
