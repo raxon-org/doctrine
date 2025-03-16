@@ -1,12 +1,11 @@
 <?php
-namespace Raxon\Doctrine\Service;
+namespace Raxon\Doctrine\Module;
 
 use Raxon\App;
 
 use Raxon\Module\Core;
 use Raxon\Module\Data;
 use Raxon\Module\Controller;
-use Raxon\Module\Database;
 use Raxon\Module\File;
 
 use Exception;
@@ -14,22 +13,7 @@ use Exception;
 use Raxon\Exception\FileWriteException;
 use Raxon\Node\Module\Node;
 
-class Schema extends Main
-
-{
-
-    /**
-     * class entity::schema
-     *
-     * $schemaTool = new SchemaTool($entityManager);
-     *
-     * $metadata = [$entityManager->getClassMetadata(YourEntity::class)];
-     *
-     * // Create the schema
-     * $schemaTool->createSchema($metadata);
-     *
-     * @throws Exception
-     */
+class Schema{
 
     public static function entity(App $object, $class, $role, $node, $options=[]): void
     {
@@ -898,7 +882,7 @@ class Schema extends Main
                                     //create column (bigint user_id for example)
                                 }
                             }
-                        break;
+                            break;
                         case 'one-to-many':
                             if(
                                 property_exists($column->options, 'join') &&
@@ -906,7 +890,7 @@ class Schema extends Main
                             ){
                                 //create column (bigint user_id for example)
                             }
-                        break;
+                            break;
                         case 'many-to-many':
                             if(
                                 property_exists($column->options, 'join') &&
@@ -928,7 +912,7 @@ class Schema extends Main
                                 }
                                 $schema_table_foreign->addForeignKeyConstraint($node->get('table'), [ $column->options->join->column[0]->name ], [ $column->options->join->column[1]->name ]);
                             }
-                        break;
+                            break;
                         default:
                             if(empty($schema_options)){
                                 $schema_table->addColumn($column->name, $column->type);
@@ -936,7 +920,7 @@ class Schema extends Main
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
                             }
 
-                        break;
+                            break;
                     }
 
                 } else {

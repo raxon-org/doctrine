@@ -4,11 +4,7 @@ namespace Event\Raxon\Doctrine;
 
 use Raxon\App;
 
-use Raxon\Module\File;
-use Raxon\Module\Database;
-use Raxon\Module\Parse;
-
-use Raxon\Doctrine\Service\Schema as SchemaService;
+use Raxon\Doctrine\Module\Schema as SchemaModule;
 use Raxon\Doctrine\Service\Table;
 
 use Exception;
@@ -35,7 +31,7 @@ class Schema {
                 ){
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $config){
-                            d($config);
+                            ddd($config);
                             $config->table = Table::all($object, $config->name, $config->environment);
                             d($config);
                             if(in_array($node->table, $config->table, true)){

@@ -18,6 +18,37 @@ use Raxon\Exception\ObjectException;
 
 class Entity {
 
+    public static function create(App $object, EntityManager $em, object $role, string $entity, array $request): ?object
+    {
+        $data = [];
+        $data[] = $request;
+        $response = Entity::create_many($object, $em, $role, $entity, $data);
+        return $response[0] ?? null;
+    }
+
+    public static function create_many(App $object, EntityManager $em, object $role, string $entity, array $data): array
+    {
+ddd($data);
+        $function = 'create';
+        $nodes = [];
+        foreach ($data as $record) {
+            $node = new $entity();
+            $node = Entity::expose(
+                $object,
+                $role,
+                $node,
+                $record,
+                $entity,
+                $function,
+            );
+            $em->persist($node);
+            $em->flush();
+            $nodes[] = $node;
+        }
+        return $nodes;
+    }
+
+
     /**
      * @throws OptimisticLockException
      * @throws ORMException
