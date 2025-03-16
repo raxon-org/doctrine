@@ -90,6 +90,7 @@ class Entity {
         $record = [];
         $is_expose = false;
         $permissions = $role->permission;
+        ddd($permissions);
         if (is_array($permissions)) {
             foreach ($permissions as $permission) {
                 foreach ($expose as $action) {
@@ -232,7 +233,6 @@ class Entity {
                 }
             }
         }
-
         if($is_expose === false){
             throw new Exception('No permission found for ' . str_replace('.', ':', Controller::name($class)) . ':' . str_replace('_', '.', $function));
         }
