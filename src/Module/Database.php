@@ -47,7 +47,7 @@ class Database {
      */
     public static function entity_manager(App $object, $config, $connection=[]): EntityManager
     {
-        $connection = Core::object($connection, Core::OBJECT_OBJECT);
+        $connection = Core::object($connection, Core::OBJECT);
         if(property_exists($connection, 'path')){
             $parameters = [];
             $parameters[] = $connection->path;
@@ -85,7 +85,9 @@ class Database {
             ]);
         }
         $connection = Core::object($connection, Core::OBJECT_ARRAY);
+        d($connection);
         $connection = DriverManager::getConnection($connection, $config);
+        ddd($connection);
         $eventManager = new EventManager();
         return new EntityManager($connection, $config, $eventManager);
     }
