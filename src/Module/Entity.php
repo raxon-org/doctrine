@@ -82,7 +82,7 @@ class Entity {
                             $key = 'validate' . '.' . $key;
                             $function = str_replace('.', '_', $key);
                             if(function_exists($function)){
-                                $test[$field][$function][] = $function($object, $record, $value, $field, $argument, $method);
+                                $test[$field][$function][] = $function($object, $data->data(), $value, $field, $argument, $method);
                             } else {
                                 $url_list = (array) $object->config('validate.dir.validator');
                                 if(empty($url_list)){
@@ -122,7 +122,7 @@ class Entity {
                                 foreach($url_list as $url){
                                     if(File::exist($url)){
                                         require_once $url;
-                                        $test[$field][$function][] = $function($object, $record, $value, $field, $argument, $method);
+                                        $test[$field][$function][] = $function($object, $data->data(), $value, $field, $argument, $method);
                                         $is_found = true;
                                         break;
                                     }
