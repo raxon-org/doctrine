@@ -31,6 +31,7 @@ class Schema {
                 ){
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $config){
+                            d($options);
                             ddd($config);
                             $config->table = Table::all($object, $config->name, $config->environment);
                             d($config);
