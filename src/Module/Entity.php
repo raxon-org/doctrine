@@ -27,14 +27,12 @@ class Entity {
      * @throws LocateException
      * @throws Exception
      */
-    public static function validate(App $object, object $validation, array $record=[], array $options=[]): object
+    public static function validate(App $object, object $validation, object $record=null, array $options=[]): object
     {
         $method = $options['function'] ?? false;
         $extra = $options['extra'] ?? false;
         $extension = $object->config('extension.php');
         $test = [];
-        $data = new Data($record);
-        ddd($data->data());
         foreach($validation as $field => $list){
             $is_optional = false;
             if($field == 'test'){
@@ -46,7 +44,7 @@ class Entity {
             }
             $test[$field] = [];
             if(is_object($list)){
-                $validation->{$field} = Entity::validate($object, $list, ['extra' => $field, 'function' => $options['function'] ?? false]);
+                $validation->{$field} = Entity::validate($object, $list, $record, ['extra' => $field, 'function' => $options['function'] ?? false]);
                 if(property_exists($validation->{$field}, 'test')){
                     $validation->test[$field] = $validation->{$field}->test;
                 }
@@ -207,7 +205,7 @@ class Entity {
             $object->config('extension.json');
     }
 
-    public static function create(App $object, EntityManager $em, object $role, string $entity, array $request): ?object
+    public static function create(App $object, EntityManager $em, object $role, string $entity, object $request): ?object
     {
         $data = [];
         $data[] = $request;
@@ -230,7 +228,7 @@ class Entity {
         foreach ($data as $node) {
             if(File::exist($validate_url)) {
                 $data = new Data($node);
-                $validate = Entity::validate($object, $validation, $data->data());
+                $validate = Entity::validate($object, $validation, $record);
                 if ($validate) {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
