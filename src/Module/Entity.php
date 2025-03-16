@@ -23,7 +23,8 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function readById(App $object, EntityManager $em, string $entity, int $id){
+    public static function readById(App $object, EntityManager $em, mixed $role, string $entity, int $id){
+        ddd($role);
         $function = 'read';
         $node = $em->find($object->config('doctrine.entity.prefix') . $entity, $id);
         if($node) {
