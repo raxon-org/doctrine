@@ -41,7 +41,7 @@ class Schema {
                             }
                             $em = Database::entity_manager($object, $config, $connection);
                             $config->table = $em->listTableNames();
-                            d($config);
+                            ddd($config);
                             if(in_array($node->table, $config->table, true)){
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
