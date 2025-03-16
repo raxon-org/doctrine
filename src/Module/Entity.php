@@ -45,7 +45,7 @@ class Entity {
             $data['node'] = $record;
             return $data;
         }
-        throw new Exception('Cannot find entity: ' . $entity .', with uuid: ' . $uuid);
+        throw new Exception('Cannot find entity: ' . $entity .', with id: ' . $id);
     }
 
     public static function readByUuid(App $object, EntityManager $em, string $entity, string $uuid): array
