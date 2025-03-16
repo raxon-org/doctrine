@@ -73,8 +73,8 @@ class Entity {
                     }
                     $test[$field][$function][] = true;
                 } else {
-                    foreach($list as $nr => $record){
-                        foreach($record as $key => $argument){
+                    foreach($list as $nr => $record_list){
+                        foreach($record_list as $key => $argument){
                             if(substr($key, 0, 1) === '#'){
                                 continue;
                             }
