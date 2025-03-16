@@ -33,11 +33,7 @@ class Schema {
                 ){
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $config){
-                            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
-                            if($connection === null){
-                                $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
-                            }
-                            ddd($connection);
+                            ddd($config);
                             $em = Database::entity_manager($object, $config, $connection);
                             $config->table = $em->listTableNames();
                             ddd($config);
