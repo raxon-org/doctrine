@@ -34,7 +34,6 @@ class Schema {
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
                             $em = Database::entity_manager($object, $config, $connection);
-                            ddd($em);
                             $connection->table = $em->listTableNames();
                             ddd($connection);
                             if(in_array($node->table, $config->table, true)){
