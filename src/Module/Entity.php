@@ -25,7 +25,7 @@ class Entity {
      */
     public static function readById(App $object, EntityManager $em, string $entity, int $id){
         $function = 'read';
-        $node = $em->find($entity, $id);
+        $node = $em->find($object->config('doctrine.entity.prefix') . $entity, $id);
         if($node) {
             $data = [];
             $record = [];
@@ -51,7 +51,7 @@ class Entity {
     public static function readByUuid(App $object, EntityManager $em, string $entity, string $uuid): array
     {
         $function = 'read';
-        $repository = $em->getRepository($entity);
+        $repository = $em->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'uuid' => $uuid
         ]);
