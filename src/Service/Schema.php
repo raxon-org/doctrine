@@ -107,10 +107,14 @@ class Schema extends Main
                         $is_null = true;
                     }
                     if(
+                        property_exists($column, 'nullable')
+                    ){
+                        $is_null = $column->nullable;
+                    }
+                    if(
                         property_exists($column, 'type') &&
                         $column->type === 'one-to-one'
                     ){
-                        ddd($column);
                         if(
                             property_exists($column, 'options') &&
                             property_exists($column->options, 'join') &&
