@@ -32,11 +32,10 @@ class Schema {
                     is_object($node->environment)
                 ){
                     foreach($node->environment as $name => $environments){
-                        foreach($environments as $environment => $config){
-                            ddd($config);
+                        foreach($environments as $environment => $connection){
                             $em = Database::entity_manager($object, $config, $connection);
-                            $config->table = $em->listTableNames();
-                            ddd($config);
+                            $connection->table = $em->listTableNames();
+                            ddd($connection);
                             if(in_array($node->table, $config->table, true)){
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
