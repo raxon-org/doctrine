@@ -28,20 +28,24 @@ class Entity {
 
     public static function create_many(App $object, EntityManager $em, object $role, string $entity, array $data): array
     {
-ddd($data);
         $function = 'create';
         $nodes = [];
-        foreach ($data as $record) {
-            $node = new $entity();
-            $node = Entity::expose(
+        foreach ($data as $node) {
+            $toArray = Entity::expose_get(
+                $object,
+                $entity,
+                $entity . '.read.output'
+            );
+            $record = Entity::expose(
                 $object,
                 $role,
                 $node,
-                $record,
+                $toArray,
                 $entity,
                 $function,
             );
-            $em->persist($node);
+            ddd($record);
+            $em->persist($record);
             $em->flush();
             $nodes[] = $node;
         }
