@@ -122,6 +122,7 @@ class Entity {
         if (!is_array($expose)) {
             return new Data();
         }
+        ddd($node);
         $record = [];
         $is_expose = false;
         $permissions = $role->permission;
