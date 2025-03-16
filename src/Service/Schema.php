@@ -110,6 +110,7 @@ class Schema extends Main
                         property_exists($column, 'type') &&
                         $column->type === 'one-to-one'
                     ){
+                        ddd($column);
                         if(
                             property_exists($column, 'options') &&
                             property_exists($column->options, 'join') &&
@@ -851,7 +852,6 @@ class Schema extends Main
                 throw new Exception('Platform not found, are you connected?');
             }
         }
-        d($node);
         $schema = new \Doctrine\DBAL\Schema\Schema();
         $schema_table = $schema->createTable($node->get('table'));
         $columns = $node->get('column');
