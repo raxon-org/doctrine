@@ -2,13 +2,30 @@
 namespace Raxon\Doctrine\Module;
 
 use Doctrine\Common\EventManager;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\ORMSetup;
 
+use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Monolog\Processor\PsrLogMessageProcessor;
+
+use Doctrine\DBAL\Logging;
+use Doctrine\DBAL\Logging\DebugStack;
+use Doctrine\ORM\EntityManager;
+
+use Doctrine\DBAL\Schema\SQLiteSchemaManager;
+use Doctrine\DBAL\Schema\MySqlSchemaManager;
+use Doctrine\DBAL\Schema\PostgreSqlSchemaManager;
+use Doctrine\DBAL\Schema\SqlServerSchemaManager;
+
+use Doctrine\DBAL\Platforms\MySQLPlatform;
+use Doctrine\DBAL\Platforms\SQLitePlatform;
+use Doctrine\DBAL\Platforms\SQLServerPlatform;
+use Doctrine\DBAL\Platforms\PostgresSQLPlatform;
+use Doctrine\DBAL\Platforms\OraclePlatform;
+use Doctrine\DBAL\Platforms\MariaDBPlatform;
+
+use Doctrine\ORM\ORMSetup;
 
 use Raxon\App;
 use Raxon\Config;
