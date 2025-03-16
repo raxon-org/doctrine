@@ -813,6 +813,7 @@ class Schema{
      */
     public static function sql(App $object, $class, $role, $node, $options=[]): void
     {
+        ddd($options);
         if(is_object($node)){
             $node_class = get_class($node);
             switch($node_class) {
