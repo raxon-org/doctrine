@@ -37,7 +37,6 @@ class Schema {
                             $em_connection = $em->getConnection();
                             $schema_manager = $em_connection->createSchemaManager();
                             $connection->table = $schema_manager->listTableNames();
-                            ddd($connection);
                             if(in_array($node->table, $config->table, true)){
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
