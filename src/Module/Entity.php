@@ -34,6 +34,7 @@ class Entity {
         $extension = $object->config('extension.php');
         $test = [];
         $data = new Data($record);
+        ddd($data->data());
         foreach($validation as $field => $list){
             $is_optional = false;
             if($field == 'test'){
