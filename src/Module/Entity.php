@@ -5,6 +5,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 
+use Raxon\App;
+
 class Entity {
 
     /**
