@@ -8,7 +8,6 @@ use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Mapping\Driver\AttributeReader;
 use Doctrine\ORM\Query\Parameter;
 use Entity\Role;
-use Raxon\Module\Data;
 use ReflectionObject;
 
 use Doctrine\ORM\EntityManager;
@@ -53,7 +52,7 @@ class Entity extends Main
      * @throws AuthorizationException
      * @throws FileWriteException
      */
-    public static function create(App $object, EntityManager $entityManager, mixed $role, string $entity=null, array $request=[]): array
+    public static function create(App $object, EntityManager $entityManager, Role $role, $entity=null, $request=[]): array
     {
         $function = __FUNCTION__;
         if(empty($request)){
@@ -251,7 +250,7 @@ class Entity extends Main
      */
     public static function updateById(App $object, $entity, $id): array
     {
-        $entityManager = Database::entityManager($object, ['name' => DATABASE::SYSTEM]);
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $repository = $entityManager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'id' => $id
@@ -334,7 +333,7 @@ class Entity extends Main
      */
     public static function deleteByUuid(App $object, $entity, $uuid): array
     {
-        $entityManager = Database::entityManager($object, ['name' => DATABASE::SYSTEM]);
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $repository = $entityManager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'uuid' => $uuid
@@ -353,7 +352,7 @@ class Entity extends Main
      */
     public static function deleteById(App $object, $entity, $id): array
     {
-        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $repository = $entityManager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'id' => $id
@@ -396,7 +395,7 @@ class Entity extends Main
         if(empty($request)){
             throw new Exception('Request is empty...');
         }
-        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
         $validate_url = Entity::getValidatorUrl($object, $entity);
@@ -489,7 +488,7 @@ class Entity extends Main
         if(empty($request)){
             throw new Exception('Request is empty...');
         }
-        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
 
@@ -549,7 +548,7 @@ class Entity extends Main
         if(count($request) < 2){
             throw new Exception('Request need more data...');
         }
-        $entityManager = Database::entityManager($object, ['name' => Database::SYSTEM]);
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
         $validate_url = Entity::getValidatorUrl($object, $entity);
@@ -636,20 +635,12 @@ class Entity extends Main
      * @throws NonUniqueResultException
      * @throws Exception
      */
-    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
+    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): object
     {
-        d($options);
         $list = Entity::list($object, $entityManager, $role, $entity, $options);
-        $record = $list;
-        $record['node'] = $record['nodeList'][0] ?? null;
-        unset($record['nodeList']);
-        unset($record['max']);
-        unset($record['sort']);
-        unset($record['list']);
-        unset($record['page']);
-        unset($record['limit']);
-        unset($record['count']);
-        return $record;
+
+        ddd($list);
+        return (object) [];
     }
 
     /**
@@ -796,6 +787,7 @@ class Entity extends Main
             $data['count'] = (int) $count;
             $data['page'] = $page;
             $data['limit'] = $limit;
+            d($data);
             $qb = $entityManager->createQueryBuilder();
             $qb->select([$alias])
                 ->from($entityName, $alias);
@@ -804,11 +796,9 @@ class Entity extends Main
             }
             $count_where = count($where);
             if($count_where >= 1){
-                d($where[0]);
                 $qb->where($where[0]);
                 if($count_where > 1){
                     for($i = 1; $i < $count_where; $i++){
-                        d($where[$i]);
                         $qb->andWhere($where[$i]);
                     }
                 }
@@ -816,9 +806,14 @@ class Entity extends Main
             foreach($order as $key => $value){
                 $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
             }
+
+            d($parameters);
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($limit);
+//            d($qb->getQuery()->getSQL());
+            d($alias);
+            ddd($options);
             $paginator = new Paginator($qb->getQuery(), $options['fetchJoinCollection']);
             $expose = Entity::expose_get(
                 $object,
@@ -1451,7 +1446,7 @@ class Entity extends Main
     /**
      * @throws Exception
      */
-    public static function getValidatorUrl(App $object, string $entity): string
+    public static function getValidatorUrl(App $object, $entity): string
     {
         return $object->config('project.dir.source') .
             'Validate' .
