@@ -31,20 +31,19 @@ class Entity {
         $function = 'create';
         $nodes = [];
         foreach ($data as $node) {
-            $toArray = Entity::expose_get(
-                $object,
-                $entity,
-                $entity . '.read.output'
+            $className = $object->config('doctrine.entity.prefix') . $entity;
+            $class = new $className();
+            if(method_exists($class, 'setObject')){
+                $class->setObject($object);
+            }
+            if(method_exists($class, 'setEntityManager')){
+                $class->setEntityManager($em);
+            }
+            $node = Entity::import(
+                $class,
+                $node
             );
-            $record = Entity::expose(
-                $object,
-                $role,
-                $node,
-                $toArray,
-                $entity,
-                $function,
-            );
-            ddd($record);
+            ddd($node);
             $em->persist($record);
             $em->flush();
             $nodes[] = $node;
@@ -52,6 +51,41 @@ class Entity {
         return $nodes;
     }
 
+    private static function import($node, $data=[]){
+        foreach($data as $key => $value){
+            if($key === 'request'){
+                continue;
+            }
+            if(
+                in_array(
+                    substr($key, 0, 5),
+                    [
+                        'node_',
+                        'node.'
+                    ]
+                )
+            ){
+                $explode = explode('_', substr($key, 5));
+                foreach($explode as $nr => $part){
+                    $explode[$nr] = ucfirst($part);
+                }
+                $method = 'set' . implode($explode);
+                if(method_exists($node, $method)){
+                    $node->$method($value);
+                }
+            } else {
+                $explode = explode('_', $key);
+                foreach($explode as $nr => $part){
+                    $explode[$nr] = ucfirst($part);
+                }
+                $method = 'set' . implode($explode);
+                if(method_exists($node, $method)){
+                    $node->$method($value);
+                }
+            }
+        }
+        return $node;
+    }
 
     /**
      * @throws OptimisticLockException
