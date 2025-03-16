@@ -36,7 +36,7 @@ class Schema {
                             $em = Database::entity_manager($object, $config, $connection);
                             $em_connection = $em->getConnection();
                             $schema_manager = $em_connection->createSchemaManager();
-                            $connection->table = $schema_manager->listTables();
+                            $connection->table = $schema_manager->listTableNames();
                             ddd($connection);
                             if(in_array($node->table, $config->table, true)){
                                 /**
