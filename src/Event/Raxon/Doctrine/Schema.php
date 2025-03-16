@@ -33,10 +33,6 @@ class Schema {
                 ){
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
-                            $parameters = [];
-                            $parameters[] = $connection;
-                            $parameters = Config::parameters($object, $parameters);
-                            $connection = $parameters[0] ?? null;
                             $em = Database::entity_manager($object, $config, $connection);
                             ddd($em);
                             $connection->table = $em->listTableNames();
