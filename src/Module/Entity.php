@@ -228,7 +228,7 @@ class Entity {
         foreach ($data as $node) {
             if(File::exist($validate_url)) {
                 $data = new Data($node);
-                $validate = Entity::validate($object, $validation, $record);
+                $validate = Entity::validate($object, $validation, $data->data());
                 if ($validate) {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
