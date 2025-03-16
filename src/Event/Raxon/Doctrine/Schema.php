@@ -26,13 +26,12 @@ class Schema {
         $config = Database::config($object);
         if(array_key_exists('node', $options)){
             $node = $options['node'];
-            d($node);
             if(property_exists($node, 'environment')){
                 if(
                     is_array($node->environment) ||
                     is_object($node->environment)
                 ){
-
+                    ddd($node->environment);
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $config){
                             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
