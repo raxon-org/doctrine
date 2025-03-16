@@ -38,6 +38,7 @@ class Schema {
                             $parameters = Config::parameters($object, $parameters);
                             $connection = $parameters[0] ?? null;
                             $em = Database::entity_manager($object, $config, $connection);
+                            ddd($em);
                             $connection->table = $em->listTableNames();
                             ddd($connection);
                             if(in_array($node->table, $config->table, true)){
