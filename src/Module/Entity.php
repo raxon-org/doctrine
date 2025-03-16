@@ -267,7 +267,7 @@ class Entity {
      */
     public static function expose_get(App $object, $entity='', $attribute=''){
         $dir = $object->config('project.dir.source') . 'Expose' . $object->config('ds');
-        $url = $dir . str_replace('\\', '/', $entity) . $object->config('extension.json');
+        $url = $dir . $entity . $object->config('extension.json');
         if(!File::exist($url)){
             throw new Exception('Data url (' . $url . ') not found for entity: ' . $entity);
         }
