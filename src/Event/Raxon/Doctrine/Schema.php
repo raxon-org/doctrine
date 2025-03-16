@@ -4,10 +4,12 @@ namespace Event\Raxon\Doctrine;
 
 use Raxon\App;
 
+use Raxon\Doctrine\Module\Database;
 use Raxon\Doctrine\Module\Schema as SchemaModule;
 use Raxon\Doctrine\Service\Table;
 
 use Exception;
+use Raxon\Node\Module\Node;
 
 class Schema {
 
@@ -21,6 +23,7 @@ class Schema {
         $node = false;
         $is_entity = false;
         $is_repository = false;
+        $config = Database::config($object);
         if(array_key_exists('node', $options)){
             $node = $options['node'];
             d($node);
@@ -29,13 +32,23 @@ class Schema {
                     is_array($node->environment) ||
                     is_object($node->environment)
                 ){
+
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $config){
-                            d($options);
-                            ddd($config);
-                            $config->table = Table::all($object, $config->name, $config->environment);
+                            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+                            if($connection === null){
+                                $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+                            }
+                            $em = Database::entity_manager($object, $config, $connection);
+                            $config->table = $em->listTableNames();
                             d($config);
                             if(in_array($node->table, $config->table, true)){
+                                /**
+                                 * rename goes wrong (we need to rename to much like the indexes uniques)
+                                 * we are going to export the old table and import it after the new table is created
+                                 */
+                                ddd('table exist work todo!');
+
                                 $table = Table::rename(
                                     $object,
                                     $config->name,
@@ -47,7 +60,7 @@ class Schema {
                                 );
                                 d($table);
                                 if($is_entity === false){
-                                    SchemaService::entity($object,
+                                    SchemaModule::entity($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -56,7 +69,7 @@ class Schema {
                                 }
                                 if($is_repository === false){
                                     //only create repository class if not exist, resetting means deleting the repository class and rerun this event
-                                    SchemaService::repository($object,
+                                    SchemaModule::repository($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -64,7 +77,7 @@ class Schema {
                                     $is_repository = true;
                                 }
                                 try {
-                                    SchemaService::sql($object,
+                                    SchemaModule::sql($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node'],
@@ -84,7 +97,7 @@ class Schema {
                                 */
                             } else {
                                 if($is_entity === false){
-                                    SchemaService::entity($object,
+                                    SchemaModule::entity($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -93,7 +106,7 @@ class Schema {
                                 }
                                 if($is_repository === false){
                                     //only create repository class if not exist, resetting means deleting the repository class and rerun this event
-                                    SchemaService::repository($object,
+                                    SchemaModule::repository($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -101,12 +114,12 @@ class Schema {
                                     $is_repository = true;
                                 }
                                 try {
-                                    SchemaService::sql($object,
+                                    SchemaModule::sql($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node'],
                                         [
-                                            'config' => $config,
+                                            'em' => $em,
                                         ]
                                     );
                                 }
