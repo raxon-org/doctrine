@@ -126,6 +126,9 @@ class Entity {
                                 $explode = explode(':', $property, 2);
                                 $compare = null;
                                 $method = 'get' . ucfirst($explode[0]);
+                                if (!method_exists($node, $method)) {
+                                    continue;
+                                }
                                 $value = $node->{$method}();
                                 if (array_key_exists(1, $explode)) {
                                     $record_property = $value;
