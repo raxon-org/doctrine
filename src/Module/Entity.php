@@ -244,14 +244,12 @@ class Entity {
                             $class,
                             $node
                         );
-                        ddd($node);
-                        $em->persist($record);
+                        $em->persist($node);
                         $em->flush();
                         $nodes[] = $node;
                     }
                 }
             }
-
         }
         return $nodes;
     }
