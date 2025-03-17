@@ -210,6 +210,7 @@ class Entity {
     {
         $data = [];
         $data[] = $request;
+        $error = [];
         $response = Entity::create_many($object, $em, $role, $entity, $data, $error);
         $error = $error[0] ?? null;
         return $response[0] ?? null;
