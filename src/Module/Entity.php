@@ -206,11 +206,12 @@ class Entity {
             $object->config('extension.json');
     }
 
-    public static function create(App $object, EntityManager $em, object $role, string $entity, object $request): ?object
+    public static function create(App $object, EntityManager $em, object $role, string $entity, object $request, object &$error = null): ?object
     {
         $data = [];
         $data[] = $request;
-        $response = Entity::create_many($object, $em, $role, $entity, $data);
+        $response = Entity::create_many($object, $em, $role, $entity, $data, $error);
+        $error = $error[0] ?? null;
         return $response[0] ?? null;
     }
 
@@ -219,7 +220,7 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function create_many(App $object, EntityManager $em, object $role, string $entity, array $data): array
+    public static function create_many(App $object, EntityManager $em, object $role, string $entity, array $data, array &$error=[]): array
     {
         $function = 'create';
         $nodes = [];
@@ -248,6 +249,8 @@ class Entity {
                         $em->flush();
                         $nodes[] = $node;
                     }
+                } else {
+                    $error[] = $node;
                 }
             }
         }
