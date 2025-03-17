@@ -256,6 +256,8 @@ class Entity {
                         $em->persist($node);
                         $em->flush();
                         $nodes[] = $node;
+                    } else {
+                        $error[] = $validate;
                     }
                 } else {
                     $error[] = $node;
