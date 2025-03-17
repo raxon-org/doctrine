@@ -257,10 +257,12 @@ class Entity {
                         $em->flush();
                         $nodes[] = $node;
                     } else {
-                        $error[] = $validate;
+                        $error[] = $validate->test;
                     }
                 } else {
-                    $error[] = $node;
+                    $error[] = (object) [
+                        'success' => false,
+                    ];
                 }
             }
         }
