@@ -206,6 +206,11 @@ class Entity {
             $object->config('extension.json');
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws Exception
+     */
     public static function create(App $object, EntityManager $em, object $role, string $entity, object $request, object &$error = null): ?object
     {
         $data = [];
