@@ -63,7 +63,7 @@ class Database {
     /**
      * @throws Exception
      */
-    public static function entity_manager(App $object, $config, $connection=[]): EntityManager
+    public static function entity_manager(App $object, $config, $connection): EntityManager
     {
         $connection = Core::object($connection, Core::OBJECT);
         if(property_exists($connection, 'path')){
