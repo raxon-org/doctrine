@@ -10,20 +10,21 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 use Doctrine\DBAL\Logging;
-use Doctrine\DBAL\Logging\DebugStack;
 use Doctrine\ORM\EntityManager;
 
-use Doctrine\DBAL\Schema\SQLiteSchemaManager;
+use Doctrine\DBAL\Schema\OracleSchemaManager;
 use Doctrine\DBAL\Schema\MySqlSchemaManager;
-use Doctrine\DBAL\Schema\PostgreSqlSchemaManager;
+use Doctrine\DBAL\Schema\SQLiteSchemaManager;
 use Doctrine\DBAL\Schema\SqlServerSchemaManager;
+use Doctrine\DBAL\Schema\PostgreSqlSchemaManager;
 
+use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
+use Doctrine\DBAL\Platforms\OraclePlatform;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Platforms\SQLitePlatform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
-use Doctrine\DBAL\Platforms\PostgresSQLPlatform;
-use Doctrine\DBAL\Platforms\OraclePlatform;
-use Doctrine\DBAL\Platforms\MariaDBPlatform;
+
 
 use Doctrine\ORM\ORMSetup;
 
@@ -105,5 +106,29 @@ class Database {
         $connection = DriverManager::getConnection($connection, $config);
         $eventManager = new EventManager();
         return new EntityManager($connection, $config, $eventManager);
+    }
+
+    public static function schema_manager(EntityManager $em): mixed
+    {
+        $platform = $em->getConnection()->getDatabasePlatform();
+        if($platform instanceof MySQLPlatform){
+            return new MySqlSchemaManager($em->getConnection(), $platform);
+        }
+        elseif($platform instanceof SQLitePlatform){
+            return new SQLiteSchemaManager($em->getConnection(), $platform);
+        }
+        elseif($platform instanceof SQLServerPlatform){
+            return new SqlServerSchemaManager($em->getConnection(), $platform);
+        }
+        elseif($platform instanceof PostgreSQLPlatform){
+            return new PostgreSqlSchemaManager($em->getConnection(), $platform);
+        }
+        elseif($platform instanceof OraclePlatform){
+            return new OracleSchemaManager($em->getConnection(), $platform);
+        }
+        elseif($platform instanceof MariaDBPlatform){
+            return new MySqlSchemaManager($em->getConnection(), $platform);
+        }
+        return false;
     }
 }

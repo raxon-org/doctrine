@@ -9,6 +9,7 @@ use Raxon\Doctrine\Module\Schema as SchemaModule;
 use Raxon\Doctrine\Service\Table;
 
 use Exception;
+use Raxon\Module\Data;
 use Raxon\Node\Module\Node;
 
 class Schema {
@@ -34,9 +35,13 @@ class Schema {
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
                             $em = Database::entity_manager($object, $config, $connection);
+                            $sm = Database::schema_manager($em);
+                            $connection->table = $sm->listTableNames();
+                            /*
                             $em_connection = $em->getConnection();
                             $schema_manager = $em_connection->createSchemaManager();
                             $connection->table = $schema_manager->listTableNames();
+                            */
                             if(in_array($node->table, $config->table, true)){
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
