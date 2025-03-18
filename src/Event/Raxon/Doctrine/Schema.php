@@ -63,7 +63,7 @@ class Schema {
                             $schema_manager = $em_connection->createSchemaManager();
                             $connection->table = $schema_manager->listTableNames();
                             */
-                            if(in_array($node->table, $config->table, true)){
+                            if(in_array($node->table, $connection->table, true)){
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
                                  * we are going to export the old table and import it after the new table is created
