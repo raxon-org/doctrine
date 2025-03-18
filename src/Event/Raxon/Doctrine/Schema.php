@@ -26,6 +26,7 @@ class Schema {
         $is_entity = false;
         $is_repository = false;
         $config = Database::config($object);
+        ddd($options);
         if(array_key_exists('node', $options)){
             $node = $options['node'];
             if(property_exists($node, 'environment')){
