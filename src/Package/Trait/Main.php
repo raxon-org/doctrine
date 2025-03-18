@@ -538,6 +538,7 @@ trait Main {
                     ]
                 ]
             ];
+            d($events);
             Event::on($object, $events);
 //            Doctrine\ORM\Tools\SchemaTool::getSchemaFromMetadata(array $classes): Schema
             //load events for:
