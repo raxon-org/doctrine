@@ -3,16 +3,36 @@
 namespace Event\Raxon\Doctrine;
 
 use Raxon\App;
+use Raxon\Config;
+
+use Raxon\Module\Core;
 
 use Raxon\Doctrine\Module\Database;
 use Raxon\Doctrine\Module\Schema as SchemaModule;
 use Raxon\Doctrine\Service\Table;
 
 use Exception;
-use Raxon\Module\Data;
-use Raxon\Node\Module\Node;
+
+use Raxon\Exception\ObjectException;
 
 class Schema {
+
+    /**
+     * @throws ObjectException
+     * @throws Exception
+     */
+    public static function connection(App $object, $connection){
+        $connection = Core::object($connection, Core::OBJECT);
+        if(property_exists($connection, 'path')){
+            $parameters = [];
+            $parameters[] = $connection->path;
+            $parameters = Config::parameters($object, $parameters);
+            if(array_key_exists(0, $parameters)){
+                $connection->path = $parameters[0];
+            }
+        }
+        return $connection;
+    }
 
     /**
      * @throws Exception
@@ -20,7 +40,6 @@ class Schema {
      */
     public static function create(App $object, $event, $options=[]): void
     {
-        d('Schema::create');
         //if exist rename table
         $node = false;
         $is_entity = false;
@@ -35,6 +54,7 @@ class Schema {
                 ){
                     foreach($node->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
+                            $connection = Schema::connection($object, $connection);
                             $em = Database::entity_manager($object, $config, $connection);
                             $sm = Database::schema_manager($em);
                             $connection->table = $sm->listTableNames();
