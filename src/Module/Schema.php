@@ -813,7 +813,6 @@ class Schema{
      */
     public static function sql(App $object, $class, $role, $node, $options=[]): void
     {
-        ddd($options);
         if(is_object($node)){
             $node_class = get_class($node);
             switch($node_class) {
@@ -827,22 +826,11 @@ class Schema{
         elseif(is_array($node)){
             $node = new Data($node);
         }
-        $config = false;
-        if(array_key_exists('config', $options)){
-            $config = $options['config'];
+        $em = $options['em'] ?? null;
+        if(!$em){
+            throw new Exception('em (Entity manager) not set...');
         }
-        $platform = null;
-        if(
-            is_object($config) &&
-            property_exists($config, 'name') &&
-            property_exists($config, 'environment')
-        ) {
-
-            $platform = Database::platform($object, $config->name, $config->environment);
-            if (!$platform) {
-                throw new Exception('Platform not found, are you connected?');
-            }
-        }
+        $platform = $em->getConnection()->getDatabasePlatform();
         $schema = new \Doctrine\DBAL\Schema\Schema();
         $schema_table = $schema->createTable($node->get('table'));
         $columns = $node->get('column');
@@ -982,7 +970,7 @@ class Schema{
                 //add to log
                 echo $line . ';' . PHP_EOL;
             }
-            $connection = Database::connection($object, $config->name, $config->environment);
+            $connection = $em->getConnection();
             if($connection){
                 foreach($sql_to as $line){
                     $stmt = $connection->prepare($line);
