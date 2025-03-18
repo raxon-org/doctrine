@@ -551,7 +551,6 @@ trait Main {
         $class = 'System.Doctrine.Schema';
         $role = $node->role_system();
         $import = $node->import($class, $role, $options);
-        ddd($import);
         echo Core::object($import, Core::OBJECT_JSON) . PHP_EOL;
     }
 }
