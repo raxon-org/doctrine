@@ -20,6 +20,7 @@ class Schema {
      */
     public static function create(App $object, $event, $options=[]): void
     {
+        d('Schema::create');
         //if exist rename table
         $node = false;
         $is_entity = false;
