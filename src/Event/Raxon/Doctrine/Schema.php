@@ -65,7 +65,6 @@ class Schema {
                             $connection->table = $schema_manager->listTableNames();
                             */
                             if(in_array($options['node']->table, $connection->table, true)){
-                                ddd($connection);
                                 $class = 'System.Doctrine.Schema';
                                 $role = $node->role_system();
                                 $list = $node->list(
@@ -73,10 +72,12 @@ class Schema {
                                     $role,
                                     [
                                         'filter' => [
-                                            'environment' => $object->config('framework.environment')
+                                            'environment' => $connection->uuid
                                         ]
                                     ]
                                 );
+                                ddd($list);
+
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
                                  * we are going to export the old table and import it after the new table is created
