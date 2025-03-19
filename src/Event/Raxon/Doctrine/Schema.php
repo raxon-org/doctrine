@@ -14,6 +14,7 @@ use Raxon\Doctrine\Service\Table;
 use Exception;
 
 use Raxon\Exception\ObjectException;
+use Raxon\Node\Module\Node;
 
 class Schema {
 
@@ -45,14 +46,14 @@ class Schema {
         $is_entity = false;
         $is_repository = false;
         $config = Database::config($object);
+        $node = new Node($object);
         if(array_key_exists('node', $options)){
-            $node = $options['node'];
-            if(property_exists($node, 'environment')){
+            if(property_exists($options['node'], 'environment')){
                 if(
-                    is_array($node->environment) ||
-                    is_object($node->environment)
+                    is_array($options['node']->environment) ||
+                    is_object($options['node']->environment)
                 ){
-                    foreach($node->environment as $name => $environments){
+                    foreach($options['node']->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
                             $connection = Schema::connection($object, $connection);
                             $em = Database::entity_manager($object, $config, $connection);
@@ -63,7 +64,19 @@ class Schema {
                             $schema_manager = $em_connection->createSchemaManager();
                             $connection->table = $schema_manager->listTableNames();
                             */
-                            if(in_array($node->table, $connection->table, true)){
+                            if(in_array($options['node']->table, $connection->table, true)){
+                                ddd($connection);
+                                $class = 'System.Doctrine.Schema';
+                                $role = $node->role_system();
+                                $list = $node->list(
+                                    $class,
+                                    $role,
+                                    [
+                                        'filter' => [
+                                            'environment' => $object->config('framework.environment')
+                                        ]
+                                    ]
+                                );
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
                                  * we are going to export the old table and import it after the new table is created
