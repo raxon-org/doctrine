@@ -89,9 +89,14 @@ class Schema {
                                     $date .
                                     $object->config('ds')
                                 ;
+                                Dir::create($dir_backup, Dir::CHMOD);
+                                File::permission($object, [
+                                    'dir' => $dir_backup
+                                ]);
                                 foreach($connection->table as $nr => $table){
                                     $file = $dir_backup . $table . $object->config('extension.sql');
-                                    d($file);
+                                    $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
+                                    d($command);
                                 }
 
                                 /**
