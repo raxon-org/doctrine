@@ -6,15 +6,18 @@ use Raxon\App;
 use Raxon\Config;
 
 use Raxon\Module\Core;
+use Raxon\Module\Dir;
+use Raxon\Module\File;
 
 use Raxon\Doctrine\Module\Database;
 use Raxon\Doctrine\Module\Schema as SchemaModule;
 use Raxon\Doctrine\Service\Table;
 
+use Raxon\Node\Module\Node;
+
 use Exception;
 
 use Raxon\Exception\ObjectException;
-use Raxon\Node\Module\Node;
 
 class Schema {
 
