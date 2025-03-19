@@ -76,17 +76,17 @@ class Schema {
                                         ]
                                     ]
                                 );
-                                ddd($list);
+                                ddd($connection);
 
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
                                  * we are going to export the old table and import it after the new table is created
                                  * steps:
                                  * 1: query System.Doctrine.Schema for all current schema's
-                                 * 1: export all old tables
-                                 * 2: delete old tables
-                                 * 3: create new tables from system.doctrine.schema
-                                 * 4: import old tables
+                                 * 2: export all old tables
+                                 * 3: delete old tables
+                                 * 4: create new tables from system.doctrine.schema
+                                 * 5: import old tables
                                  *
                                  * app raxon/doctrine table export -table=user -connection=system
                                  *
