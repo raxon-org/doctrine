@@ -80,12 +80,19 @@ class Schema {
                                     ]
                                 );
                                 $path = $connection->path;
-                                $dir = Dir::name($path);
-                                $file = File::basename($path, $object->config('extension.db'));
-                                d($path);
-                                d($file);
-                                d($dir);
-                                ddd($connection);
+                                $dir_name = Dir::name($path);
+                                $file_name = File::basename($path, $object->config('extension.db'));
+                                $date = date('Ymd_His');
+                                $dir_backup = $dir_name .
+                                    'Backup' .
+                                    $object->config('ds') .
+                                    $date .
+                                    $object->config('ds')
+                                ;
+                                foreach($connection->table as $nr => $table){
+                                    $file = $dir_backup . $table . $object->config('extension.sql');
+                                    d($file);
+                                }
 
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
@@ -100,8 +107,6 @@ class Schema {
                                  * app raxon/doctrine table export -table=user -connection=system
                                  *
                                  */
-                                d($options);
-
                                 ddd('table exist work todo!');
 
 
