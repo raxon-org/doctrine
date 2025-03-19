@@ -67,8 +67,22 @@ class Schema {
                                 /**
                                  * rename goes wrong (we need to rename to much like the indexes uniques)
                                  * we are going to export the old table and import it after the new table is created
+                                 * steps:
+                                 * 1: query System.Doctrine.Schema for all current schema's
+                                 * 1: export all old tables
+                                 * 2: delete old tables
+                                 * 3: create new tables from system.doctrine.schema
+                                 * 4: import old tables
+                                 *
+                                 * app raxon/doctrine table export -table=user -connection=system
+                                 *
                                  */
+                                d($options);
+
                                 ddd('table exist work todo!');
+
+
+
 
                                 $table = Table::rename(
                                     $object,
