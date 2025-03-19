@@ -76,6 +76,12 @@ class Schema {
                                         ]
                                     ]
                                 );
+                                $path = $connection->path;
+                                $dir = Dir::name($path);
+                                $file = File::basename($path, $object->config('extension.db'));
+                                d($path);
+                                d($file);
+                                d($dir);
                                 ddd($connection);
 
                                 /**
