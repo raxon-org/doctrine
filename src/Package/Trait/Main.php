@@ -442,6 +442,8 @@ trait Main {
         if(property_exists($options, 'force')){
             $is_force = $options->force;
         }
+        $options->event = true;
+        $options->relation = true;
         $node = new Node($object);
         if(
             is_string($options->connection)
