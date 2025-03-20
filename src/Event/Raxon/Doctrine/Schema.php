@@ -83,6 +83,9 @@ class Schema {
                                 $dir_name = Dir::name($path);
                                 $file_name = File::basename($path, $object->config('extension.db'));
                                 $date = date('Ymd_His');
+
+                                ddd($object->config('project.dir.backup'));
+
                                 $dir_backup = $dir_name .
                                     'Backup' .
                                     $object->config('ds') .
