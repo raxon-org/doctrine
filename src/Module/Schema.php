@@ -915,6 +915,7 @@ class Schema{
                                         unset($schema_options['target']);
                                     }
                                     if(!empty($schema_options)){
+                                        d($schema_options);
                                         $schema_table->addColumn($column->name, $column->type, $schema_options);
                                     } else {
                                         $schema_table->addColumn($column->name, $column->type);
