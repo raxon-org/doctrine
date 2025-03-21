@@ -116,10 +116,6 @@ class Schema {
                                  *
                                  */
                                 ddd('table exist work todo!');
-
-
-
-
                                 $table = Table::rename(
                                     $object,
                                     $config->name,
@@ -151,6 +147,7 @@ class Schema {
                                     SchemaModule::sql($object,
                                         $options['class'],
                                         $options['role'],
+                                        $connection,
                                         $options['node'],
                                         [
                                             'config' => $config,
