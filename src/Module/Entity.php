@@ -367,7 +367,7 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function readById(App $object, object $connection, object $role, string $entity, int $id): array
+    public static function readById(App $object, object $connection, object $role, string $entity, int $id): mixed
     {
         $function = 'read';
         $node = $connection->manager->find($object->config('doctrine.entity.prefix') . $entity, $id);
