@@ -295,9 +295,9 @@ class Entity {
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
         $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
+            ddd($node);
             if(File::exist($validate_url)) {
                 $data_node = new Data($node);
-                ddd($data_node);
                 $validate = Entity::validate($object, $validation, $data->data());
                 if ($validate) {
                     if ($validate->success === true) {
