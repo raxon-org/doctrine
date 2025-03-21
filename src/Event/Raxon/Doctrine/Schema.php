@@ -59,9 +59,9 @@ class Schema {
                     foreach($options['node']->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
                             $connection = Schema::connection($object, $connection);
-                            $em = Database::entity_manager($object, $config, $connection);
-                            $sm = Database::schema_manager($em);
-                            $connection->table = $sm->listTableNames();
+                            $connection->manager = Database::entity_manager($object, $config, $connection);
+                            $connection->schema_manager = Database::schema_manager($connection->manager);
+                            $connection->table = $connection->schema_manager->listTableNames();
                             /*
                             $em_connection = $em->getConnection();
                             $schema_manager = $em_connection->createSchemaManager();
@@ -188,9 +188,9 @@ class Schema {
                                     SchemaModule::sql($object,
                                         $options['class'],
                                         $options['role'],
+                                        $connection,
                                         $options['node'],
                                         [
-                                            'em' => $em,
                                         ]
                                     );
                                 }

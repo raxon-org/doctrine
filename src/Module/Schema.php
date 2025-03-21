@@ -811,7 +811,7 @@ class Schema{
      * @throws Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public static function sql(App $object, $class, $role, $node, $options=[]): void
+    public static function sql(App $object, string $class, object $role, object $connection=null, object $node=null, $options=[]): void
     {
         if(is_object($node)){
             $node_class = get_class($node);
@@ -826,7 +826,7 @@ class Schema{
         elseif(is_array($node)){
             $node = new Data($node);
         }
-        $em = $options['em'] ?? null;
+        $em = $connection->mananger ?? null;
         if(!$em){
             throw new Exception('em (Entity manager) not set...');
         }
@@ -906,6 +906,7 @@ class Schema{
                             if(empty($schema_options)){
                                 $schema_table->addColumn($column->name, $column->type);
                             } else {
+                                d($column);
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
                             }
 
