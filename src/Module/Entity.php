@@ -293,8 +293,6 @@ class Entity {
         $nodes = [];
         $validate_url = Entity::get_validate_url($object, $entity);
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
-        d($validate_url);
-        d($validation);
         $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
             if(File::exist($validate_url)) {
@@ -304,12 +302,10 @@ class Entity {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
                         $class = Entity::readById($object, $connection, $role, $entity, $node->id);
-                        d($class);
                         $node = Entity::import(
                             $class,
                             $node
                         );
-                        ddd($node);
                         $connection->manager->persist($node);
                         $connection->manager->flush();
                         $nodes[] = $node;
