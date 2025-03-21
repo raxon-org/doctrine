@@ -911,7 +911,7 @@ class Schema{
                                     property_exists($schema_options['target'], 'node')
                                 ){
                                     unset($schema_options['target']->node);
-                                    if(empty(Core::object_is_empty($schema_options['target']))){
+                                    if(Core::object_is_empty($schema_options['target'])){
                                         unset($schema_options['target']);
                                     }
                                     if(!empty($schema_options)){
