@@ -108,6 +108,7 @@ class Schema{
                             array_key_exists(0, $column->options->join->column) &&
                             property_exists($column->options, 'target')
                         ){
+                            ddd($column);
                             $column_join = $column->options->join->column[0];
                             $data_columns[] = '#[ORM\OneToOne(';
                             $data_columns_parameters = [];
