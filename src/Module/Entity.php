@@ -303,7 +303,8 @@ class Entity {
                 if ($validate) {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
-                        $class = Entity::readById($object, $connection, $role, $entity, $node->id);
+                        $read = Entity::readById($object, $connection, $role, $entity, $node->id);
+                        ddd($read);
                         if(method_exists($class, 'setObject')){
                             $class->setObject($object);
                         }
