@@ -906,14 +906,25 @@ class Schema{
                             if(empty($schema_options)){
                                 $schema_table->addColumn($column->name, $column->type);
                             } else {
-                                d($column);
-                                d($schema_options);
-                                $schema_table->addColumn($column->name, $column->type, $schema_options);
+                                if(
+                                    array_key_exists('target', $schema_options) &&
+                                    property_exists($schema_options['target'], 'node')
+                                ){
+                                    unset($schema_options['target']->node);
+                                    if(empty(Core::object_is_empty($schema_options['target']))){
+                                        unset($schema_options['target']);
+                                    }
+                                    if(!empty($schema_options)){
+                                        $schema_table->addColumn($column->name, $column->type, $schema_options);
+                                    } else {
+                                        $schema_table->addColumn($column->name, $column->type);
+                                    }
+                                } else {
+                                    $schema_table->addColumn($column->name, $column->type, $schema_options);
+                                }
                             }
-
                             break;
                     }
-
                 } else {
                     $schema_table->addColumn($column->name, $column->type);
                 }
