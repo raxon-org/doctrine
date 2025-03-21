@@ -834,7 +834,6 @@ class Schema{
         $schema = new \Doctrine\DBAL\Schema\Schema();
         $schema_table = $schema->createTable($node->get('table'));
         $columns = $node->get('column');
-        ddd($columns);
         foreach($columns as $nr => $column){
             if(property_exists($column, 'type')){
                 if(property_exists($column, 'options')){
