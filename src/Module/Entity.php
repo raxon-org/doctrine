@@ -295,6 +295,7 @@ class Entity {
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
         $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
+            $item = Entity::readById($object, $connection, $role, $entity, $node->id);
             ddd($node);
             if(File::exist($validate_url)) {
                 $data_node = new Data($node);
@@ -370,9 +371,9 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function readById(App $object, EntityManager $em, object $role, string $entity, int $id){
+    public static function readById(App $object, object $connection, object $role, string $entity, int $id){
         $function = 'read';
-        $node = $em->find($object->config('doctrine.entity.prefix') . $entity, $id);
+        $node = $connection->manager->find($object->config('doctrine.entity.prefix') . $entity, $id);
         if($node) {
             $data = [];
             $record = [];
@@ -395,10 +396,10 @@ class Entity {
         throw new Exception('Cannot find entity: ' . $entity .', with id: ' . $id);
     }
 
-    public static function readByUuid(App $object, EntityManager $em, object $role, string $entity, string $uuid): array
+    public static function readByUuid(App $object, object $connection, object $role, string $entity, string $uuid): array
     {
         $function = 'read';
-        $repository = $em->getRepository($object->config('doctrine.entity.prefix') . $entity);
+        $repository = $connection->manager->getRepository($object->config('doctrine.entity.prefix') . $entity);
         $node = $repository->findOneBy([
             'uuid' => $uuid
         ]);
