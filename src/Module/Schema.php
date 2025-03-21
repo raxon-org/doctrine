@@ -826,7 +826,7 @@ class Schema{
         elseif(is_array($node)){
             $node = new Data($node);
         }
-        $em = $connection->mananger ?? null;
+        $em = $connection->manager ?? null;
         if(!$em){
             throw new Exception('em (Entity manager) not set...');
         }
