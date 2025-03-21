@@ -302,6 +302,7 @@ class Entity {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
                         $class = Entity::readById($object, $connection, $role, $entity, $node->id);
+                        ddd($class);
                         $node = Entity::import(
                             $class,
                             $node
