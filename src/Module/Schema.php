@@ -47,7 +47,6 @@ class Schema{
             $data[] = '';
             $data[] = 'namespace Entity;';
             $columns = $node->get('column');
-            ddd($node);
             $data_columns = [];
             $data_functions = [];
             $encrypted = [];
