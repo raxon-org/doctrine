@@ -106,14 +106,13 @@ class Schema{
                             property_exists($column->options->join, 'column') &&
                             is_array($column->options->join->column) &&
                             array_key_exists(0, $column->options->join->column) &&
-                            property_exists($column->options, 'target')
+                            property_exists($column->options, 'target') &&
+                            property_exists($column->options->target, 'entity')
                         ){
-                            trace();
-                            ddd($column->options);
                             $column_join = $column->options->join->column[0];
                             $data_columns[] = '#[ORM\OneToOne(';
                             $data_columns_parameters = [];
-                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target .'"';
+                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
                             if(property_exists($column->options, 'inversed')){
                                 $data_columns_parameters[] = '    inversedBy: "' . $column->options->inversed .'"';
                             }
