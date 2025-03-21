@@ -300,16 +300,11 @@ class Entity {
                 $validate = Entity::validate($object, $validation, $data_node->data());
                 if ($validate) {
                     if ($validate->success === true) {
-                        $node = $connection->manager->find($object->config('doctrine.entity.prefix') . $entity, $node->id);
-                        ddd($node);
-                        $className = $object->config('doctrine.entity.prefix') . $entity;
-                        $class = Entity::readById($object, $connection, $role, $entity, $node->id);
-                        ddd($class);
+                        $class = $connection->manager->find($object->config('doctrine.entity.prefix') . $entity, $node->id);
                         $node = Entity::import(
                             $class,
                             $node
                         );
-                        ddd($node);
                         $connection->manager->persist($node);
                         $connection->manager->flush();
                         $nodes[] = $node;
