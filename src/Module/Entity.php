@@ -303,18 +303,13 @@ class Entity {
                 if ($validate) {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
-                        $read = Entity::readById($object, $connection, $role, $entity, $node->id);
-                        ddd($read);
-                        if(method_exists($class, 'setObject')){
-                            $class->setObject($object);
-                        }
-                        if(method_exists($class, 'setEntityManager')){
-                            $class->setEntityManager($connection->manager);
-                        }
+                        $class = Entity::readById($object, $connection, $role, $entity, $node->id);
+                        d($class);
                         $node = Entity::import(
                             $class,
                             $node
                         );
+                        ddd($node);
                         $connection->manager->persist($node);
                         $connection->manager->flush();
                         $nodes[] = $node;
@@ -392,8 +387,19 @@ class Entity {
                 $entity,
                 $function,
             );
-            $data['node'] = $record;
-            return $data;
+            $className = $object->config('doctrine.entity.prefix') . $entity;
+            $class = new $className();
+            if(method_exists($class, 'setObject')){
+                $class->setObject($object);
+            }
+            if(method_exists($class, 'setEntityManager')){
+                $class->setEntityManager($connection->manager);
+            }
+            $node = Entity::import(
+                $class,
+                $record->data()
+            );
+            return $node;
         }
         throw new Exception('Cannot find entity: ' . $entity .', with id: ' . $id);
     }
