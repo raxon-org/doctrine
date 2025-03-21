@@ -295,15 +295,14 @@ class Entity {
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
         $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
-            $item = Entity::readById($object, $connection, $role, $entity, $node->id);
-            ddd($node);
             if(File::exist($validate_url)) {
+
                 $data_node = new Data($node);
                 $validate = Entity::validate($object, $validation, $data->data());
                 if ($validate) {
                     if ($validate->success === true) {
                         $className = $object->config('doctrine.entity.prefix') . $entity;
-                        $class = new $className();
+                        $class = Entity::readById($object, $connection, $role, $entity, $node->id);
                         if(method_exists($class, 'setObject')){
                             $class->setObject($object);
                         }
@@ -371,7 +370,8 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function readById(App $object, object $connection, object $role, string $entity, int $id){
+    public static function readById(App $object, object $connection, object $role, string $entity, int $id): array
+    {
         $function = 'read';
         $node = $connection->manager->find($object->config('doctrine.entity.prefix') . $entity, $id);
         if($node) {
@@ -435,7 +435,6 @@ class Entity {
         if (!is_array($expose)) {
             return new Data();
         }
-        ddd($node);
         $record = [];
         $is_expose = false;
         $permissions = $role->permission;
