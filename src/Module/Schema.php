@@ -907,6 +907,7 @@ class Schema{
                                 $schema_table->addColumn($column->name, $column->type);
                             } else {
                                 d($column);
+                                d($schema_options);
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
                             }
 
