@@ -71,13 +71,13 @@ class Schema{
                     if ($column->name === 'uuid') {
                         $is_uuid = true;
                     }
-                    if ($column->name === 'is_created') {
+                    if ($column->name === 'isCreated') {
                         $is_created = true;
                     }
-                    if ($column->name === 'is_updated') {
+                    if ($column->name === 'isUpdated') {
                         $is_updated = true;
                     }
-                    if ($column->name === 'is_deleted') {
+                    if ($column->name === 'isDeleted') {
                         $is_deleted = true;
                     }
                     if (
@@ -835,6 +835,7 @@ class Schema{
         $schema = new \Doctrine\DBAL\Schema\Schema();
         $schema_table = $schema->createTable($node->get('table'));
         $columns = $node->get('column');
+        ddd($columns);
         foreach($columns as $nr => $column){
             if(property_exists($column, 'type')){
                 if(property_exists($column, 'options')){
