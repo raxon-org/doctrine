@@ -211,12 +211,12 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function create(App $object, EntityManager $em, object $role, string $entity, object $request, object &$error = null): ?object
+    public static function create(App $object, object $connection, object $role, string $entity, object $request, object &$error = null): ?object
     {
         $data = [];
         $data[] = $request;
         $error = [];
-        $response = Entity::create_many($object, $em, $role, $entity, $data, $error);
+        $response = Entity::create_many($object, $connection, $role, $entity, $data, $error);
         $error = $error[0] ?? null;
         return $response[0] ?? null;
     }
@@ -226,16 +226,78 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function create_many(App $object, EntityManager $em, object $role, string $entity, array $data, array &$error=[]): array
+    public static function create_many(App $object, object $connection, object $role, string $entity, array $data, array &$error=[]): array
     {
         $function = 'create';
         $nodes = [];
         $validate_url = Entity::get_validate_url($object, $entity);
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
-        $object->config('doctrine.entity.manager', $em);
+        $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
             if(File::exist($validate_url)) {
-                $data = new Data($node);
+                $data_node = new Data($node);
+                $validate = Entity::validate($object, $validation, $data_node->data());
+                if ($validate) {
+                    if ($validate->success === true) {
+                        $className = $object->config('doctrine.entity.prefix') . $entity;
+                        $class = new $className();
+                        if(method_exists($class, 'setObject')){
+                            $class->setObject($object);
+                        }
+                        if(method_exists($class, 'setEntityManager')){
+                            $class->setEntityManager($connection->manager);
+                        }
+                        $node = Entity::import(
+                            $class,
+                            $node
+                        );
+                        $connection->manager->persist($node);
+                        $connection->manager->flush();
+                        $nodes[] = $node;
+                    } else {
+                        $error[] = $validate->test;
+                    }
+                } else {
+                    $error[] = (object) [
+                        'success' => false,
+                    ];
+                }
+            }
+        }
+        return $nodes;
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws Exception
+     */
+    public static function patch(App $object, object $connection, object $role, string $entity, object $request, object &$error = null): ?object
+    {
+        $data = [];
+        $data[] = $request;
+        $error = [];
+        $response = Entity::patch_many($object, $connection, $role, $entity, $data, $error);
+        $error = $error[0] ?? null;
+        return $response[0] ?? null;
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws Exception
+     */
+    public static function patch_many(App $object, object $connection, object $role, string $entity, array $data, array &$error=[]): array
+    {
+        $function = 'patch';
+        $nodes = [];
+        $validate_url = Entity::get_validate_url($object, $entity);
+        $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
+        $object->config('doctrine.entity.manager', $connection->manager);
+        foreach ($data as $node) {
+            if(File::exist($validate_url)) {
+                $data_node = new Data($node);
+                ddd($data_node);
                 $validate = Entity::validate($object, $validation, $data->data());
                 if ($validate) {
                     if ($validate->success === true) {
@@ -245,14 +307,14 @@ class Entity {
                             $class->setObject($object);
                         }
                         if(method_exists($class, 'setEntityManager')){
-                            $class->setEntityManager($em);
+                            $class->setEntityManager($connection->manager);
                         }
                         $node = Entity::import(
                             $class,
                             $node
                         );
-                        $em->persist($node);
-                        $em->flush();
+                        $connection->manager->persist($node);
+                        $connection->manager->flush();
                         $nodes[] = $node;
                     } else {
                         $error[] = $validate->test;
