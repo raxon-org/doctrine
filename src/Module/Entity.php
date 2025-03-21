@@ -293,6 +293,8 @@ class Entity {
         $nodes = [];
         $validate_url = Entity::get_validate_url($object, $entity);
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
+        d($validate_url);
+        d($validation);
         $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
             if(File::exist($validate_url)) {
