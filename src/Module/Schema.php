@@ -106,9 +106,9 @@ class Schema{
                             property_exists($column->options->join, 'column') &&
                             is_array($column->options->join->column) &&
                             array_key_exists(0, $column->options->join->column) &&
-                            property_exists($column->options, 'target')
+                            property_exists($column->options, 'target') &&
+                            !empty($column->options->target)
                         ){
-                            ddd($column);
                             $column_join = $column->options->join->column[0];
                             $data_columns[] = '#[ORM\OneToOne(';
                             $data_columns_parameters = [];
@@ -139,7 +139,6 @@ class Schema{
                             property_exists($column->options->mapped, 'by') &&
                             property_exists($column->options, 'target') &&
                             property_exists($column->options->target, 'entity')
-
                         ){
                             //#[OneToOne(targetEntity: Cart::class, mappedBy: 'customer')]
                             $data_columns[] = '#[ORM\OneToOne(';
