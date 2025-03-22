@@ -711,9 +711,21 @@ class Entity {
                                                 $reflection = new \ReflectionClass($node);
                                                 $methods_reflection = $reflection->getMethods();
                                                 foreach($methods_reflection as $method_reflection){
-                                                    d($method_reflection);
+                                                    if(
+                                                        strtolower($method_reflection->name) === $method
+                                                    ) {
+                                                        $attributes = $method_reflection->getAttributes();
+                                                        foreach ($attributes as $attribute_nr => $attribute) {
+                                                            $instance = $attribute->newInstance();
+                                                            $instance->class = get_class($instance);
+                                                            if ($instance->class === 'Raxon\\Attribute\\Node') {
+                                                                $argument_attribute = $instance;
+                                                            }
+                                                            $attributes[$attribute_nr] = $instance;
+                                                        }
+                                                        ddd($attributes);
+                                                    }
                                                 }
-
                                                 d($method);
                                                 ddd($array);
                                                 foreach ($array as $child) {
