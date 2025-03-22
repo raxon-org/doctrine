@@ -717,10 +717,7 @@ class Entity {
                                                         $attributes = $method_reflection->getAttributes();
                                                         foreach ($attributes as $attribute_nr => $attribute) {
                                                             $instance = $attribute->newInstance();
-                                                            $instance->class = get_class($instance);
-                                                            if ($instance->class === 'Raxon\\Attribute\\Node') {
-                                                                $argument_attribute = $instance;
-                                                            }
+                                                            $instance->{"#class"} = get_class($instance);
                                                             $attributes[$attribute_nr] = $instance;
                                                         }
                                                         ddd($attributes);
