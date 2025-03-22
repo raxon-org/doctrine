@@ -639,7 +639,6 @@ class Entity {
         if(empty($roles)){
             throw new Exception('Roles failed...');
         }
-        ddd($entity . ':' . $function);
         foreach($roles as $role){
             if(
                 property_exists($role, 'permission') &&
