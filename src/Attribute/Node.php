@@ -8,10 +8,10 @@ use Attribute;
 class Node
 {
     public function __construct(
-        public readonly string $class,
-        public readonly array $filter=[],
-        public readonly array $where=[],
-        public readonly array $sort=[],
+        public string $class,
+        public array $filter=[],
+        public array $where=[],
+        public array $sort=[],
     ) {
 
     }
