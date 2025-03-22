@@ -738,25 +738,26 @@ class Entity {
                                                         ],
                                                         'relation' => $node_instance->relation ?? false,
                                                     ]);
-                                                    d($response);
-                                                    d($method);
-                                                    d($node_instance);
-                                                    ddd($array);
+                                                    $array = $response['list'] ?? [];
                                                 }
                                                 foreach ($array as $child) {
-                                                    //need to add the node output if its a node (has property #class)
-                                                    //below needed for sql joins
-                                                    $child_entity = explode('Entity\\', get_class($child));
-                                                    $child_record = [];
-                                                    $child_record = Entity::output(
-                                                        $object,
-                                                        $child,
-                                                        $action->object->$attribute->output,
-                                                        $child_entity[1],
-                                                        'children',
-                                                        $child_record,
-                                                        $role,
-                                                    );
+                                                    if(property_exists($child, '#class')){
+                                                        $child_record = $child;
+                                                    } else {
+                                                        //need to add the node output if its a node (has property #class)
+                                                        //below needed for sql joins
+                                                        $child_entity = explode('Entity\\', get_class($child));
+                                                        $child_record = [];
+                                                        $child_record = Entity::output(
+                                                            $object,
+                                                            $child,
+                                                            $action->object->$attribute->output,
+                                                            $child_entity[1],
+                                                            'children',
+                                                            $child_record,
+                                                            $role,
+                                                        );
+                                                    }
                                                     $record[$attribute][] = $child_record;
                                                 }
                                             } elseif (
@@ -764,17 +765,52 @@ class Entity {
                                             ) {
                                                 $record[$attribute] = [];
                                                 $child = $node->$method();
+                                                $node_instance = false;
+                                                $reflection = new \ReflectionClass($node);
+                                                $methods_reflection = $reflection->getMethods();
+                                                foreach($methods_reflection as $method_reflection){
+                                                    if(
+                                                        $method_reflection->name === $method
+                                                    ) {
+                                                        $attributes = $method_reflection->getAttributes();
+                                                        foreach ($attributes as $attribute_nr => $attribute) {
+                                                            $instance = $attribute->newInstance();
+                                                            $instance->{"#class"} = get_class($instance);
+                                                            $attributes[$attribute_nr] = $instance;
+                                                            if($instance->{"#class"} === 'Raxon\Doctrine\Attribute\Node'){
+                                                                $node_instance = $instance;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
                                                 if (!empty($child)) {
-                                                    $child_entity = explode('Entity\\', get_class($child));
-                                                    $record[$attribute] = Entity::output(
-                                                        $object,
-                                                        $child,
-                                                        $action->object->$attribute->output,
-                                                        $child_entity[1],
-                                                        'child',
-                                                        $record[$attribute],
-                                                        $role,
-                                                    );
+                                                    if($node_instance){
+                                                        $item = new Node($object);
+                                                        $response = $item->record($node_instance->class, $internalRole, [
+                                                            'where' => [
+                                                                [
+                                                                    'attribute' => 'uuid',
+                                                                    'operator' => '===',
+                                                                    'value' => $child
+                                                                ]
+                                                            ],
+                                                            'relation' => $node_instance->relation ?? false,
+                                                        ]);
+                                                        $record[$attribute] = $response['node'];
+                                                    } else {
+                                                        $child_entity = explode('Entity\\', get_class($child));
+                                                        $record[$attribute] = Entity::output(
+                                                            $object,
+                                                            $child,
+                                                            $action->object->$attribute->output,
+                                                            $child_entity[1],
+                                                            'child',
+                                                            $record[$attribute],
+                                                            $role,
+                                                        );
+                                                    }
+
                                                 }
                                                 if (empty($record[$attribute])) {
                                                     $record[$attribute] = null;
