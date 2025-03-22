@@ -735,7 +735,8 @@ class Entity {
                                                                 'operator' => 'in',
                                                                 'value' => $array
                                                             ]
-                                                        ]
+                                                        ],
+                                                        'relation' => true
                                                     ]);
                                                     d($response);
                                                     d($method);
