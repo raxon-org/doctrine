@@ -743,8 +743,9 @@ class Entity {
                                                     d($node_instance);
                                                     ddd($array);
                                                 }
-
                                                 foreach ($array as $child) {
+                                                    //need to add the node output if its a node (has property #class)
+                                                    //below needed for sql joins
                                                     $child_entity = explode('Entity\\', get_class($child));
                                                     $child_record = [];
                                                     $child_record = Entity::output(
