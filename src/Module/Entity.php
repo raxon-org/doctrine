@@ -712,7 +712,7 @@ class Entity {
                                                 $methods_reflection = $reflection->getMethods();
                                                 foreach($methods_reflection as $method_reflection){
                                                     if(
-                                                        strtolower($method_reflection->name) === $method
+                                                        $method_reflection->name === $method
                                                     ) {
                                                         $attributes = $method_reflection->getAttributes();
                                                         foreach ($attributes as $attribute_nr => $attribute) {
