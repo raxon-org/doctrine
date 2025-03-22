@@ -707,7 +707,7 @@ class Entity {
                                             ) {
                                                 $record[$attribute] = [];
                                                 $array = $node->$method();
-
+                                                $node_instance = false;
                                                 $reflection = new \ReflectionClass($node);
                                                 $methods_reflection = $reflection->getMethods();
                                                 foreach($methods_reflection as $method_reflection){
@@ -719,12 +719,18 @@ class Entity {
                                                             $instance = $attribute->newInstance();
                                                             $instance->{"#class"} = get_class($instance);
                                                             $attributes[$attribute_nr] = $instance;
+                                                            if($instance->{"#class"} === 'Raxon\Doctrine\Attribute\Node'){
+                                                                $node_instance = $instance;
+                                                            }
                                                         }
-                                                        ddd($attributes);
                                                     }
                                                 }
-                                                d($method);
-                                                ddd($array);
+                                                if($node_instance){
+                                                    d($method);
+                                                    d($node_instance);
+                                                    ddd($array);
+                                                }
+
                                                 foreach ($array as $child) {
                                                     $child_entity = explode('Entity\\', get_class($child));
                                                     $child_record = [];
