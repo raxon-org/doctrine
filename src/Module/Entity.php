@@ -20,6 +20,7 @@ use Raxon\Module\Parse;
 use Raxon\Exception\FileWriteException;
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
+use Raxon\Node\Module\Node;
 
 
 class Entity {
@@ -726,6 +727,17 @@ class Entity {
                                                     }
                                                 }
                                                 if($node_instance){
+                                                    $item = new Node($object);
+                                                    $response = $item->list($node_instance->class, $internalRole, [
+                                                        'where' => [
+                                                            [
+                                                                'attribute' => 'uuid',
+                                                                'operator' => 'in',
+                                                                'value' => $array
+                                                            ]
+                                                        ]
+                                                    ]);
+                                                    d($response);
                                                     d($method);
                                                     d($node_instance);
                                                     ddd($array);
