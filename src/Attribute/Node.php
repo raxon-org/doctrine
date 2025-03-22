@@ -12,6 +12,7 @@ class Node
         public array $filter=[],
         public array $where=[],
         public array $sort=[],
+        public bool $relation=false,
     ) {
 
     }
