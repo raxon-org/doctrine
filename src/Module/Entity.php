@@ -736,7 +736,7 @@ class Entity {
                                                                 'value' => $array
                                                             ]
                                                         ],
-                                                        'relation' => true
+                                                        'relation' => $node_instance->relation ?? false,
                                                     ]);
                                                     d($response);
                                                     d($method);
