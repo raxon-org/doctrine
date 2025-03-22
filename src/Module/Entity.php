@@ -619,7 +619,7 @@ class Entity {
      * @throws Exception
      * @throws AuthorizationException
      */
-    public static function output(App $object, $node, $toArray=[], $entity='', $function='', $record=[], $internalRole=false): array
+    public static function output(App $object, Entity $node, $toArray=[], $entity='', $function='', $record=[], $internalRole=false): array
     {
         if(!is_array($toArray)){
             return $record;
@@ -677,12 +677,13 @@ class Entity {
                                             foreach ($methods as $nr => $method) {
                                                 $methods[$nr] = ucfirst($method);
                                             }
-                                            $method = 'get' . implode($methods);
+                                            $method = 'get' . implode('', $methods);
                                             $compare = $explode[1];
                                             $attribute = $explode[0];
                                             if ($compare) {
                                                 $parse = new Parse($object, $object->data());
                                                 $compare = $parse->compile($compare, $object->data());
+                                                //add reflection to check if it has a node chain.
                                                 if ($node->$method() !== $compare) {
                                                     throw new Exception('Assertion failed: ' . $assertion . ' values [' . $node->$method() . ', ' . $compare . ']');
                                                 }
@@ -692,7 +693,7 @@ class Entity {
                                             foreach ($methods as $nr => $method) {
                                                 $methods[$nr] = ucfirst($method);
                                             }
-                                            $method = 'get' . implode($methods);
+                                            $method = 'get' . implode('', $methods);
                                         }
                                         if (
                                             property_exists($action, 'object') &&
@@ -706,6 +707,13 @@ class Entity {
                                             ) {
                                                 $record[$attribute] = [];
                                                 $array = $node->$method();
+
+                                                $reflection = new \ReflectionClass($node);
+                                                $methods_reflection = $reflection->getMethods();
+                                                foreach($methods_reflection as $method_reflection){
+                                                    d($method_reflection);
+                                                }
+
                                                 d($method);
                                                 ddd($array);
                                                 foreach ($array as $child) {
