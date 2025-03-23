@@ -629,6 +629,7 @@ class Entity {
             method_exists($node, 'setObject') &&
             method_exists($node, 'getObject')
         ){
+            trace();
             ddd($node);
             $test = $node->getObject();
             if(empty($test)){
