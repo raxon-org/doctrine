@@ -715,11 +715,11 @@ class Entity {
                                                     if(
                                                         $method_reflection->name === $method
                                                     ) {
-                                                        $attributes = $method_reflection->getAttributes();
-                                                        foreach ($attributes as $attribute_nr => $attribute) {
-                                                            $instance = $attribute->newInstance();
+                                                        $attributes_reflection = $method_reflection->getAttributes();
+                                                        foreach ($attributes_reflection as $attribute_reflection_nr => $attribute_reflection) {
+                                                            $instance = $attribute_reflection->newInstance();
                                                             $instance->{"#class"} = get_class($instance);
-                                                            $attributes[$attribute_nr] = $instance;
+                                                            $attributes_reflection[$attribute_reflection_nr] = $instance;
                                                             if($instance->{"#class"} === 'Raxon\Doctrine\Attribute\Node'){
                                                                 $node_instance = $instance;
                                                             }
@@ -772,18 +772,17 @@ class Entity {
                                                     if(
                                                         $method_reflection->name === $method
                                                     ) {
-                                                        $attributes = $method_reflection->getAttributes();
-                                                        foreach ($attributes as $attribute_nr => $attribute) {
-                                                            $instance = $attribute->newInstance();
+                                                        $attributes_reflection = $method_reflection->getAttributes();
+                                                        foreach ($attributes_reflection as $attribute_reflection_nr => $attribute_reflection) {
+                                                            $instance = $attribute_reflection->newInstance();
                                                             $instance->{"#class"} = get_class($instance);
-                                                            $attributes[$attribute_nr] = $instance;
+                                                            $attributes_reflection[$attribute_reflection_nr] = $instance;
                                                             if($instance->{"#class"} === 'Raxon\Doctrine\Attribute\Node'){
                                                                 $node_instance = $instance;
                                                             }
                                                         }
                                                     }
                                                 }
-
                                                 if (!empty($child)) {
                                                     if($node_instance){
                                                         $item = new Node($object);
@@ -797,7 +796,7 @@ class Entity {
                                                             ],
                                                             'relation' => $node_instance->relation ?? false,
                                                         ]);
-                                                        $record[$attribute] = $response['node'];
+                                                        $record[$attribute] = $response['node'] ?? null;
                                                     } else {
                                                         $child_entity = explode('Entity\\', get_class($child));
                                                         $record[$attribute] = Entity::output(
@@ -810,9 +809,8 @@ class Entity {
                                                             $role,
                                                         );
                                                     }
-
                                                 }
-                                                if (empty($record[$attribute])) {
+                                                if ($record[$attribute] === '') {
                                                     $record[$attribute] = null;
                                                 }
                                             }
