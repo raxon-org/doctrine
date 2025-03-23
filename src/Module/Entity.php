@@ -683,7 +683,6 @@ class Entity {
                                             $attribute = $explode[0];
                                             if ($compare) {
                                                 $parse = new Parse($object, $object->data());
-                                                ddd($compare);
                                                 $compare = $parse->compile($compare, $object->data());
                                                 //add reflection to check if it has a node chain.
                                                 if ($node->$method() !== $compare) {
