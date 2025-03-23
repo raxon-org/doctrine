@@ -686,8 +686,6 @@ class Entity {
                                                 $compare = $parse->compile($compare, $object->data());
                                                 //add reflection to check if it has a node chain.
                                                 if ($node->$method() !== $compare) {
-                                                    d($node->$method());
-                                                    ddd($compare);
                                                     throw new Exception('Assertion failed: ' . $assertion . ' values [' . $node->$method() . ', ' . $compare . ']');
                                                 }
                                             }
