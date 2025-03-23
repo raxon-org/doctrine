@@ -701,6 +701,7 @@ class Entity {
                                                             break;
                                                     }
                                                 }
+                                                $object->config('delete', 'parse.cast');
                                                 //add reflection to check if it has a node chain.
                                                 if ($node->$method() !== $compare) {
                                                     d($node->$method());
