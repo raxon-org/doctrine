@@ -684,24 +684,6 @@ class Entity {
                                             if ($compare) {
                                                 $parse = new Parse($object, $object->data());
                                                 $compare = $parse->compile($compare, $object->data());
-                                                $is_cast = $object->config('parse.cast');
-                                                if($is_cast){
-                                                    switch($is_cast){
-                                                        case 'int':
-                                                            $compare = (int) $compare;
-                                                            break;
-                                                        case 'float':
-                                                            $compare = (float) $compare;
-                                                            break;
-                                                        case 'bool':
-                                                            $compare = (bool) $compare;
-                                                            break;
-                                                        case 'string':
-                                                            $compare = (string) $compare;
-                                                            break;
-                                                    }
-                                                }
-                                                $object->config('delete', 'parse.cast');
                                                 //add reflection to check if it has a node chain.
                                                 if ($node->$method() !== $compare) {
                                                     d($node->$method());
