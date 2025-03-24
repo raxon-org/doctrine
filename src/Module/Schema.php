@@ -276,7 +276,35 @@ class Schema{
                             '    ' .
                             ')]';
                     }
-                    d($column);
+                    if(
+                        property_exists($column, 'options') &&
+                        property_exists($column->options, 'join') &&
+                        property_exists($column->options->join, 'table')
+                    ){
+$data_columns[] = '#[ORM\JoinTable(';
+                        $data_columns_parameters = [];
+                        $data_columns_parameters[] = 'name: "' . $column->options->join->table . '"';
+                        if(property_exists($column->options->join, 'join')){
+                            $data_columns_parameters[] = 'joinColumns: [' . PHP_EOL . '        ' . 'new JoinColumn(';
+                            $data_columns_parameters_join = [];
+                            $data_columns_parameters_join[] = 'name: "' . $column->options->join->join->name . '"';
+                            $data_columns_parameters_join[] = 'referencedColumnName: "' . $column->options->join->join->reference . '"';
+                            $data_columns_parameters_join[] = 'nullable: ' . ($column->options->join->join->nullable === true ? 'true' : 'false');
+                            $data_columns_parameters[] = '            ' . implode(',' . PHP_EOL . '            ', $data_columns_parameters_join);
+                            $data_columns_parameters[] = '        ' . ')]';
+                        }
+                        if(property_exists($column->options->join, 'inverse')){
+                            $data_columns_parameters[] = 'inverseJoinColumns: [' . PHP_EOL . '        ' . 'new JoinColumn(';
+                            $data_columns_parameters_inverse = [];
+                            $data_columns_parameters_inverse[] = 'name: "' . $column->options->join->inverse->name . '"';
+                            $data_columns_parameters_inverse[] = 'referencedColumnName: "' . $column->options->join->inverse->reference . '"';
+                            $data_columns_parameters_inverse[] = 'nullable: ' . ($column->options->join->inverse->nullable === true ? 'true' : 'false');
+                            $data_columns_parameters[] = '            ' . implode(',' . PHP_EOL . '            ', $data_columns_parameters_inverse);
+                            $data_columns_parameters[] = '        ' . ')]';
+                        }
+                        $data_columns[] = '    ' . implode(',' . PHP_EOL . '    ', $data_columns_parameters);
+                        $data_columns[] = ')]';
+                    }
                     if (
                         property_exists($column, 'options') &&
                         property_exists($column->options, 'autoincrement')
