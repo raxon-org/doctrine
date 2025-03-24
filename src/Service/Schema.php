@@ -997,6 +997,7 @@ class Schema extends Main
                 //add to log
                 echo $line . ';' . PHP_EOL;
             }
+            ddd('no sql file');
             $connection = Database::connection($object, $config->name, $config->environment);
             if($connection){
                 foreach($sql_to as $line){
