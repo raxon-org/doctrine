@@ -901,6 +901,7 @@ class Schema{
                                 }
                                 $schema_table_foreign->addForeignKeyConstraint($node->get('table'), [ $column->options->join->column[0]->name ], [ $column->options->join->column[1]->name ]);
                             }
+                            ddd($column);
                             break;
                         default:
                             if(empty($schema_options)){
