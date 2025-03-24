@@ -34,6 +34,7 @@ class Schema {
             if(array_key_exists(0, $parameters)){
                 $connection->path = $parameters[0];
             }
+            ddd($connection);
         }
         return $connection;
     }
