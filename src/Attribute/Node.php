@@ -13,6 +13,7 @@ class Node
         public array $where=[],
         public array $sort=[],
         public bool $relation=false,
+        public bool $multiple=false,
     ) {
 
     }
