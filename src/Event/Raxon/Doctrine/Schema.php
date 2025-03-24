@@ -80,22 +80,14 @@ class Schema {
                                     ]
                                 );
                                 $path = $connection->path;
-                                $dir_name = Dir::name($path);
-                                $file_name = File::basename($path, $object->config('extension.db'));
-                                $date = date('Ymd_His');
-
-                                ddd($object->config('project.dir.backup'));
-
-                                $dir_backup = $dir_name .
-                                    'Backup' .
-                                    $object->config('ds') .
-                                    $date .
-                                    $object->config('ds')
-                                ;
+                                $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
+                                $dir_backup =  $dir_sqlite . date('Ymd_His') . $object->config('ds');
                                 Dir::create($dir_backup, Dir::CHMOD);
                                 File::permission($object, [
-                                    'dir' => $dir_backup
+                                    'dir_sqlite' => $dir_sqlite,
+                                    'dir_backup' => $dir_backup
                                 ]);
+                                File::copy($path, $dir_backup . File::basename($path));
                                 foreach($connection->table as $nr => $table){
                                     $file = $dir_backup . $table . $object->config('extension.sql');
                                     $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
