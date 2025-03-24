@@ -34,9 +34,6 @@ class Schema {
             if(array_key_exists(0, $parameters)){
                 $connection->path = $parameters[0];
             }
-            File::permission($object, [
-                'dir' => $connection->path
-            ]);
         }
         return $connection;
     }
@@ -198,6 +195,11 @@ class Schema {
                                     echo $exception;
                                 }
 //                            Table::import($object, $config->name, $config->environment, $config->table);
+                            }
+                            if(property_exists('path', $connection)){
+                                File::permission($object, [
+                                    'dir' => $connection->path
+                                ]);
                             }
                         }
                     }
