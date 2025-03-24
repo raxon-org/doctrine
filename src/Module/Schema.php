@@ -978,7 +978,7 @@ class Schema{
                     $stmt = $em_connection->prepare($line);
                     $result = $stmt->executeQuery();
                 }
-                if(property_exists('path', $connection)){
+                if(property_exists($connection, 'path')){
                     File::permission($object, [
                         'dir' => $connection->path
                     ]);
