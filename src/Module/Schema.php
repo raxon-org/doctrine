@@ -276,7 +276,7 @@ class Schema{
                             '    ' .
                             ')]';
                     }
-                    ddd($options);
+                    d($options);
                     if (
                         property_exists($column, 'options') &&
                         property_exists($column->options, 'autoincrement')
