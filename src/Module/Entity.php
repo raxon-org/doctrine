@@ -683,12 +683,7 @@ class Entity {
                                             $attribute = $explode[0];
                                             if ($compare) {
                                                 $parse = new Parse($object, $object->data());
-                                                $object->config('parse.cast', 'string');
                                                 $compare = $parse->compile($compare, $object->data());
-                                                //add reflection to check if it has a node chain.
-                                                d($method);
-                                                d($node->$method());
-                                                ddd($compare);
                                                 if ($node->$method() !== $compare) {
                                                     throw new Exception('Assertion failed: ' . $assertion . ' values [' . $node->$method() . ', ' . $compare . ']');
                                                 }
@@ -748,7 +743,6 @@ class Entity {
                                                     if(property_exists($child, '#class')){
                                                         $child_record = $child;
                                                     } else {
-                                                        ddd($array);
                                                         //need to add the node output if its a node (has property #class)
                                                         //below needed for sql joins
                                                         $child_entity = explode('Entity\\', get_class($child));
