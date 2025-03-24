@@ -748,6 +748,7 @@ class Entity {
                                                     if(property_exists($child, '#class')){
                                                         $child_record = $child;
                                                     } else {
+                                                        ddd($array);
                                                         //need to add the node output if its a node (has property #class)
                                                         //below needed for sql joins
                                                         $child_entity = explode('Entity\\', get_class($child));
