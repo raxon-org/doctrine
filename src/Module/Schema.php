@@ -972,11 +972,16 @@ class Schema{
                 //add to log
                 echo $line . ';' . PHP_EOL;
             }
-            $connection = $em->getConnection();
-            if($connection){
+            $em_connection = $em->getConnection();
+            if($em_connection){
                 foreach($sql_to as $line){
-                    $stmt = $connection->prepare($line);
+                    $stmt = $em_connection->prepare($line);
                     $result = $stmt->executeQuery();
+                }
+                if(property_exists('path', $connection)){
+                    File::permission($object, [
+                        'dir' => $connection->path
+                    ]);
                 }
             }
         }

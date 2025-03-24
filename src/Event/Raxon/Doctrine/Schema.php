@@ -196,11 +196,6 @@ class Schema {
                                 }
 //                            Table::import($object, $config->name, $config->environment, $config->table);
                             }
-                            if(property_exists('path', $connection)){
-                                File::permission($object, [
-                                    'dir' => $connection->path
-                                ]);
-                            }
                         }
                     }
                 }
