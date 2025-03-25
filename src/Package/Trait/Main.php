@@ -426,10 +426,7 @@ trait Main {
         return [];
     }
 
-    /**
-     * @throws Exception
-     */
-    public function schema_import($flags=null, $options=null): void
+    public function sql_import($flags=null, $options=null): void
     {
         $object = $this->object();
         $is_force = false;
@@ -442,17 +439,28 @@ trait Main {
         if(property_exists($options, 'force')){
             $is_force = $options->force;
         }
-        $options->event = true;
         $options->relation = true;
-        $node = new Node($object);
         if(
             is_string($options->connection)
         ){
             $options->connection = [$options->connection];
         }
+        $options = $this->connection($options);
+        ddd($options);
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws Exception
+     */
+    public function connection($options=null): object
+    {
         if(
+            property_exists($options, 'connection') &&
             is_array($options->connection)
         ){
+            $object = $this->object();
+            $node = new Node($object);
             foreach($options->connection as $nr => $environment){
                 if(!Core::is_uuid($environment)){
                     $class = 'System.Doctrine.Environment';
@@ -497,6 +505,33 @@ trait Main {
                 }
             }
         }
+        return $options;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function schema_import($flags=null, $options=null): void
+    {
+        $object = $this->object();
+        $is_force = false;
+        if(!property_exists($options, 'url')){
+            throw new Exception('Option: url not set...');
+        }
+        if(!property_exists($options, 'connection')){
+            throw new Exception('Option: connection not set...');
+        }
+        if(property_exists($options, 'force')){
+            $is_force = $options->force;
+        }
+        $options->event = true;
+        $options->relation = true;
+        if(
+            is_string($options->connection)
+        ){
+            $options->connection = [$options->connection];
+        }
+        $options = $this->connection($options);
         //default value for each import
         // system.doctrine.environment is user input
         $options->node = (object) [
@@ -549,7 +584,7 @@ trait Main {
             // - r3m.io.node.put (schema) -> create entity, patch table(s)
             // - r3m.io.node.delete (schema) -> delete entity, drop table(s)
         }
-
+        $node = new Node($object);
         $class = 'System.Doctrine.Schema';
         $role = $node->role_system();
         $import = $node->import($class, $role, $options);
