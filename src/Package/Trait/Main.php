@@ -3,6 +3,7 @@ namespace Package\Raxon\Doctrine\Trait;
 
 use Raxon\Config;
 
+use Raxon\Doctrine\Service\Entity;
 use Raxon\Module\Core;
 use Raxon\Module\Event;
 use Raxon\Module\File;
@@ -417,6 +418,23 @@ trait Main {
             throw new Exception('Option: table not set...');
         }
         $object = $this->object();
+        $node = new Node($object);
+        $table = $options->table;
+        unset($options->table);
+        if(!property_exists($options, 'environment')){
+            $options->environment = $object->config('framework.environment');
+        }
+        $options->relation = true;
+        $config = Database::config($object);
+        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+        }
+        $em = Database::entity_manager($object, $config, $connection);
+        $list = Entity::list($object, $em, $node->role_system(), $table, $options);
+        ddd($list);
+
+
         $config = $this->config($options);
         ddd($config);
         if($config){
