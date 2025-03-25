@@ -63,9 +63,8 @@ class Database {
     /**
      * @throws Exception
      */
-    public static function entity_manager(App $object, $config, $connection): EntityManager
+    public static function entity_manager(App $object, $config, object $connection): EntityManager
     {
-        $connection = Core::object($connection, Core::OBJECT);
         if(property_exists($connection, 'path')){
             $parameters = [];
             $parameters[] = $connection->path;
@@ -102,10 +101,10 @@ class Database {
                 'file' => $connection->path
             ]);
         }
-        $connection = Core::object($connection, Core::OBJECT_ARRAY);
-        $connection = DriverManager::getConnection($connection, $config);
+        $connection_array = Core::object($connection, Core::OBJECT_ARRAY);
+        $connection_array = DriverManager::getConnection($connection_array, $config);
         $eventManager = new EventManager();
-        return new EntityManager($connection, $config, $eventManager);
+        return new EntityManager($connection_array, $config, $eventManager);
     }
 
     public static function schema_manager(EntityManager $em): mixed
