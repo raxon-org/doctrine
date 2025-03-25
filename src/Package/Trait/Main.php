@@ -488,13 +488,13 @@ trait Main {
         $sql = implode('',$data);
         echo $sql . PHP_EOL;
         try {
-            $connection_em->beginTransaction(); // Start transaction
+//            $connection_em->beginTransaction(); // Start transaction
 
             $connection_em->executeStatement($sql); // Execute the SQL
 
-            $connection_em->commit(); // Commit the transaction
+//            $connection_em->commit(); // Commit the transaction
         } catch (\Exception $e) {
-            $connection_em->rollBack(); // Rollback if there is an error
+//            $connection_em->rollBack(); // Rollback if there is an error
             throw $e;
         }
     }
