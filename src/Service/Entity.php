@@ -653,6 +653,9 @@ class Entity extends Main
      */
     public static function list(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
     {
+        if(is_array($options)){
+            $options = Core::obect($options, Core::OBJECT);
+        }
         if(!property_exists($options, 'function')){
             $options->function = __FUNCTION__;
         }
