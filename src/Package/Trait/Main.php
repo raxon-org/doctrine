@@ -453,8 +453,8 @@ trait Main {
         if($connection === null){
             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
         }
-        ddd($connection);
         $em = Database::entity_manager($object, $config, $connection);
+        ddd($connection);
         $connection_em = $em->getConnection();
         $data = [];
         if(File::exist($options->url)){
