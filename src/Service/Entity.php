@@ -664,6 +664,7 @@ class Entity extends Main
         }
         $pagination = $object->request('pagination');
         $filter = Entity::filter($object, $where, $parameters);
+        d($object->request());
         d($filter);
         d($parameters);
         d($where);
