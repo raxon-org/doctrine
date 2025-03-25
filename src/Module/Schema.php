@@ -406,7 +406,7 @@ class Schema{
                             $type = 'bool';
                             break;
                         default :
-                            $type = 'string';
+                            $type = 'mixed';
                             break;
                     }
                     if ($type_is_created === null && $is_created) {

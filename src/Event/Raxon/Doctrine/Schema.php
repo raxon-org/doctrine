@@ -109,6 +109,15 @@ class Schema {
                                  * app raxon/doctrine table export -table=user -connection=system
                                  *
                                  */
+                                //move below rename
+                                if($is_entity === false){
+                                    SchemaModule::entity($object,
+                                        $options['class'],
+                                        $options['role'],
+                                        $options['node']
+                                    );
+                                    $is_entity = true;
+                                }
                                 ddd('table exist work todo!');
                                 $table = Table::rename(
                                     $object,
@@ -120,14 +129,7 @@ class Schema {
                                     ]
                                 );
                                 d($table);
-                                if($is_entity === false){
-                                    SchemaModule::entity($object,
-                                        $options['class'],
-                                        $options['role'],
-                                        $options['node']
-                                    );
-                                    $is_entity = true;
-                                }
+
                                 if($is_repository === false){
                                     //only create repository class if not exist, resetting means deleting the repository class and rerun this event
                                     SchemaModule::repository($object,
