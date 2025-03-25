@@ -475,7 +475,8 @@ trait Main {
                     $char === ';'
                 ){
                     //line complete, commit
-                    $connection_em->executeQuery($line);
+                    $sql = implode('', $line);
+                    $connection_em->executeQuery($sql);
                 }
             }
         }
