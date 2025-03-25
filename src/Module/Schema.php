@@ -147,7 +147,27 @@ class Schema{
                             $data_columns_parameters[] = 'mappedBy: "' . $column->options->mapped->by .'"';
                             $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
                             $data_columns[] = ')]';
-                        } else {
+                        }
+                        elseif(
+                            property_exists($column, 'options') &&
+                            property_exists($column->options, 'inversed') &&
+                            property_exists($column->options->mapped, 'by') &&
+                            property_exists($column->options, 'target') &&
+                            property_exists($column->options->target, 'entity')
+                        ){
+                            //#[OneToOne(targetEntity: Cart::class, inversedBy: 'customer')]
+                            //#[ManyToMany(targetEntity: "Extension", inversedBy: "applications", cascade: ["persist"])]
+                            $data_columns[] = '#[ORM\ManyToMany(';
+                            $data_columns_parameters = [];
+                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
+                            $data_columns_parameters[] = 'inversedBy: "' . $column->options->inversed->by .'"';
+                            if(property_exists($column->options, 'cascade')){
+                                $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
+                            }
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
+                            $data_columns[] = ')]';
+                        }
+                        else {
                             d($column);
                             continue;
                         }
