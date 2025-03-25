@@ -443,6 +443,9 @@ trait Main {
         if(property_exists($options, 'force')){
             $is_force = $options->force;
         }
+        if(!property_exists($options, 'environment')){
+            $options->environment = $object->config('framework.environment');
+        }
         $options->relation = true;
         $config = Database::config($object);
         $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
