@@ -4,6 +4,7 @@ namespace Package\Raxon\Doctrine\Trait;
 use Raxon\Config;
 
 use Raxon\Doctrine\Service\Entity;
+use Raxon\Module\Controller;
 use Raxon\Module\Core;
 use Raxon\Module\Event;
 use Raxon\Module\File;
@@ -431,7 +432,8 @@ trait Main {
             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
         }
         $em = Database::entity_manager($object, $config, $connection);
-        $list = Entity::list($object, $em, $node->role_system(), $table, $options);
+        $entity = str_replace('.', '', Controller::name($table));
+        $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
         ddd($list);
 
 
