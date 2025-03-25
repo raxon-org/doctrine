@@ -721,7 +721,7 @@ class Entity extends Main
             $toArray = Entity::expose_get(
                 $object,
                 $entity,
-                $entity . '.' . $options['function'] .'.output'
+                $entity . '.' . $options->function .'.output'
             );
             foreach($result as $node){
                 $record = [];
@@ -730,7 +730,7 @@ class Entity extends Main
                     $node,
                     $toArray,
                     $entity,
-                    $options['function'],
+                    $options->function,
                     $record,
                     $role
                 );
@@ -791,7 +791,7 @@ class Entity extends Main
             $data['count'] = (int) $count;
             $data['page'] = $page;
             $data['limit'] = $limit;
-            d($data);
+            ddd($data);
             $qb = $entityManager->createQueryBuilder();
             $qb->select([$alias])
                 ->from($entityName, $alias);
