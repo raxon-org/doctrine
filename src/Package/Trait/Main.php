@@ -429,6 +429,7 @@ trait Main {
     /**
      * @throws ObjectException
      * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
      */
     public function sql_import($flags=null, $options=null): void
     {
@@ -474,10 +475,9 @@ trait Main {
                     $char === ';'
                 ){
                     //line complete, commit
-                    ddd(implode('', $line));
+                    $connection_em->executeQuery($line);
                 }
             }
-            $connection_em->executeQuery($sql);
         }
     }
 
