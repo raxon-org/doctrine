@@ -482,7 +482,7 @@ trait Main {
                 }
             }
         }
-        $sql = implode(PHP_EOL,$data);
+        $sql = implode('',$data);
         echo $sql . PHP_EOL;
         $connection_em->executeQuery($sql);
     }
