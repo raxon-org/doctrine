@@ -453,6 +453,7 @@ trait Main {
         if($connection === null){
             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
         }
+        ddd($connection);
         $em = Database::entity_manager($object, $config, $connection);
         $connection_em = $em->getConnection();
         $data = [];
