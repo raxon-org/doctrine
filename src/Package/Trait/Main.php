@@ -481,7 +481,9 @@ trait Main {
                 }
             }
         }
-        $connection_em->executeQuery(implode(PHP_EOL,$data));
+        $sql = implode(PHP_EOL,$data);
+        echo $sql . PHP_EOL;
+        $connection_em->executeQuery($sql);
     }
 
     /**
