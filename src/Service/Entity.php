@@ -810,11 +810,11 @@ class Entity extends Main
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($limit);
-            $paginator = new Paginator($qb->getQuery(), $options['fetchJoinCollection']);
+            $paginator = new Paginator($qb->getQuery(), $options->fetchJoinCollection);
             $expose = Entity::expose_get(
                 $object,
                 $entity,
-                $entity . '.'. $options['function'] . '.output'
+                $entity . '.'. $options->function . '.output'
             );
             foreach ($paginator as $node) {
                 $record = [];
@@ -823,7 +823,7 @@ class Entity extends Main
                     $node,
                     $expose,
                     $entity,
-                    $options['function'],
+                    $options->function,
                     $record,
                     $role
                 );
