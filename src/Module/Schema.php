@@ -172,7 +172,6 @@ class Schema{
                         property_exists($column, 'type') &&
                         $column->type === 'many-to-many'
                     ){
-                        ddd($column);
                         if(
                             property_exists($column, 'options') &&
                             property_exists($column->options, 'inversed') &&
