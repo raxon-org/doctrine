@@ -393,6 +393,7 @@ class Schema{
                         case 'ascii_string':
                         case 'varchar':
                         case 'guid':
+                        case 'string':
                             $type = 'string';
                             break;
                         case 'blob':
