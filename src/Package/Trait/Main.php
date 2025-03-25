@@ -446,6 +446,8 @@ trait Main {
             $options->connection = [$options->connection];
         }
         $options = $this->connection($options);
+        $connection = Database::connection($object, $options->connection);
+        d($connection);
         ddd($options);
     }
 
