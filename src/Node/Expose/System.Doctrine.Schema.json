@@ -41,11 +41,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -125,11 +138,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -209,11 +235,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -293,11 +332,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -377,11 +429,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -461,11 +526,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -545,11 +623,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -629,11 +720,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
@@ -713,11 +817,24 @@
                                                 "cascade",
                                                 "mapped",
                                                 "target",
+                                                "inversed",
                                                 "join",
                                                 "definition",
                                                 "comment"
                                             ],
                                             "object": {
+                                                "mapped": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
+                                                "inversed": {
+                                                    "multiple": false,
+                                                    "output": [
+                                                        "by"
+                                                    ]
+                                                },
                                                 "target": {
                                                     "multiple": false,
                                                     "output": [
