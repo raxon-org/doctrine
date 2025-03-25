@@ -812,7 +812,6 @@ class Entity extends Main
             $qb->setParameters($parameters)
                 ->setFirstResult($firstResult)
                 ->setMaxResults($limit);
-            ddd($qb->getQuery()->getSQL());
             $paginator = new Paginator($qb->getQuery(), $options->fetchJoinCollection);
             $expose = Entity::expose_get(
                 $object,
