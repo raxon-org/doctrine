@@ -454,7 +454,9 @@ trait Main {
             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
         }
         $em = Database::entity_manager($object, $config, $connection);
-        ddd($connection);
+        $backup_connection = clone $connection;
+        $backup_connection->path = str_replace('System.db', 'System.Backup.db', $backup_connection->path);
+        $em = Database::entity_manager($object, $config, $connection);
         $connection_em = $em->getConnection();
         $data = [];
         if(File::exist($options->url)){
