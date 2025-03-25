@@ -456,7 +456,7 @@ trait Main {
         $em = Database::entity_manager($object, $config, $connection);
         $backup_connection = clone $connection;
         $backup_connection->path = str_replace('System.db', 'System.Backup.db', $backup_connection->path);
-        $em = Database::entity_manager($object, $config, $connection);
+        $em = Database::entity_manager($object, $config, $backup_connection);
         $connection_em = $em->getConnection();
         $data = [];
         if(File::exist($options->url)){
