@@ -426,6 +426,10 @@ trait Main {
         return [];
     }
 
+    /**
+     * @throws ObjectException
+     * @throws Exception
+     */
     public function sql_import($flags=null, $options=null): void
     {
         $object = $this->object();
