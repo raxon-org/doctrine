@@ -653,11 +653,11 @@ class Entity extends Main
      */
     public static function list(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
     {
-        if(!array_key_exists('function', $options)){
-            $options['function'] = __FUNCTION__;
+        if(!property_exists($options, 'function')){
+            $options->function = __FUNCTION__;
         }
-        if(!array_key_exists('fetchJoinCollection', $options)){
-            $options['fetchJoinCollection'] = true;
+        if(!property_exists($options, 'fetchJoinCollection')){
+            $options->fetchJoinCollection = true;
         }
         $pagination = $object->request('pagination');
         $filter = Entity::filter($object, $where, $parameters);
