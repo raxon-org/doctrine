@@ -791,7 +791,6 @@ class Entity extends Main
             $data['count'] = (int) $count;
             $data['page'] = $page;
             $data['limit'] = $limit;
-            ddd($data);
             $qb = $entityManager->createQueryBuilder();
             $qb->select([$alias])
                 ->from($entityName, $alias);
