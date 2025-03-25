@@ -477,6 +477,7 @@ trait Main {
                 ){
                     //line complete, commit
                     $data[] = implode('', $line);
+                    $line = [];
 //                    $connection_em->executeQuery($sql);
                 }
             }
