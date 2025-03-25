@@ -4,10 +4,10 @@ namespace Package\Raxon\Doctrine\Trait;
 use Raxon\Config;
 
 use Raxon\Module\Core;
-use Raxon\Module\Database;
 use Raxon\Module\Event;
 use Raxon\Module\File;
 
+use Raxon\Doctrine\Module\Database;
 use Raxon\Node\Module\Node;
 
 use Raxon\Doctrine\Service\Table;
@@ -444,14 +444,14 @@ trait Main {
             $is_force = $options->force;
         }
         $options->relation = true;
-        if(
-            is_string($options->connection)
-        ){
-            $options->connection = [$options->connection];
+        $config = Database::config($object);
+        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
         }
-        $options = $this->connection($options);
-        $connection = Database::connection($object, $options->connection);
-        d($connection);
+        $em = Database::entity_manager($object, $config, $connection);
+        $connection_em = $em->getConnection();
+        d($connection_em);
         ddd($options);
     }
 
