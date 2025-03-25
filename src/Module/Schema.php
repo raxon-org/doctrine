@@ -175,7 +175,7 @@ class Schema{
                         if(
                             property_exists($column, 'options') &&
                             property_exists($column->options, 'inversed') &&
-                            property_exists($column->options->mapped, 'by') &&
+                            property_exists($column->options->inversed, 'by') &&
                             property_exists($column->options, 'target') &&
                             property_exists($column->options->target, 'entity')
                         ){
