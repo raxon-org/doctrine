@@ -487,7 +487,16 @@ trait Main {
         }
         $sql = implode('',$data);
         echo $sql . PHP_EOL;
-        $connection_em->executeQuery($sql);
+        try {
+            $connection->beginTransaction(); // Start transaction
+
+            $connection->executeStatement($sql); // Execute the SQL
+
+            $connection->commit(); // Commit the transaction
+        } catch (\Exception $e) {
+            $connection->rollBack(); // Rollback if there is an error
+            throw $e;
+        }
     }
 
     /**
