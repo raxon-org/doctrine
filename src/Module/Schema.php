@@ -148,25 +148,6 @@ class Schema{
                             $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
                             $data_columns[] = ')]';
                         }
-                        elseif(
-                            property_exists($column, 'options') &&
-                            property_exists($column->options, 'inversed') &&
-                            property_exists($column->options->mapped, 'by') &&
-                            property_exists($column->options, 'target') &&
-                            property_exists($column->options->target, 'entity')
-                        ){
-                            //#[OneToOne(targetEntity: Cart::class, inversedBy: 'customer')]
-                            //#[ManyToMany(targetEntity: "Extension", inversedBy: "applications", cascade: ["persist"])]
-                            $data_columns[] = '#[ORM\ManyToMany(';
-                            $data_columns_parameters = [];
-                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
-                            $data_columns_parameters[] = 'inversedBy: "' . $column->options->inversed->by .'"';
-                            if(property_exists($column->options, 'cascade')){
-                                $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
-                            }
-                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
-                            $data_columns[] = ')]';
-                        }
                         else {
                             d($column);
                             continue;
@@ -186,6 +167,30 @@ class Schema{
                             '    ' .
                             ')]';
                         */
+                    }
+                    elseif(
+                        property_exists($column, 'type') &&
+                        $column->type === 'many-to-many'
+                    ){
+                        if(
+                            property_exists($column, 'options') &&
+                            property_exists($column->options, 'inversed') &&
+                            property_exists($column->options->mapped, 'by') &&
+                            property_exists($column->options, 'target') &&
+                            property_exists($column->options->target, 'entity')
+                        ){
+                            //#[OneToOne(targetEntity: Cart::class, inversedBy: 'customer')]
+                            //#[ManyToMany(targetEntity: "Extension", inversedBy: "applications", cascade: ["persist"])]
+                            $data_columns[] = '#[ORM\ManyToMany(';
+                            $data_columns_parameters = [];
+                            $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
+                            $data_columns_parameters[] = 'inversedBy: "' . $column->options->inversed->by .'"';
+                            if(property_exists($column->options, 'cascade')){
+                                $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
+                            }
+                            $data_columns[] = '    ' . implode(',' . PHP_EOL . '        ', $data_columns_parameters);
+                            $data_columns[] = ')]';
+                        }
                     }
                     elseif (
                         property_exists($column, 'type')
@@ -301,7 +306,7 @@ class Schema{
                         property_exists($column->options, 'join') &&
                         property_exists($column->options->join, 'table')
                     ){
-$data_columns[] = '#[ORM\JoinTable(';
+                        $data_columns[] = '#[ORM\JoinTable(';
                         $data_columns_parameters = [];
                         $data_columns_parameters[] = 'name: "' . $column->options->join->table . '"';
                         if(property_exists($column->options->join, 'join')){
