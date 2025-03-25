@@ -454,8 +454,31 @@ trait Main {
         }
         $em = Database::entity_manager($object, $config, $connection);
         $connection_em = $em->getConnection();
-        d($connection_em);
-        ddd($options);
+        if(File::exist($options->url)){
+            $sql = File::read($options->url);
+            $split = mb_str_split($sql);
+            $is_single_quote = false;
+            $is_double_quote = false;
+            $line = [];
+            foreach($split as $nr => $char){
+                $line[] = $char;
+                if($char == '\''){
+                    $is_single_quote = !$is_single_quote;
+                }
+                elseif($char == '"'){
+                    $is_double_quote = !$is_double_quote;
+                }
+                elseif(
+                    $is_single_quote === false &&
+                    $is_double_quote === false &&
+                    $char === ';'
+                ){
+                    //line complete, commit
+                    ddd(implode('', $line));
+                }
+            }
+            $connection_em->executeQuery($sql);
+        }
     }
 
     /**
