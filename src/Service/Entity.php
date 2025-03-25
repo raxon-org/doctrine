@@ -664,6 +664,9 @@ class Entity extends Main
         }
         $pagination = $object->request('pagination');
         $filter = Entity::filter($object, $where, $parameters);
+        d($filter);
+        d($parameters);
+        d($where);
         $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
         $alias = lcfirst($entity);
         $data = [];
