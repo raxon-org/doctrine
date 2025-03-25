@@ -174,8 +174,16 @@ class Schema{
                     ){
                         if(
                             property_exists($column, 'options') &&
-                            property_exists($column->options, 'inversed') &&
-                            property_exists($column->options->inversed, 'by') &&
+                            (
+                            (
+                                property_exists($column->options, 'inversed') &&
+                                property_exists($column->options->inversed, 'by')
+                            ) ||
+                            (
+                                property_exists($column->options, 'mapped') &&
+                                property_exists($column->options->mapped, 'by')
+                            )
+                            ) &&
                             property_exists($column->options, 'target') &&
                             property_exists($column->options->target, 'entity')
                         ){
@@ -184,7 +192,12 @@ class Schema{
                             $data_columns[] = '#[ORM\ManyToMany(';
                             $data_columns_parameters = [];
                             $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
-                            $data_columns_parameters[] = 'inversedBy: "' . $column->options->inversed->by .'"';
+                            if(property_exists($column->options, 'inversed')){
+                                $data_columns_parameters[] = 'inversedBy: "' . $column->options->inversed->by .'"';
+                            }
+                            if(property_exists($column->options, 'mapped')){
+                                $data_columns_parameters[] = 'mappedBy: "' . $column->options->mapped->by .'"';
+                            }
                             if(property_exists($column->options, 'cascade')){
                                 $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
                             }
