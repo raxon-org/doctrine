@@ -1,0 +1,3 @@
+{{$response = Package.Raxon.Doctrine:Main:table.data.all(flags(), options())}}
+{{$response|json.encode:'JSON_PRETTY_PRINT'}}
+

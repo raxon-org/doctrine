@@ -408,6 +408,31 @@ trait Main {
     /**
      * @throws Exception
      */
+    public function table_data_all($flags=null, $options=null): array
+    {
+        if(!property_exists($options, 'connection')){
+            throw new Exception('Option: connection not set...');
+        }
+        if(!property_exists($options, 'table')){
+            throw new Exception('Option: table not set...');
+        }
+        $object = $this->object();
+        $config = $this->config($options);
+        ddd($config);
+        if($config){
+            if(
+                property_exists($config, 'name') &&
+                property_exists($config, 'environment')
+            ){
+                return Column::all($object, $config->name, $config->environment, $options);
+            }
+        }
+        return [];
+    }
+
+    /**
+     * @throws Exception
+     */
     public function sequence_all($flags=null, $options=null): array
     {
         if(!property_exists($options, 'connection')){
