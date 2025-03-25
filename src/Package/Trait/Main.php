@@ -455,9 +455,10 @@ trait Main {
         }
         $em = Database::entity_manager($object, $config, $connection);
         $connection_em = $em->getConnection();
+        $data = [];
         if(File::exist($options->url)){
-            $sql = File::read($options->url);
-            $split = mb_str_split($sql);
+            $read = File::read($options->url);
+            $split = mb_str_split($read);
             $is_single_quote = false;
             $is_double_quote = false;
             $line = [];
@@ -475,11 +476,12 @@ trait Main {
                     $char === ';'
                 ){
                     //line complete, commit
-                    $sql = implode('', $line);
-                    $connection_em->executeQuery($sql);
+                    $data[] = implode('', $line);
+//                    $connection_em->executeQuery($sql);
                 }
             }
         }
+        $connection_em->executeQuery(implode(PHP_EOL,$data));
     }
 
     /**
