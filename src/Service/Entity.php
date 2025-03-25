@@ -820,7 +820,6 @@ class Entity extends Main
             );
             foreach ($paginator as $node) {
                 $record = [];
-                d($node);
                 $record = Entity::output(
                     $object,
                     $node,
