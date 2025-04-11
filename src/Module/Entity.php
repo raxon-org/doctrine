@@ -831,7 +831,12 @@ class Entity {
         }
         ddd($role);
         if($has_permission === false){
-            throw new AuthorizationException('No permission found for ' . $entity . ':' . $function);
+            if($role){
+                throw new AuthorizationException('No permission found for ' . $entity . ':' . $function . ' for role: ' . $role->name);
+            } else {
+                throw new AuthorizationException('No permission found for ' . $entity . ':' . $function);
+            }
+
         }
         return $record;
     }
