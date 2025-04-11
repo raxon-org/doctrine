@@ -640,6 +640,7 @@ class Entity {
         if(empty($roles)){
             throw new Exception('Roles failed...');
         }
+        $has_permission = false;
         foreach($roles as $role){
             if(
                 property_exists($role, 'permission') &&
@@ -665,6 +666,7 @@ class Entity {
                                     $action->role === $role->name
                                 )
                             ) {
+                                $has_permission = true;
                                 if (
                                     property_exists($action, 'property') &&
                                     is_array($action->property)
@@ -826,6 +828,9 @@ class Entity {
                     }
                 }
             }
+        }
+        if($has_permission === false){
+            throw new AuthorizationException('No permission found for ' . $entity . ':' . $function);
         }
         return $record;
     }
