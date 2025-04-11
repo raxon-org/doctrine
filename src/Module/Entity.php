@@ -832,9 +832,9 @@ class Entity {
         }
         if($has_permission === false){
             if($role){
-                throw new AuthorizationException('No permission found for ' . $entity . ':' . $function . ' for role: ' . $role->name);
+                throw new AuthorizationException('No permission found or missing exposure for role for ' . $entity . ':' . $function . ' for role: ' . $role->name);
             } else {
-                throw new AuthorizationException('No permission found for ' . $entity . ':' . $function);
+                throw new AuthorizationException('No permission found or missing exposure for role for ' . $entity . ':' . $function);
             }
 
         }
