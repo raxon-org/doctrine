@@ -650,6 +650,7 @@ class Entity {
                 $permissions = $role->permission;
                 foreach ($permissions as $permission) {
                     if(property_exists($permission, 'name')){
+                        d($permission->name);
                         foreach ($toArray as $action) {
                             if (
                                 (
