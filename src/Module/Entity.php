@@ -829,6 +829,7 @@ class Entity {
                 }
             }
         }
+        ddd($role);
         if($has_permission === false){
             throw new AuthorizationException('No permission found for ' . $entity . ':' . $function);
         }
