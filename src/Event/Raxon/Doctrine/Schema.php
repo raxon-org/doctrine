@@ -50,6 +50,7 @@ class Schema {
         $is_repository = false;
         $config = Database::config($object);
         $node = new Node($object);
+        ddd($options);
         if(array_key_exists('node', $options)){
             if(property_exists($options['node'], 'environment')){
                 if(
