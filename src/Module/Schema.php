@@ -111,9 +111,11 @@ class Schema{
                             $data_columns[] = '#[ORM\OneToOne(';
                             $data_columns_parameters = [];
                             $data_columns_parameters[] = 'targetEntity: "' . $column->options->target->entity .'"';
-                            if(property_exists($column->options, 'inversed')){
-                                ddd($column);
-                                $data_columns_parameters[] = '    inversedBy: "' . $column->options->inversed .'"';
+                            if(
+                                property_exists($column->options, 'inversed') &&
+                                property_exists($column->options->inversed, 'by')
+                            ){
+                                $data_columns_parameters[] = '    inversedBy: "' . $column->options->inversed->by .'"';
                             }
                             if(property_exists($column->options, 'cascade')){
                                 $data_columns_parameters[] = 'cascade: ["' . implode('", "', $column->options->cascade) . '"]';
