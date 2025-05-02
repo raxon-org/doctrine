@@ -17,8 +17,8 @@ Submodule: {{$request.submodule|string.uppercase.first}}
 ]}}
 {{foreach($selected as $select)}}
 {{$url = config('controller.dir.view') + $select}}
-{{$url}}
-{{$files = dir.read(config('controller.dir.view') + $select)}}
+{{$files = dir.read($url)}}
+{{dd($files)}}
 {{$files = data.sort($files, ['url' => 'ASC'])}}
 {{$files = data.filter($files, ['type' => 'file'])}}
 Commands:
