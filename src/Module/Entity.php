@@ -180,7 +180,7 @@ class Entity {
      * @throws ObjectException
      * @throws Exception
      */
-    protected static function get_validation(App $object, $url, $type): object | false
+    public static function get_validation(App $object, $url, $type): object | false
     {
         $data = $object->data(sha1($url));
         if($data === null){
