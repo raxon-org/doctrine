@@ -10,6 +10,7 @@ Submodule: {{$request.submodule|string.uppercase.first}}
 'Database',
 'Schema',
 'Sequence',
+'Sql',
 'Table/Column',
 'Table/Foreign',
 'Table/Index',
