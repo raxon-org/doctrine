@@ -730,6 +730,7 @@ class Entity {
                                                 }
                                                 d($method);
                                                 d($node_instance);
+                                                d($attributes_reflection);
                                                 if($node_instance){
                                                     $item = new Node($object);
                                                     $response = $item->list($node_instance->class, $internalRole, [
