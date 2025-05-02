@@ -748,6 +748,7 @@ class Entity {
                                                     } else {
                                                         //need to add the node output if its a node (has property #class)
                                                         //below needed for sql joins
+                                                        d($child);
                                                         $child_entity = explode('Entity\\', get_class($child));
                                                         $child_record = [];
                                                         $child_record = Entity::output(
