@@ -201,7 +201,7 @@ class Entity {
      */
     public static function get_validate_url(App $object, string $entity): string
     {
-        return $object->config('project.dir.shared') .
+        return $object->config('project.dir.source') .
             'Validate' .
             $object->config('ds') .
             $entity .
