@@ -978,7 +978,6 @@ class Schema{
                                 if(array_key_exists('target', $schema_options)){
                                     unset($schema_options['target']);
                                 }
-                                d($schema_options);
                                 $schema_table->addColumn($column->name, $column->type, $schema_options);
                             }
                             break;
