@@ -728,6 +728,7 @@ class Entity {
                                                         }
                                                     }
                                                 }
+                                                d($node_instance);
                                                 if($node_instance){
                                                     $item = new Node($object);
                                                     $response = $item->list($node_instance->class, $internalRole, [
@@ -742,6 +743,7 @@ class Entity {
                                                     ]);
                                                     $array = $response['list'] ?? [];
                                                 }
+                                                ddd($array);
                                                 foreach ($array as $child) {
                                                     if(property_exists($child, '#class')){
                                                         $child_record = $child;
