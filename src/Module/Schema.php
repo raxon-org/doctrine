@@ -1,23 +1,22 @@
 <?php
 namespace Raxon\Doctrine\Module;
 
+use Exception;
 use Raxon\App;
-
-use Raxon\Module\Core;
+use Raxon\Exception\FileWriteException;
 use Raxon\Module\Data;
 use Raxon\Module\Controller;
 use Raxon\Module\File;
-
-use Exception;
-
-use Raxon\Exception\FileWriteException;
 use Raxon\Node\Module\Node;
 
 class Schema{
 
+    /**
+     * @throws FileWriteException
+     * @throws Exception
+     */
     public static function entity(App $object, $class, $role, $node, $options=[]): void
     {
-        d($node);
         if (is_object($node)) {
             $node_class = get_class($node);
             switch ($node_class) {
@@ -32,7 +31,6 @@ class Schema{
         } else {
             return;
         }
-        d($node);
         if ($node->has('table')) {
             $table = $node->get('table');
             $entity = $node->get('entity');
@@ -40,10 +38,8 @@ class Schema{
                 'Entity' .
                 $object->config('ds') .
                 $entity .
-                $object->config('extension.php');
-            d($table);
-            d($entity);
-            d($target);
+                $object->config('extension.php')
+            ;
             $data = [];
             $data[] = '<?php';
             $data[] = '';
