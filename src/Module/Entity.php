@@ -300,6 +300,7 @@ class Entity {
             if(File::exist($validate_url)) {
                 $data_node = new Data($node);
                 d($validate_url);
+                d($validation);
                 ddd($entity . '.' . $function);
                 $validate = Entity::validate($object, $validation, $data_node->data());
                 if ($validate) {
