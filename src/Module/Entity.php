@@ -728,6 +728,7 @@ class Entity {
                                                         }
                                                     }
                                                 }
+                                                d($method);
                                                 d($node_instance);
                                                 if($node_instance){
                                                     $item = new Node($object);
