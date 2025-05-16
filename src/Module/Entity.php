@@ -1,20 +1,29 @@
 <?php
 namespace Raxon\Doctrine\Module;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 
+use Doctrine\ORM\Query\Parameter;
+use Doctrine\ORM\Query\QueryException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Exception;
 
 use Raxon\App;
 use Raxon\Config;
 
+use Raxon\Doctrine\Service\Main;
 use Raxon\Exception\AuthorizationException;
 use Raxon\Module\Core;
 use Raxon\Module\Controller;
 use Raxon\Module\Data;
+use Raxon\Module\Database;
 use Raxon\Module\File;
+use Raxon\Module\Limit;
 use Raxon\Module\Parse;
 
 use Raxon\Exception\FileWriteException;
@@ -840,5 +849,613 @@ class Entity {
 
         }
         return $record;
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws QueryException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
+     */
+    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
+    {
+        $list = \Raxon\Doctrine\Service\Entity::list($object, $entityManager, $role, $entity, $options);
+        $record = $list;
+        $record['node'] = $list['nodeList'][0] ?? null;
+        unset($record['nodeList']);
+        return $record;
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws QueryException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
+     */
+    public static function list(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
+    {
+        if(is_array($options)){
+            $options = Core::object($options, Core::OBJECT);
+        }
+        if(!property_exists($options, 'function')){
+            $options->function = __FUNCTION__;
+        }
+        if(!property_exists($options, 'fetchJoinCollection')){
+            $options->fetchJoinCollection = true;
+        }
+        $pagination = $object->request('pagination');
+        $filter = Entity::filter($object, $where, $parameters);
+        $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
+        $alias = lcfirst($entity);
+        $data = [];
+        if(
+            $pagination === false ||
+            $pagination === 'false'
+        ){
+            $data['nodeList'] = [];
+            $qb = $entityManager->createQueryBuilder();
+            $entityName = $object->config('doctrine.entity.prefix') . $entity;
+            $joins = Entity::get_joins($object, $entity);
+            $qb->select(['count(' . $alias . '.id)'])
+                ->from($entityName, $alias);
+            foreach($joins as $join){
+                $qb->leftJoin($join['join'], $join['alias']);
+                foreach($where as $nr => $is){
+                    $where[$nr] = str_replace($join['join'], $join['alias'], $is);
+                }
+            }
+            if(is_array($where)){
+                $count_where = count($where);
+                if($count_where >= 1){
+                    $qb->where($where[0]);
+                    if($count_where > 1){
+                        for($i = 1; $i < $count_where; $i++){
+                            $qb->andWhere($where[$i]);
+                        }
+                    }
+                }
+            }
+            $count = $qb->setParameters($parameters)
+                ->getQuery()
+                ->getSingleScalarResult();
+            $data['count'] = (int) $count;
+            $qb = $entityManager->createQueryBuilder();
+            $qb->select([$alias])
+                ->from($entityName, $alias);
+            foreach($joins as $join){
+                $qb->leftJoin($join['join'], $join['alias']);
+            }
+            $count_where = count($where);
+            if($count_where >= 1){
+                $qb->where($where[0]);
+                if($count_where > 1){
+                    for($i = 1; $i < $count_where; $i++){
+                        $qb->andWhere($where[$i]);
+                    }
+                }
+            }
+            foreach($order as $key => $value){
+                $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
+            }
+            $qb->setParameters($parameters);
+            $result = $qb->getQuery()->getResult();
+            $toArray = Entity::expose_get(
+                $object,
+                $entity,
+                $entity . '.' . $options->function .'.output'
+            );
+            foreach($result as $node){
+                $record = [];
+                $record = Entity::output(
+                    $object,
+                    $node,
+                    $toArray,
+                    $entity,
+                    $options->function,
+                    $record,
+                    $role
+                );
+                $data['nodeList'][] = $record;
+            }
+            $data['filter'] = Entity::castValue($filter);
+            $data['order'] = $object->request('order');
+        } else {
+            if($object->request('page')){
+                $page = (int) $object->request('page');
+            } else {
+                $page = 1;
+            }
+            $limit = Limit::LIMIT;
+            /*
+            $settings_url = $object->config('controller.dir.data') . 'Settings' . $object->config('extension.json');
+            $settings =  $object->data_read($settings_url);
+            if($settings){
+                if($settings->data('component.default.limit')){
+                    $limit = $settings->data('component.default.limit');
+                }
+            }
+            */
+            if($object->request('limit')){
+                $limit = (int) $object->request('limit');
+                if($limit > Limit::MAX){
+                    $limit = Limit::MAX;
+                }
+            }
+            $firstResult = $page * $limit - $limit;
+            $data['nodeList'] = [];
+            $qb = $entityManager->createQueryBuilder();
+            $entityName = $object->config('doctrine.entity.prefix') . $entity;
+            $joins = Entity::get_joins($object, $entity);
+            $qb->select(['count(' . $alias . '.id)'])
+                ->from($entityName, $alias);
+            foreach($joins as $join){
+                $qb->leftJoin($join['join'], $join['alias']);
+                foreach($where as $nr => $is){
+                    $where[$nr] = str_replace($join['join'], $join['alias'], $is);
+                }
+            }
+            if(is_array($where)){
+                $count_where = count($where);
+                if($count_where >= 1){
+                    $qb->where($where[0]);
+                    if($count_where > 1){
+                        for($i = 1; $i < $count_where; $i++){
+                            $qb->andWhere($where[$i]);
+                        }
+                    }
+                }
+            }
+            $qb->setParameters($parameters);
+            $count = $qb
+                ->getQuery()
+                ->getSingleScalarResult();
+            $data['count'] = (int) $count;
+            $data['page'] = $page;
+            $data['limit'] = $limit;
+            $qb = $entityManager->createQueryBuilder();
+            $qb->select([$alias])
+                ->from($entityName, $alias);
+            foreach($joins as $join){
+                $qb->leftJoin($join['join'], $join['alias']);
+            }
+            $count_where = count($where);
+            if($count_where >= 1){
+                $qb->where($where[0]);
+                if($count_where > 1){
+                    for($i = 1; $i < $count_where; $i++){
+                        $qb->andWhere($where[$i]);
+                    }
+                }
+            }
+            foreach($order as $key => $value){
+                $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
+            }
+            $qb->setParameters($parameters)
+                ->setFirstResult($firstResult)
+                ->setMaxResults($limit);
+            $paginator = new Paginator($qb->getQuery(), $options->fetchJoinCollection);
+            $expose = Entity::expose_get(
+                $object,
+                $entity,
+                $entity . '.'. $options->function . '.output'
+            );
+            foreach ($paginator as $node) {
+                $record = [];
+                $record = Entity::output(
+                    $object,
+                    $node,
+                    $expose,
+                    $entity,
+                    $options->function,
+                    $record,
+                    $role
+                );
+                $data['nodeList'][] = $record;
+            }
+            $data['max'] = (int) ceil($data['count'] / $data['limit']);
+            $data['filter'] = Entity::castValue($filter);
+            $data['order'] = $object->request('order');
+        }
+        return $data;
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws QueryException
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
+     */
+    public static function page(App $object, $entity, $id): array
+    {
+        $request = Permission::request($object, $entity, 'page');
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $object->request('delete', 'id');
+        $filter = Entity::filter($object, $where, $parameters);
+        $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
+        $alias = lcfirst($entity);
+        $data = [];
+        $limit = Limit::LIMIT;
+        $settings_url = $object->config('controller.dir.data') . 'Settings' . $object->config('extension.json');
+        $settings =  $object->data_read($settings_url);
+        if($settings){
+            if($settings->data('component.default.limit')){
+                $limit = $settings->data('component.default.limit');
+            }
+        }
+        if($object->request('limit')){
+            $limit = (int) $object->request('limit');
+            if($limit > Limit::MAX){
+                $limit = Limit::MAX;
+            }
+        }
+        $page = 1;
+        $firstResult = $page * $limit - $limit;
+        $qb = $entityManager->createQueryBuilder();
+        $entityName = $object->config('doctrine.entity.prefix') . $entity;
+        $joins = Entity::get_joins($object, $entity);
+        $qb->select(['count(' . $alias . '.id)'])
+            ->from($entityName, $alias);
+        foreach($joins as $join){
+            $qb->leftJoin($join['join'], $join['alias']);
+            foreach($where as $nr => $is){
+                $where[$nr] = str_replace($join['join'], $join['alias'], $is);
+            }
+        }
+        if(is_array($where)){
+            $count_where = count($where);
+            if($count_where >= 1){
+                $qb->where($where[0]);
+                if($count_where > 1){
+                    for($i = 1; $i < $count_where; $i++){
+                        $qb->andWhere($where[$i]);
+                    }
+                }
+            }
+        }
+        $qb->setParameters($parameters);
+        $count = $qb
+            ->getQuery()
+            ->getSingleScalarResult();
+        $data['count'] = $count;
+        $data['limit'] = $limit;
+        $data['max'] = ceil($data['count'] / $data['limit']);
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select([$alias])
+            ->from($entityName, $alias);
+        foreach($joins as $join){
+            $qb->leftJoin($join['join'], $join['alias']);
+        }
+        $count_where = count($where);
+        if($count_where >= 1){
+            $qb->where($where[0]);
+            if($count_where > 1){
+                for($i = 1; $i < $count_where; $i++){
+                    $qb->andWhere($where[$i]);
+                }
+            }
+        }
+        foreach($order as $key => $value){
+            $qb->orderBy($alias . '.' . $key, mb_strtoupper($value));
+        }
+        $qb->setParameters($parameters)
+            ->setFirstResult($firstResult)
+            ->setMaxResults($limit);
+
+        $is_found = false;
+        $fetchJoinCollection = false;
+
+        for($page=1; $page <= $data['max']; $page++){
+            $firstResult = $page * $limit - $limit;
+            $qb->setFirstResult($firstResult)
+                ->setMaxResults($limit);
+            $paginator = new Paginator($qb->getQuery(), $fetchJoinCollection);
+            foreach ($paginator as $entity) {
+                if($entity->getId() === $id){
+                    $is_found = true;
+                    break 2;
+                }
+            }
+        }
+        if($is_found){
+            $data['page'] = $page;
+        } else {
+            throw new Exception('Item not found with id: ' . $id);
+        }
+        $data['filter'] = Entity::castValue($filter);
+        $data['order'] = $object->request('order');
+        return $data;
+    }
+
+    /**
+     * @throws ObjectException
+     */
+    protected static function castValue($array=[]): mixed
+    {
+        if(is_array($array)){
+            foreach($array as $key => $value) {
+                if(is_object($value) || is_array($value)){
+                    $array[$key] = Entity::castValue($value);
+                } else {
+                    if($value === 'null'){
+                        $array[$key] = null;
+                    }
+                    elseif($value === 'true'){
+                        $array[$key] = true;
+                    }
+                    elseif($value === 'false'){
+                        $array[$key] = false;
+                    }
+                    elseif(is_numeric($value)){
+                        $array[$key] = $value + 0;
+                    }
+                    elseif(substr($value, 0, 1) === '[' && substr($value, -1, 1) === ']'){
+                        $array[$key] = Core::object($value, Core::OBJECT_ARRAY);
+                    }
+                }
+            }
+            return $array;
+        }
+        elseif(is_object($array)){
+            foreach($array as $key => $value) {
+                if(is_object($value) || is_array($value)){
+                    $array->$key = Entity::castValue($value);
+                } else {
+                    if($value === 'null'){
+                        $array->$key = null;
+                    }
+                    elseif($value === 'true'){
+                        $array->$key = true;
+                    }
+                    elseif($value === 'false'){
+                        $array->$key = false;
+                    }
+                    elseif(is_numeric($value)){
+                        $array->$key = $value + 0;
+                    }
+                    elseif(substr($value, 0, 1) === '[' && substr($value, -1, 1) === ']'){
+                        $array->$key = Core::object($value, Core::OBJECT_ARRAY);
+                    }
+                }
+            }
+            return $array;
+        }
+        elseif($array === 'null'){
+            return null;
+        }
+        elseif($array === 'true'){
+            return true;
+        }
+        elseif($array === 'false'){
+            return false;
+        }
+        elseif(is_numeric($array)){
+            return $array + 0;
+        }
+        elseif(substr($array, 0, 1) === '[' && substr($array, -1, 1) === ']'){
+            return Core::object($array, Core::OBJECT_ARRAY);
+        }
+        else {
+            return $array;
+        }
+    }
+
+    /**
+     * @throws ObjectException
+     * @throws \ReflectionException
+     */
+    private static function filter(App $object, &$where=[], ArrayCollection &$parameters=null){
+        $request = $object->request('filter') ?? [];
+        $alias = lcfirst($object->request('entity'));
+        $filter = $request ?? [];
+        $where = [];
+        $parameters = [];
+        foreach($request as $attribute => $array){
+            if(substr($attribute, 0, 1) === '@'){
+                $attribute = substr($attribute, 1);
+            }
+            $is_not = false;
+            if(is_object($array)){
+                $array = Core::object_array($array);
+            }
+            if(Core::is_array_nested($array)){
+                if(array_key_exists('not', $array)){
+                    $is_not = true;
+                    $array = $array['not'];
+                }
+            }
+            $array = Entity::castValue($array);
+            if(is_array($array)){
+                if(count($array) > 1){
+                    foreach($array as $key => $value){
+                        if($key === 'gte') {
+                            $where[] = $alias . '.' . $attribute .' >= :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                            unset($array[$key]);
+                        }
+                        elseif($key === 'lte') {
+                            $where[] = $alias . '.' . $attribute .' <= :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                            unset($array[$key]);
+                        }
+                        elseif($key === 'gt') {
+                            $where[] = $alias . '.' . $attribute .' > :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                            unset($array[$key]);
+                        }
+                        elseif($key === 'lt') {
+                            $where[] = $alias . '.' . $attribute .' < :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                            unset($array[$key]);
+                        }
+                    }
+                    if(!empty($array)){
+                        if($is_not){
+                            $where[] = $alias . '.' . $attribute . ' NOT IN (:' . $attribute . ')';
+                        } else {
+                            $where[] = $alias . '.' . $attribute . ' IN (:' . $attribute . ')';
+                        }
+                        $parameters[$attribute] = $array;
+                    }
+                } else {
+                    foreach($array as $key => $value){
+                        if(is_numeric($key)){
+                            if($value === null){
+                                $where[] = $alias . '.' . $attribute . ' IS NULL';
+                            }
+                            elseif(is_array($value)){
+                                $where[] = $alias . '.' . $attribute . ' IN (:' . $attribute . ')';
+                                $parameters[$attribute] = $value;
+                            } else {
+                                $where[] = $alias . '.' . $attribute . ' = :' . $attribute;
+                                $parameters[$attribute] = $value;
+                            }
+                        }
+                        elseif($key === 'not'){
+                            if($value === null) {
+                                $where[] = $alias . '.' . $attribute . ' IS NOT NULL';
+                            }
+                            elseif(is_array($value)){
+                                $where[] = $alias . '.' . $attribute . ' NOT IN (:' . $attribute . ')';
+                                $parameters[$attribute] = $value;
+                            } else {
+                                $where[] = $alias . '.' . $attribute . ' != :' . $attribute;
+                                $parameters[$attribute] = $value;
+                            }
+                        }
+                        elseif($key === 'exact'){
+                            if($is_not){
+                                $where[] = $alias . '.' . $attribute . ' != :' . $attribute . '_' . $key;
+                            } else {
+                                $where[] = $alias . '.' . $attribute . ' = :' . $attribute . '_' . $key;
+                            }
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'partial'){
+                            if($is_not){
+                                $where[] = $alias . '.' . $attribute .' NOT LIKE :' . $attribute . '_' . $key;
+                            } else {
+                                $where[] = $alias . '.' . $attribute .' LIKE :' . $attribute . '_' . $key;
+                            }
+
+                            $parameters[$attribute . '_' . $key] = '%' . $value . '%';
+                        }
+                        elseif($key === 'start'){
+                            if($is_not){
+                                $where[] = $alias . '.' . $attribute .' NOT LIKE :' . $attribute . '_' . $key;
+                            } else {
+                                $where[] = $alias . '.' . $attribute . ' LIKE :' . $attribute . '_' . $key;
+                            }
+                            $parameters[$attribute . '_' . $key] = $value . '%';
+                        }
+                        elseif($key === 'end'){
+                            if($is_not){
+                                $where[] = $alias . '.' . $attribute .' NOT LIKE :' . $attribute . '_' . $key;
+                            } else {
+                                $where[] = $alias . '.' . $attribute . ' LIKE :' . $attribute . '_' . $key;
+                            }
+                            $parameters[$attribute . '_' . $key] = '%' . $value;
+                        }
+                        elseif($key === 'gte') {
+                            $where[] = $alias . '.' . $attribute .' >= :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'lte') {
+                            $where[] = $alias . '.' . $attribute .' <= :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'gt') {
+                            $where[] = $alias . '.' . $attribute .' > :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'lt') {
+                            $where[] = $alias . '.' . $attribute .' < :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'after'){
+                            $value = strtotime($value);
+                            $value = date('Y-m-d H:i:s', $value);
+                            $where[] = $alias . '.' . $attribute .' >= :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'before'){
+                            $value = strtotime($value);
+                            $value = date('Y-m-d H:i:s', $value);
+                            $where[] = $alias . '.' . $attribute .' <= :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'strictly_after'){
+                            $value = strtotime($value);
+                            $value = date('Y-m-d H:i:s', $value);
+                            $where[] = $alias . '.' . $attribute .' > :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+
+                        }
+                        elseif($key === 'strictly_before'){
+                            $value = strtotime($value);
+                            $value = date('Y-m-d H:i:s', $value);
+                            $where[] = $alias . '.' . $attribute .' < :' . $attribute . '_' . $key;
+                            $parameters[$attribute . '_' . $key] = $value;
+                        }
+                        elseif($key === 'between'){
+                            $value = explode('..', $value, 2);
+                            if(array_key_exists(1, $value)){
+                                if(is_numeric($value[0])){
+                                    $value[0] += 0;
+                                }
+                                if(is_numeric($value[1])){
+                                    $value[1] += 0;
+                                }
+                                $where[] = $alias . '.' . $attribute .' > :' . $attribute . '_' . $key . '_' . 'gt';
+                                $parameters[$attribute . '_' . $key. '_' . 'gt'] = $value[0];
+                                if(is_numeric($value)){
+                                    $value += 0;
+                                }
+                                $where[] = $alias . '.' . $attribute .' < :' . $attribute . '_' . $key . '_' . 'lt';
+                                $parameters[$attribute . '_' . $key . '_' . 'lt'] = $value[1];
+                            }
+                        }
+                        elseif($key === 'between-equals'){
+                            $value = explode('..', $value, 2);
+                            if(array_key_exists(1, $value)){
+                                if(is_numeric($value[0])){
+                                    $value[0] += 0;
+                                }
+                                if(is_numeric($value[1])){
+                                    $value[1] += 0;
+                                }
+                                $where[] = $alias . '.' . $attribute .' >= :' . $attribute . '_' . $key . '_' . 'gte';
+                                $parameters[$attribute . '_' . $key. '_' . 'gte'] = $value[0];
+                                if(is_numeric($value)){
+                                    $value += 0;
+                                }
+                                $where[] = $alias . '.' . $attribute .' <= :' . $attribute . '_' . $key . '_' . 'lte';
+                                $parameters[$attribute . '_' . $key . '_' . 'lte'] = $value[1];
+                            }
+                        }
+                    }
+                }
+            } else {
+                $value = $array;
+                if($value === null){
+                    $where[] = $alias . '.' . $attribute . ' IS NULL';
+                }
+                elseif(is_array($value)){
+                    $where[] = $alias . '.' . $attribute . ' IN (:' . $attribute . ')';
+                    $parameters[$attribute] = $value;
+                }
+                elseif($alias) {
+                    $where[] = $alias . '.' . $attribute . ' = :' . $attribute;
+                    $parameters[$attribute] = $value;
+                }
+            }
+        }
+        foreach($parameters as $key => $parameter){
+            $parameters[$key] = new Parameter($key, $parameter);
+        }
+        $parameters = new ArrayCollection($parameters);
+        return $filter;
     }
 }
