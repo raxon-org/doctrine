@@ -4,6 +4,11 @@ namespace Raxon\Doctrine\Module;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\Mapping\Driver\AttributeReader;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
@@ -1457,5 +1462,54 @@ class Entity {
         }
         $parameters = new ArrayCollection($parameters);
         return $filter;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private static function has_joins(App $object, $entity): array
+    {
+        $entityName = $object->config('doctrine.entity.prefix') . $entity;
+        $reflection = new ReflectionObject(new $entityName());
+        $properties = $reflection->getProperties();
+        $reader = new AttributeReader();
+        //must become attribute reader
+        $has_join = [];
+        foreach ($properties as $property) {
+            $attributes = $reader->getPropertyAttributes($property);
+            foreach ($attributes as $attribute) {
+                if (in_array(get_class($attribute), [
+                    OneToMany::class,
+                    ManyToOne::class,
+                    ManyToMany::class,
+                    OneToOne::class
+                ])) {
+                    $has_join[] = $property->getName();
+                }
+            }
+        }
+        return $has_join;
+    }
+
+    private static function get_joins(App $object, $entity): array
+    {
+        $has_join = Entity::has_joins($object, $entity);
+        $joins = [];
+        $alias = lcfirst($entity);
+        foreach($object->request() as $attribute => $value){
+            if(in_array($attribute, $has_join, true)){
+                $joins[] = [
+                    'join' => $alias . '.' . $attribute,
+                    'alias' => $attribute
+                ];
+            }
+            elseif(substr($attribute, 0, 1) === '@'){
+                $joins[] = [
+                    'join' => $alias . '.' . substr($attribute, 1),
+                    'alias' => substr($attribute, 1)
+                ];
+            }
+        }
+        return $joins;
     }
 }
