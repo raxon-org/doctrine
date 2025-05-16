@@ -35,6 +35,7 @@ use Raxon\Exception\FileWriteException;
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
 use Raxon\Node\Module\Node;
+use ReflectionObject;
 
 
 class Entity {
