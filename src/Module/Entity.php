@@ -326,6 +326,7 @@ class Entity {
                             $class,
                             $node
                         );
+                        ddd($node);
                         $connection->manager->persist($node);
                         $connection->manager->flush();
                         $nodes[] = $node;
