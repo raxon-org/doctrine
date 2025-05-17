@@ -866,6 +866,7 @@ class Entity {
      */
     public static function record(App $object, EntityManager $entityManager, $role, $options=[]): array
     {
+        $object->request('limit', 1);
         $list = Entity::list(
             $object,
             $entityManager,
