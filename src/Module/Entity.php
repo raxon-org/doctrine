@@ -295,7 +295,7 @@ class Entity {
         $data = [];
         $data[] = $request;
         $error = [];
-        $response = Entity::patch_many($object, $connection, $role, $entity, $data, $error);
+        $response = Entity::patch_many($object, $connection, $role, $data, $error);
         $error = $error[0] ?? null;
         return $response[0] ?? null;
     }
@@ -305,9 +305,10 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function patch_many(App $object, object $connection, object $role, string $entity, array $data, array &$error=[]): array
+    public static function patch_many(App $object, object $connection, object $role, array $data, array &$error=[]): array
     {
         $function = 'patch';
+        $entity = $object->request('entity');
         $nodes = [];
         $validate_url = Entity::get_validate_url($object, $entity);
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
