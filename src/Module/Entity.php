@@ -294,8 +294,6 @@ class Entity {
         $entity = $object->request('entity');
         $data = [];
         $data[] = $request;
-        d($entity);
-        ddd($data);
         $error = [];
         $response = Entity::patch_many($object, $connection, $role, $entity, $data, $error);
         $error = $error[0] ?? null;
