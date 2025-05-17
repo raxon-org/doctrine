@@ -864,9 +864,14 @@ class Entity {
      * @throws NonUniqueResultException
      * @throws Exception
      */
-    public static function record(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
+    public static function record(App $object, EntityManager $entityManager, $role, $options=[]): array
     {
-        $list = \Raxon\Doctrine\Service\Entity::list($object, $entityManager, $role, $entity, $options);
+        $list = Entity::list(
+            $object,
+            $entityManager,
+            $role,
+            $options
+        );
         $record = $list;
         $record['node'] = $list['nodeList'][0] ?? null;
         unset($record['nodeList']);
@@ -880,7 +885,7 @@ class Entity {
      * @throws NonUniqueResultException
      * @throws Exception
      */
-    public static function list(App $object, EntityManager $entityManager, $role, $entity, $options=[]): array
+    public static function list(App $object, EntityManager $entityManager, $role, $options=[]): array
     {
         if(is_array($options)){
             $options = Core::object($options, Core::OBJECT);
@@ -891,6 +896,7 @@ class Entity {
         if(!property_exists($options, 'fetchJoinCollection')){
             $options->fetchJoinCollection = true;
         }
+        $entity = $object->request('entity');
         $pagination = $object->request('pagination');
         $filter = Entity::filter($object, $where, $parameters);
         $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
