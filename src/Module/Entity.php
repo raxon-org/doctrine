@@ -289,10 +289,13 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function patch(App $object, object $connection, object $role, string $entity, object $request, object &$error = null): ?object
+    public static function patch(App $object, object $connection, object $role, object $request, object &$error = null): ?object
     {
+        $entity = $object->request('entity');
         $data = [];
         $data[] = $request;
+        d($entity);
+        ddd($data);
         $error = [];
         $response = Entity::patch_many($object, $connection, $role, $entity, $data, $error);
         $error = $error[0] ?? null;
