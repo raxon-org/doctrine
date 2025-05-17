@@ -311,6 +311,8 @@ class Entity {
         $entity = $object->request('entity');
         $nodes = [];
         $validate_url = Entity::get_validate_url($object, $entity);
+        d($entity);
+        d($validate_url);
         $validation = Entity::get_validation($object, $validate_url, $entity . '.' . $function);
         $object->config('doctrine.entity.manager', $connection->manager);
         foreach ($data as $node) {
