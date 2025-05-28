@@ -199,6 +199,7 @@ class Entity {
     {
         $data = $object->data(sha1($url));
         if($data === null){
+            d($url);
             $data = $object->parse_read($url, sha1($url));
         }
         if($data){
