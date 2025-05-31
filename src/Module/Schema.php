@@ -657,7 +657,24 @@ class Schema{
                                 $get[] = '    }';
                                 $get[] = '}';
                             } else {
+                                if(
+                                    property_exists($column, 'options') &&
+                                    property_exists($column->options, 'target') &&
+                                    property_exists($column->options->target, 'node')
+                                ){
+                                    d($column->options->target->node);
+                                    ddd('found');
+                                }
+
                                 if($column->name === 'role'){
+                                    /**
+                                     *  #[Node(
+                                    class: "Account.Role",
+                                    sort: ["rank" => "ASC"],
+                                    relation: true,
+                                    multiple: true
+                                    )]
+                                     */
                                     ddd($column);
                                 }
                                 $get = [];
