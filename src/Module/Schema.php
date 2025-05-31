@@ -543,9 +543,7 @@ class Schema{
                                 $get[] = '}';
                             } else {
                                 $get = [];
-                                if($column->name === 'Role'){
-                                    ddd($column);
-                                }
+                                d($column->name);
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
                                 $get[] = '    return $this->' . $column->name . ';';
