@@ -118,6 +118,15 @@ class Schema {
                                     );
                                     $is_entity = true;
                                 }
+                                if($is_repository === false){
+                                    //only create repository class if not exist, resetting means deleting the repository class and rerun this event
+                                    SchemaModule::repository($object,
+                                        $options['class'],
+                                        $options['role'],
+                                        $options['node']
+                                    );
+                                    $is_repository = true;
+                                }
                                 ddd('table exist work todo!');
                                 $table = Table::rename(
                                     $object,
@@ -130,15 +139,7 @@ class Schema {
                                 );
                                 d($table);
 
-                                if($is_repository === false){
-                                    //only create repository class if not exist, resetting means deleting the repository class and rerun this event
-                                    SchemaModule::repository($object,
-                                        $options['class'],
-                                        $options['role'],
-                                        $options['node']
-                                    );
-                                    $is_repository = true;
-                                }
+
                                 try {
                                     SchemaModule::sql($object,
                                         $options['class'],
