@@ -881,7 +881,7 @@ class Schema{
                 File::write($target, implode(PHP_EOL, $data));
                 File::permission($object, [
                     'dir' => $target_dir,
-                    'file' => $file
+                    'file' => $target
                 ]);
                 echo 'Write: ' . $target . PHP_EOL;
             }
