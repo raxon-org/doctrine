@@ -820,7 +820,6 @@ class Schema{
                 $data[] = '    }';
             }
             $data[] = '}';
-            ddd($target);
             File::write($target, implode(PHP_EOL, $data));
             echo 'Write: ' . $target . PHP_EOL;
         }
