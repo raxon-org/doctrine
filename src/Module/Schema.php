@@ -665,7 +665,7 @@ class Schema{
                                 ){
                                     $node_data = [];
                                     if(property_exists($column->options->target->node, 'class')){
-                                        $node_data[] ='class: ' . $column->options->target->node->class;
+                                        $node_data[] ='class: "' . $column->options->target->node->class . '"';
                                     }
                                     if(property_exists($column->options->target->node, 'class')){
                                         $node_data[] ='sort: ' . Schema::node_sort($column->options->target->node->sort);
@@ -680,6 +680,19 @@ class Schema{
                                     $get[] = '  ' . implode(', ' . PHP_EOL . '      ', $node_data);
                                     $get[] = ')]';
                                 }
+
+                                if($column->name === 'role'){
+                                    /**
+                                     *  #[Node(
+                                    class: "Account.Role",
+                                    sort: ["rank" => "ASC"],
+                                    relation: true,
+                                    multiple: true
+                                    )]
+                                     */
+                                    ddd($column);
+                                }
+
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
                                 $get[] = '    return $this->' . $column->name . ';';
@@ -1094,7 +1107,11 @@ class Schema{
     {
         $result = '[';
         foreach($sort as $key => $value){
-            $result .= $key .' => ' . $value;
+            if(is_string($value)){
+                $result .= '"' .$key .'" => "' . $value . '"';
+            } else {
+                $result .= '"' .$key .'" => ' . $value;
+            }
         }
         $result .= ']';
         return $result;
