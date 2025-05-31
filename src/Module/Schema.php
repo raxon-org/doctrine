@@ -680,8 +680,6 @@ class Schema{
                                     $get[] = '  ' . implode(', ' . PHP_EOL . '      ', $node_data);
                                     $get[] = ')]';
                                 }
-
-                                if($column->name === 'role'){
                                     /**
                                      *  #[Node(
                                     class: "Account.Role",
@@ -690,9 +688,6 @@ class Schema{
                                     multiple: true
                                     )]
                                      */
-                                    ddd($column);
-                                }
-
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
                                 $get[] = '    return $this->' . $column->name . ';';
