@@ -4,11 +4,10 @@ namespace Raxon\Doctrine\Module;
 use Exception;
 use Raxon\App;
 use Raxon\Exception\FileWriteException;
-use Raxon\Module\Data;
 use Raxon\Module\Controller;
+use Raxon\Module\Data;
 use Raxon\Module\Dir;
 use Raxon\Module\File;
-use Raxon\Node\Module\Node;
 
 class Schema{
 
