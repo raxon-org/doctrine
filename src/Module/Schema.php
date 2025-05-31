@@ -543,7 +543,47 @@ class Schema{
                                 $get[] = '}';
                             } else {
                                 $get = [];
-                                d($column->name);
+                                if(
+                                    property_exists($column, 'options') &&
+                                    property_exists($column->options, 'target') &&
+                                    property_exists($column->options->target, 'node')
+                                ){
+                                    $node_data = [];
+                                    if(property_exists($column->options->target->node, 'class')){
+                                        $node_data[] ='class: "' . $column->options->target->node->class . '"';
+                                    }
+                                    if(property_exists($column->options->target->node, 'class')){
+                                        $node_data[] ='sort: ' . Schema::node_sort($column->options->target->node->sort);
+                                    }
+                                    if(property_exists($column->options->target->node, 'relation')){
+                                        if(empty($column->options->target->node->relation)){
+                                            $node_data[]  = 'relation: false';
+                                        } else {
+                                            $node_data[]  = 'relation: true';
+                                        }
+
+                                    }
+                                    if(property_exists($column->options->target->node, 'multiple')){
+                                        if(empty($column->options->target->node->multiple)){
+                                            $node_data[]  = 'multiple: false';
+                                        } else {
+                                            $node_data[]  = 'multiple: true';
+                                        }
+
+                                    }
+                                    //use Raxon\Doctrine\Attribute\Node;
+                                    /**
+                                    #[Node(
+                                    class: "Account.Role",
+                                    sort: ["rank" => "ASC"],
+                                    relation: true,
+                                    multiple: true
+                                    )]
+                                     */
+                                    $get[] = '#[Node(';
+                                    $get[] = '    ' . implode(', ' . PHP_EOL . '        ', $node_data);
+                                    $get[] = ')]';
+                                }
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
                                 $get[] = '    return $this->' . $column->name . ';';
@@ -686,6 +726,7 @@ class Schema{
                                         }
 
                                     }
+                                    //use Raxon\Doctrine\Attribute\Node;
                                     /**
                                      #[Node(
                                         class: "Account.Role",
@@ -752,6 +793,13 @@ class Schema{
             $use[] = 'Doctrine\ORM\Mapping\PreUpdate';
             $use[] = 'Doctrine\ORM\Event\PrePersistEventArgs';
             $use[] = 'Doctrine\ORM\Event\PreUpdateEventArgs';
+            if(
+                property_exists($column, 'options') &&
+                property_exists($column->options, 'target') &&
+                property_exists($column->options->target, 'node')
+            ){
+                $use[] = 'Raxon\Doctrine\Attribute\Node';
+            }
             $use[] = '';
             $use[] = 'Raxon\Module\Core';
             $use[] = 'Raxon\Module\File';
