@@ -705,6 +705,9 @@ class Entity {
                                             if ($compare) {
                                                 $parse = new Parse($object, $object->data());
                                                 $compare = $parse->compile($compare, $object->data());
+                                                d($compare);
+                                                d($method);
+                                                ddd($node);
                                                 if ($node->$method() !== $compare) {
                                                     throw new Exception('Assertion failed: ' . $assertion . ' values [' . $node->$method() . ', ' . $compare . ']');
                                                 }
