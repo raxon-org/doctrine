@@ -671,13 +671,23 @@ class Schema{
                                         $node_data[] ='sort: ' . Schema::node_sort($column->options->target->node->sort);
                                     }
                                     if(property_exists($column->options->target->node, 'relation')){
-                                        $node_data[]  = 'relation: ' . $column->options->target->node->relation;
+                                        if(empty($column->options->target->node->relation)){
+                                            $node_data[]  = 'relation: false';
+                                        } else {
+                                            $node_data[]  = 'relation: true';
+                                        }
+
                                     }
                                     if(property_exists($column->options->target->node, 'multiple')){
-                                        $node_data[]  = 'multiple: ' . $column->options->target->node->multiple;
+                                        if(empty($column->options->target->node->multiple)){
+                                            $node_data[]  = 'multiple: false';
+                                        } else {
+                                            $node_data[]  = 'multiple: true';
+                                        }
+
                                     }
                                     $get[] = '#[Node(';
-                                    $get[] = '  ' . implode(', ' . PHP_EOL . '      ', $node_data);
+                                    $get[] = '    ' . implode(', ' . PHP_EOL . '        ', $node_data);
                                     $get[] = ')]';
                                 }
                                     /**
