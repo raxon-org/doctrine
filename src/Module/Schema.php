@@ -677,7 +677,7 @@ class Schema{
                                         $node_data[]  = 'multiple: ' . $column->options->target->node->multiple;
                                     }
                                     $get[] = '#[Node(';
-                                    $get[] = '  ' . implode(', ' . PHP_EOL . '  ', $node_data);
+                                    $get[] = '  ' . implode(', ' . PHP_EOL . '      ', $node_data);
                                     $get[] = ')]';
                                 }
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
