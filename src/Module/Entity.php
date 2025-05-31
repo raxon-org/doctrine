@@ -761,7 +761,7 @@ class Entity {
                                                     $array = $response['list'] ?? [];
                                                 }
                                                 foreach ($array as $child) {
-                                                    if(property_exists($child, '#class')){
+                                                    if(property_exists($child, '#class') || Core::is_uuid($child)){
                                                         $child_record = $child;
                                                     } else {
                                                         //need to add the node output if its a node (has property #class)
