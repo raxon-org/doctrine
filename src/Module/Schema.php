@@ -857,9 +857,11 @@ class Schema{
             $table = $node->get('table');
             $entity = $node->get('entity');
             $repository = $entity .  'Repository';
-            $target = $object->config('project.dir.source') .
+            $target_dir = $object->config('project.dir.source') .
                 'Repository' .
-                $object->config('ds') .
+                $object->config('ds')
+            ;
+            $target = $target_dir .
                 $repository .
                 $object->config('extension.php')
             ;
@@ -875,7 +877,12 @@ class Schema{
                 $data[] = '{';
                 $data[] = '';
                 $data[] = '}';
+                Dir::create($target_dir, Dir::CHMOD);
                 File::write($target, implode(PHP_EOL, $data));
+                File::permission($object, [
+                    'dir' => $target_dir,
+                    'file' => $file
+                ]);
                 echo 'Write: ' . $target . PHP_EOL;
             }
         }
