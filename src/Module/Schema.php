@@ -838,7 +838,6 @@ class Schema{
      */
     public static function repository(App $object, $class, $role, $node, $options=[]): void
     {
-        ddd($node);
         if(is_object($node)){
             $node_class = get_class($node);
             switch($node_class){
