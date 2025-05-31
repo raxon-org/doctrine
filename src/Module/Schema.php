@@ -657,6 +657,7 @@ class Schema{
                                 $get[] = '    }';
                                 $get[] = '}';
                             } else {
+                                d($column->name);
                                 $get = [];
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
