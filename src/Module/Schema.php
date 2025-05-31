@@ -569,8 +569,6 @@ class Schema{
                                         } else {
                                             $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = "' . $options_default_value . '";';
                                         }
-                                        d($options_default_value);
-
                                     }
                                 }
 //                                    $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = "' . $column->options->default . '";';
@@ -822,6 +820,7 @@ class Schema{
                 $data[] = '    }';
             }
             $data[] = '}';
+            ddd($target);
             File::write($target, implode(PHP_EOL, $data));
             echo 'Write: ' . $target . PHP_EOL;
         }
