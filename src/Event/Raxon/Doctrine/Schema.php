@@ -50,7 +50,6 @@ class Schema {
         $is_repository = false;
         $config = Database::config($object);
         $node = new Node($object);
-        ddd($options);
         if(array_key_exists('node', $options)){
             if(property_exists($options['node'], 'environment')){
                 if(
@@ -68,6 +67,8 @@ class Schema {
                             $schema_manager = $em_connection->createSchemaManager();
                             $connection->table = $schema_manager->listTableNames();
                             */
+                            d($options['node']->table);
+                            ddd($connection->table);
                             if(in_array($options['node']->table, $connection->table, true)){
                                 $class = 'System.Doctrine.Schema';
                                 $role = $node->role_system();
