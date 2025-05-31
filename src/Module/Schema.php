@@ -657,27 +657,29 @@ class Schema{
                                 $get[] = '    }';
                                 $get[] = '}';
                             } else {
+                                $get = [];
                                 if(
                                     property_exists($column, 'options') &&
                                     property_exists($column->options, 'target') &&
                                     property_exists($column->options->target, 'node')
                                 ){
-                                    d($column->options->target->node);
-                                    ddd('found');
+                                    $node_data = [];
+                                    if(property_exists($column->options->target->node, 'class')){
+                                        $node_data[] ='class: ' . $column->options->target->node->class;
+                                    }
+                                    if(property_exists($column->options->target->node, 'class')){
+                                        $node_data[] ='sort: ' . Schema::node_sort($column->options->target->node->sort);
+                                    }
+                                    if(property_exists($column->options->target->node, 'relation')){
+                                        $node_data[]  = 'relation: ' . $column->options->target->node->relation;
+                                    }
+                                    if(property_exists($column->options->target->node, 'multiple')){
+                                        $node_data[]  = 'multiple: ' . $column->options->target->node->multiple;
+                                    }
+                                    $get[] = '#[Node(';
+                                    $get[] = implode(', ', $node_data);
+                                    $get[] = ')]';
                                 }
-
-                                if($column->name === 'role'){
-                                    /**
-                                     *  #[Node(
-                                    class: "Account.Role",
-                                    sort: ["rank" => "ASC"],
-                                    relation: true,
-                                    multiple: true
-                                    )]
-                                     */
-                                    ddd($column);
-                                }
-                                $get = [];
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
                                 $get[] = '    return $this->' . $column->name . ';';
@@ -1086,6 +1088,16 @@ class Schema{
                 }
             }
         }
+    }
+
+    private static function node_sort($sort): string
+    {
+        $result = '[';
+        foreach($sort as $key => $value){
+            $result .= $key .' => ' . $value;
+        }
+        $result .= ']';
+        return $result;
     }
 
 }
