@@ -6,6 +6,7 @@ use Raxon\App;
 use Raxon\Exception\FileWriteException;
 use Raxon\Module\Data;
 use Raxon\Module\Controller;
+use Raxon\Module\Dir;
 use Raxon\Module\File;
 use Raxon\Node\Module\Node;
 
@@ -34,9 +35,11 @@ class Schema{
         if ($node->has('table')) {
             $table = $node->get('table');
             $entity = $node->get('entity');
-            $target = $object->config('project.dir.source') .
+            $target_dir = $object->config('project.dir.source') .
                 'Entity' .
-                $object->config('ds') .
+                $object->config('ds')
+            ;
+            $target = $target_dir .
                 $entity .
                 $object->config('extension.php')
             ;
@@ -820,7 +823,12 @@ class Schema{
                 $data[] = '    }';
             }
             $data[] = '}';
+            Dir::create($target_dir, Dir::CHMOD);
             File::write($target, implode(PHP_EOL, $data));
+            File::permission($object, [
+                'dir' => $target_dir,
+                'file' => $target
+            ]);
             echo 'Write: ' . $target . PHP_EOL;
         }
     }
