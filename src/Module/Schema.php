@@ -58,6 +58,7 @@ class Schema{
             $type_is_created = null;
             $type_is_updated = null;
             $type_is_deleted = null;
+            $use_node = false;
             if ($columns && is_array($columns)) {
                 foreach ($columns as $nr => $column) {
                     $is_set = true;
@@ -548,6 +549,7 @@ class Schema{
                                     property_exists($column->options, 'target') &&
                                     property_exists($column->options->target, 'node')
                                 ){
+                                    $use_node = true;
                                     $node_data = [];
                                     if(property_exists($column->options->target->node, 'class')){
                                         $node_data[] ='class: "' . $column->options->target->node->class . '"';
@@ -703,6 +705,7 @@ class Schema{
                                     property_exists($column->options, 'target') &&
                                     property_exists($column->options->target, 'node')
                                 ){
+                                    $use_node = true;
                                     $node_data = [];
                                     if(property_exists($column->options->target->node, 'class')){
                                         $node_data[] ='class: "' . $column->options->target->node->class . '"';
@@ -793,11 +796,7 @@ class Schema{
             $use[] = 'Doctrine\ORM\Mapping\PreUpdate';
             $use[] = 'Doctrine\ORM\Event\PrePersistEventArgs';
             $use[] = 'Doctrine\ORM\Event\PreUpdateEventArgs';
-            if(
-                property_exists($column, 'options') &&
-                property_exists($column->options, 'target') &&
-                property_exists($column->options->target, 'node')
-            ){
+            if($use_node === true){
                 $use[] = 'Raxon\Doctrine\Attribute\Node';
             }
             $use[] = '';
