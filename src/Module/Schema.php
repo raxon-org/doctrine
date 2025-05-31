@@ -686,18 +686,19 @@ class Schema{
                                         }
 
                                     }
+                                    /**
+                                     #[Node(
+                                        class: "Account.Role",
+                                        sort: ["rank" => "ASC"],
+                                        relation: true,
+                                        multiple: true
+                                    )]
+                                     */
                                     $get[] = '#[Node(';
                                     $get[] = '    ' . implode(', ' . PHP_EOL . '        ', $node_data);
                                     $get[] = ')]';
                                 }
-                                    /**
-                                     *  #[Node(
-                                    class: "Account.Role",
-                                    sort: ["rank" => "ASC"],
-                                    relation: true,
-                                    multiple: true
-                                    )]
-                                     */
+
                                 $get[] = 'public function get' . str_replace('.', '', Controller::name($column->name)) . '(): ' . $return_type;
                                 $get[] = '{';
                                 $get[] = '    return $this->' . $column->name . ';';
