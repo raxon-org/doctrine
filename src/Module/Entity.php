@@ -704,6 +704,7 @@ class Entity {
                                             $attribute = $explode[0];
                                             if ($compare) {
                                                 $parse = new Parse($object, $object->data());
+                                                d($compare);
                                                 $compare = $parse->compile($compare, $object->data());
                                                 d($compare);
                                                 d($method);
