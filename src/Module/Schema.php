@@ -426,6 +426,7 @@ class Schema{
                     if ($type === 'mixed') {
                         $return_type = $type;
                     } else if ($is_null) {
+                        $type .= '|null';
                         $return_type = '?' . $type;
                     } else {
                         $return_type = $type;
