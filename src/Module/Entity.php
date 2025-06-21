@@ -44,7 +44,7 @@ class Entity {
      * @throws LocateException
      * @throws Exception
      */
-    public static function validate(App $object, object $validation, object $record=null, array $options=[]): object
+    public static function validate(App $object, object $validation, object|null $record=null, array $options=[]): object
     {
         $method = $options['function'] ?? false;
         $extra = $options['extra'] ?? false;
@@ -1265,7 +1265,7 @@ class Entity {
      * @throws ObjectException
      * @throws \ReflectionException
      */
-    private static function filter(App $object, &$where=[], ArrayCollection &$parameters=null){
+    private static function filter(App $object, &$where=[], ArrayCollection|null &$parameters=null){
         $request = $object->request('filter') ?? [];
         $alias = lcfirst($object->request('entity'));
         $filter = $request ?? [];
