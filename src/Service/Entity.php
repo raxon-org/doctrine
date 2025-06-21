@@ -1114,7 +1114,7 @@ class Entity extends Main
      * @throws ObjectException
      * @throws \ReflectionException
      */
-    private static function filter(App $object, &$where=[], ArrayCollection &$parameters=null){
+    private static function filter(App $object, &$where=[], ArrayCollection|null &$parameters=null){
         $request = $object->request('filter') ?? [];
         $alias = lcfirst($object->request('entity'));
         $filter = $request ?? [];
