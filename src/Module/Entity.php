@@ -894,6 +894,7 @@ class Entity {
      */
     public static function list(App $object, EntityManager $entityManager, $role, $options=[]): array
     {
+        ddd($options);
         if(is_array($options)){
             $options = Core::object($options, Core::OBJECT);
         }
