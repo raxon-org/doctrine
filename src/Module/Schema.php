@@ -450,7 +450,12 @@ class Schema{
                             $both[] = '* @throws Exception';
                             $both[] = '*/';
                         }
-                        $both[] = 'public function ' . str_replace('.', '', lcfirst(Controller::name($column->name))) . '(' . $type . ' $' . $column->name . '=null): ' . $return_type;
+                        if(str_contains($type, 'null')){
+                            $both_type = $type;
+                        } else {
+                            $both_type = $type . '|null';
+                        }
+                        $both[] = 'public function ' . str_replace('.', '', lcfirst(Controller::name($column->name))) . '(' . $both_type . ' $' . $column->name . '=null): ' . $return_type;
                         $both[] = '{';
                         $both[] = '    if($' . $column->name . ' !== null){';
                         $both[] = '        $this->set' . str_replace('.', '', Controller::name($column->name)) . '($' . $column->name . ');';
