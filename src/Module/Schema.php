@@ -452,8 +452,10 @@ class Schema{
                         }
                         if(str_contains($type, 'null')){
                             $both_type = $type;
-                        } else {
+                        } else if($type !== 'mixed') {
                             $both_type = $type . '|null';
+                        } else {
+                            $both_type = $type;
                         }
                         $both[] = 'public function ' . str_replace('.', '', lcfirst(Controller::name($column->name))) . '(' . $both_type . ' $' . $column->name . '=null): ' . $return_type;
                         $both[] = '{';
