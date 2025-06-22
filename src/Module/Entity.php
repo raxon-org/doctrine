@@ -1007,6 +1007,7 @@ class Entity {
             $data['nodeList'] = [];
             $qb = $entityManager->createQueryBuilder();
             $entityName = $object->config('doctrine.entity.prefix') . $entity;
+            ddd($entityName);
             $joins = Entity::get_joins($object, $entity);
             $qb->select(['count(' . $alias . '.id)'])
                 ->from($entityName, $alias);
