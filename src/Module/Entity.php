@@ -1486,7 +1486,7 @@ class Entity {
         $entityName = $object->config('doctrine.entity.prefix') . $entity;
         $reflection = new ReflectionObject(new $entityName());
         $properties = $reflection->getProperties();
-        $reader = new AnnotationReader();
+        $reader = new AttributeReader();
         $has_set = [];
         foreach ($properties as $property) {
             $attributes = $reader->getPropertyAttributes($property);
