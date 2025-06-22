@@ -38,6 +38,7 @@ use ReflectionObject;
 
 
 class Entity {
+    use Plugin\User_Permission_Request;
 
     /**
      * @throws LocateException
@@ -1558,6 +1559,10 @@ class Entity {
     public static function get_relation(App $object, $entity1=null, $entity2=null, $single_or_multiple='single'): array
     {
         $function = 'get';
+
+        $request = self::user_permission_request($object, $entity1 . '.' . $entity2, $function);
+        ddd($request);
+
         $request = Permission::request($object, $entity1 . '.' . $entity2, $function);
         if(empty($request)){
             throw new Exception('Request is empty...');
@@ -1634,6 +1639,7 @@ class Entity {
                 throw new Exception('Cannot validate entity at: ' . Entity::getValidatorUrl($object, $entity));
             }
         }
+        ddd('need validate example');
         $validate = Main::validate($object, $request, $validate_url,  $type . '.delete');
         if($validate) {
             if($validate->success === true) {
