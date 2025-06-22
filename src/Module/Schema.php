@@ -463,6 +463,7 @@ class Schema{
                         if ($type === 'mixed') {
                             $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = null;';
                         } else {
+                            $type .= '|null';
                             $data_columns[] = 'protected ' . $type . ' $' . $column->name . ' = null;';
                         }
                         $data_columns[] = '';
