@@ -18,6 +18,7 @@ use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Exception;
 
+use Package\Raxon\Account\Module\Permission;
 use Raxon\App;
 use Raxon\Config;
 use Raxon\Doctrine\Service\Main;
@@ -38,7 +39,6 @@ use ReflectionObject;
 
 
 class Entity {
-    use \Plugin\User_Permission_Request;
 
     /**
      * @throws LocateException
@@ -1559,11 +1559,8 @@ class Entity {
     public static function get_relation(App $object, $entity1=null, $entity2=null, $single_or_multiple='single'): array
     {
         $function = 'get';
-
-        $request = self::user_permission_request($object, $entity1 . '.' . $entity2, $function);
-        ddd($request);
-
         $request = Permission::request($object, $entity1 . '.' . $entity2, $function);
+        ddd($request);
         if(empty($request)){
             throw new Exception('Request is empty...');
         }
