@@ -1550,4 +1550,156 @@ class Entity {
         }
         return $joins;
     }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws Exception
+     */
+    public static function get_relation(App $object, $entity1=null, $entity2=null, $single_or_multiple='single'): array
+    {
+        $function = 'get';
+        $request = Permission::request($object, $entity1 . '.' . $entity2, $function);
+        if(empty($request)){
+            throw new Exception('Request is empty...');
+        }
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entity = $entity1 . '.' . $entity2;
+        $type = $entity1 . '.' . $entity2;
+
+        $entityName1 = $object->config('doctrine.entity.prefix') . $entity1;
+        $repository = $entityManager->getRepository($entityName1);
+        $id = lcfirst($entity1) . '_id';
+        if(array_key_exists($id, $request)) {
+            $node1 = $repository->findOneBy([
+                'id' => $request[$id]
+            ]);
+            if (empty($node1)) {
+                throw new Exception('Could not find entity (' . $entity1 . ') with id: ' . $request[$id]);
+            }
+        } else {
+            throw new Exception('Could not find request with id: ' . $id);
+        }
+        if($single_or_multiple === 'single'){
+            $method = $function . ucfirst($entity2);
+        } else {
+            $method = $function . ucfirst($entity2) . 's';
+        }
+        if(method_exists($node1, $method)){
+            $entity = $entity1 . '.' . $entity2;
+            $data = [];
+            $record = [];
+            $toArray = Entity::expose_get(
+                $object,
+                $entity,
+                $entity . '.' . $function .'.expose'
+            );
+            $record = Entity::expose(
+                $object,
+                $node1,
+                $toArray,
+                $entity,
+                $function,
+                $record
+            );
+            $data['node'] = $record;
+            return $data;
+        }
+        throw new Exception('Cannot find method: ' . $method . ' at: ' . $entity1);
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     * @throws Exception
+     */
+    public static function delete_relation(App $object, $entity1=null, $entity2=null): array
+    {
+        $function = 'delete';
+        $request = Permission::request($object, $entity1 . '.' . $entity2, $function);
+        if(empty($request)){
+            throw new Exception('Request is empty...');
+        }
+        if(count($request) < 2){
+            throw new Exception('Request need more data...');
+        }
+        $entityManager = Database::entityManager($object, ['name' => Main::API]);
+        $entity = $entity1 . '.' . $entity2;
+        $type = $entity1 . '.' . $entity2;
+        $validate_url = Entity::getValidatorUrl($object, $entity);
+        if(!File::exist($validate_url)) {
+            $entity = $entity2 . '.' . $entity1;
+            $type = $entity2 . '.' . $entity1;
+            $validate_url = Entity::getValidatorUrl($object, $entity);
+            if(!File::exist($validate_url)) {
+                throw new Exception('Cannot validate entity at: ' . Entity::getValidatorUrl($object, $entity));
+            }
+        }
+        $validate = Main::validate($object, $request, $validate_url,  $type . '.delete');
+        if($validate) {
+            if($validate->success === true) {
+                $entityName1 = $object->config('doctrine.entity.prefix') . $entity1;
+                $repository = $entityManager->getRepository($entityName1);
+                $node1_id = mb_strtolower($entity1) . '_id';
+                if(array_key_exists($node1_id, $request)){
+                    $node1 = $repository->findOneBy([
+                        'id' => $request[$node1_id]
+                    ]);
+                    if(empty($node1)){
+                        throw new Exception('Could not find entity (' . $entity1 . ') with id: ' . $request[$node1_id]);
+                    }
+                } else {
+                    throw new Exception('Could not find request with id: ' . $node1_id);
+                }
+                $entityName2 = $object->config('doctrine.entity.prefix') . $entity2;
+                $repository = $entityManager->getRepository($entityName2);
+                $node2_id = mb_strtolower($entity2) . '_id';
+                if(array_key_exists($node2_id, $request)){
+                    $node2 = $repository->findOneBy([
+                        'id' => $request[$node2_id]
+                    ]);
+                    if(empty($node2)){
+                        throw new Exception('Could not find entity (' . $entity2 . ') with id: ' . $request[$node2_id]);
+                    }
+                } else {
+                    throw new Exception('Could not find request with id: ' . $node2_id);
+                }
+                $method = 'delete' . ucfirst($entity2);
+                if(method_exists($node1, $method)){
+                    $is_deleted = $node1->$method($node2);
+                    if($is_deleted){
+                        $entityManager->persist($node1);
+                        $entityManager->flush();
+                    } else {
+                        throw new Exception('Could not delete entity (' . $entity2 . ') with id: ' .  $request[$node2_id] .' from entity (' . $entity1 .') with id: ' . $request[$node1_id]);
+                    }
+                } else {
+                    throw new Exception('Method doesn\'t exist: ' . $method);
+                }
+                $entity = $entity1 . '.' . $entity2;
+                $data = [];
+                $record = [];
+                $toArray = Entity::expose_get(
+                    $object,
+                    $entity,
+                    $entity . '.' . $function .'.expose'
+                );
+                $record = Entity::expose(
+                    $object,
+                    $node1,
+                    $toArray,
+                    $entity,
+                    $function,
+                    $record
+                );
+                $data['node'] = $record;
+            } else {
+                $data = [];
+                $data['error'] = $validate->test;
+            }
+            return $data;
+        } else {
+            throw new Exception('Cannot validate entity at: ' . Entity::getValidatorUrl($object, $entity));
+        }
+    }
 }
