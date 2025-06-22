@@ -1481,6 +1481,27 @@ class Entity {
         return $filter;
     }
 
+    public static function has_set(App $object, $entity): array
+    {
+        $entityName = $object->config('doctrine.entity.prefix') . $entity;
+        $reflection = new ReflectionObject(new $entityName());
+        $properties = $reflection->getProperties();
+        $reader = new AnnotationReader();
+        $has_set = [];
+        foreach ($properties as $property) {
+            $annotations = $reader->getPropertyAnnotations($property);
+            foreach ($annotations as $annotation) {
+                if (in_array(get_class($annotation), [
+                    OneToOne::class,
+                    ManyToOne::class
+                ])) {
+                    $has_set[] = $property->getName();
+                }
+            }
+        }
+        return $has_set;
+    }
+
     /**
      * @throws Exception
      */
