@@ -18,7 +18,6 @@ use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Exception;
 
-use Raxon\Account\Module\Permission;
 use Raxon\App;
 use Raxon\Config;
 use Raxon\Doctrine\Service\Main;
