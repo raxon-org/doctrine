@@ -1489,9 +1489,9 @@ class Entity {
         $reader = new AnnotationReader();
         $has_set = [];
         foreach ($properties as $property) {
-            $annotations = $reader->getPropertyAnnotations($property);
-            foreach ($annotations as $annotation) {
-                if (in_array(get_class($annotation), [
+            $attributes = $reader->getPropertyAttributes($property);
+            foreach($attributes as $attribute) {
+                if (in_array(get_class($attribute), [
                     OneToOne::class,
                     ManyToOne::class
                 ])) {
