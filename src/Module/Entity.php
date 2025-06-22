@@ -38,7 +38,7 @@ use ReflectionObject;
 
 
 class Entity {
-    use Plugin\User_Permission_Request;
+    use \Plugin\User_Permission_Request;
 
     /**
      * @throws LocateException
