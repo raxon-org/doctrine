@@ -229,7 +229,7 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function create(App $object, object $connection, object $role, string $entity, object $request, object &$error = null): ?object
+    public static function create(App $object, object $connection, object $role, string $entity, object $request, object|null &$error=null): ?object
     {
         $data = [];
         $data[] = $request;
@@ -290,7 +290,7 @@ class Entity {
      * @throws ORMException
      * @throws Exception
      */
-    public static function patch(App $object, object $connection, object $role, object $request, object &$error = null): ?object
+    public static function patch(App $object, object $connection, object $role, object $request, object|null &$error=null): ?object
     {
         $entity = $object->request('entity');
         $data = [];
