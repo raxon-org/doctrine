@@ -1559,6 +1559,8 @@ class Entity {
     public static function get_relation(App $object, $entity1=null, $entity2=null, $single_or_multiple='single'): array
     {
         $function = 'get';
+        d($entity1);
+        d($entity2);
         $request = Permission::request($object, $entity1 . '.' . $entity2, $function);
         ddd($request);
         if(empty($request)){
