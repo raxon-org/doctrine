@@ -769,7 +769,6 @@ class Entity {
                                                     } else {
                                                         //need to add the node output if its a node (has property #class)
                                                         //below needed for sql joins
-                                                        d($child);
                                                         $child_entity = explode('Entity\\', get_class($child));
                                                         $child_record = [];
                                                         $child_record = Entity::output(
@@ -782,7 +781,7 @@ class Entity {
                                                             $role,
                                                         );
                                                     }
-                                                    $record[$attribute][] = $child_record;
+                                                    $record[$attribute][] = $child_record ?? null;
                                                 }
                                             } elseif (
                                                 method_exists($node, $method)
