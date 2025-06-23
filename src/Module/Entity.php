@@ -1627,17 +1627,18 @@ class Entity {
         $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $entity = $entity1 . '.' . $entity2;
         $type = $entity1 . '.' . $entity2;
-        $validate_url = Entity::getValidatorUrl($object, $entity);
+        $validate_url = Entity::get_validate_url($object, $entity);
         if(!File::exist($validate_url)) {
             $entity = $entity2 . '.' . $entity1;
             $type = $entity2 . '.' . $entity1;
-            $validate_url = Entity::getValidatorUrl($object, $entity);
+            $validate_url = Entity::get_validate_url($object, $entity);
             if(!File::exist($validate_url)) {
-                throw new Exception('Cannot validate entity at: ' . Entity::getValidatorUrl($object, $entity));
+                throw new Exception('Cannot validate entity at: ' . Entity::get_validate_url($object, $entity));
             }
         }
-        ddd('need validate example');
-        $validate = Main::validate($object, $request, $validate_url,  $type . '.delete');
+        $validation = Entity::get_validation($object, $validate_url, $type . '.delete');
+        $validate = Entity::validate($object, $validation, $request);
+        ddd($validate);
         if($validate) {
             if($validate->success === true) {
                 $entityName1 = $object->config('doctrine.entity.prefix') . $entity1;
