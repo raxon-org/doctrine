@@ -32,7 +32,7 @@ use Raxon\Module\Data;
 use Raxon\Module\Database;
 use Raxon\Module\File;
 use Raxon\Module\Limit;
-use Raxon\Module\Parse;
+use Raxon\Parse\Module\Parse;
 use Raxon\Node\Module\Node;
 
 use ReflectionObject;
@@ -507,8 +507,13 @@ class Entity {
                                     $compare = $explode[1];
                                     $attribute = $explode[0];
                                     if ($compare) {
-                                        $parse = new Parse($object, $object->data());
-                                        $compare = $parse->compile($compare, $object->data());
+                                        $data = new Data($object->data());
+                                        $flags = App::flags($object);
+                                        $options = (object) [];
+                                        $options->source = 'Internal_' . str_replace('-', '_', Core::uuid());
+                                        $parse = new Parse($object, $data, $flags, $options);
+                                        $compare = $parse->compile($compare, $data);
+                                        ddd($compare);
                                         if ($record_property !== $compare) {
                                             throw new Exception('Assertion failed: ' . $assertion . ' values [' . $record_property . ', ' . $compare . ']');
                                         }
