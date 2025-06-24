@@ -709,9 +709,16 @@ class Entity {
                                             $compare = $explode[1];
                                             $attribute = $explode[0];
                                             if ($compare) {
+                                                $data = new Data($object->data());
+                                                $flags = App::flags($object);
+                                                $options = (object) [];
+                                                $options->source = 'Internal_' . str_replace('-', '_', Core::uuid());
+                                                $parse = new Parse($object, $data, $flags, $options);
+                                                $compare = $parse->compile($compare, $data);
                                                 ddd($compare);
-                                                $parse = new Parse($object, $object->data());
-                                                $compare = $parse->compile($compare, $object->data());
+//                                                ddd($compare);
+//                                                $parse = new Parse($object, $object->data());
+//                                                $compare = $parse->compile($compare, $object->data());
                                                 if ($node->$method() !== $compare) {
                                                     throw new Exception('Assertion failed: ' . $assertion . ' values [' . $node->$method() . ', ' . $compare . ']');
                                                 }
