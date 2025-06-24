@@ -869,7 +869,6 @@ class Entity {
             }
 
         }
-        ddd($record);
         return $record;
     }
 
