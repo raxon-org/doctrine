@@ -715,10 +715,6 @@ class Entity {
                                                 $options->source = 'Internal_' . str_replace('-', '_', Core::uuid());
                                                 $parse = new Parse($object, $data, $flags, $options);
                                                 $compare = $parse->compile($compare, $data);
-                                                ddd($compare);
-//                                                ddd($compare);
-//                                                $parse = new Parse($object, $object->data());
-//                                                $compare = $parse->compile($compare, $object->data());
                                                 if ($node->$method() !== $compare) {
                                                     throw new Exception('Assertion failed: ' . $assertion . ' values [' . $node->$method() . ', ' . $compare . ']');
                                                 }
