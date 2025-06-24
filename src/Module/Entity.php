@@ -703,6 +703,7 @@ class Entity {
                                             $compare = $explode[1];
                                             $attribute = $explode[0];
                                             if ($compare) {
+                                                ddd($compare);
                                                 $parse = new Parse($object, $object->data());
                                                 $compare = $parse->compile($compare, $object->data());
                                                 if ($node->$method() !== $compare) {
