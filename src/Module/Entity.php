@@ -747,9 +747,9 @@ class Entity {
                                                         $attributes_reflection = $method_reflection->getAttributes();
                                                         foreach ($attributes_reflection as $attribute_reflection_nr => $attribute_reflection) {
                                                             $instance = $attribute_reflection->newInstance();
-                                                            $instance->{"#class"} = get_class($instance);
+                                                            $class = get_class($instance);
                                                             $attributes_reflection[$attribute_reflection_nr] = $instance;
-                                                            if($instance->{"#class"} === 'Raxon\Doctrine\Attribute\Node'){
+                                                            if($class === 'Raxon\Doctrine\Attribute\Node'){
                                                                 $node_instance = $instance;
                                                             }
                                                         }
