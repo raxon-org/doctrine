@@ -198,9 +198,9 @@ class Entity {
     public static function get_validation(App $object, $url, $type): object | false
     {
         $data = $object->data(sha1($url));
-        if($data === null){
-            d($url);
+        if($data === null){            
             $data = $object->parse_read($url, sha1($url));
+            d($data);
         }
         if($data){
             $validation = $data->data($type . '.validate');
