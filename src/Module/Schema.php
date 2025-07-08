@@ -31,6 +31,7 @@ class Schema{
         } else {
             return;
         }
+        d($node);
         if ($node->has('table')) {
             $table = $node->get('table');
             $entity = $node->get('entity');
