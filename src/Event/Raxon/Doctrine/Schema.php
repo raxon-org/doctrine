@@ -131,6 +131,7 @@ class Schema {
                                     $is_repository = true;
                                 }
                                 ddd('table exist work todo!');
+                                /*
                                 $table = Table::rename(
                                     $object,
                                     $config->name,
@@ -140,6 +141,7 @@ class Schema {
                                         'rename' => true
                                     ]
                                 );
+                                */
                                 d($table);
 
 
