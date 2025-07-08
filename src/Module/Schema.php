@@ -11,6 +11,14 @@ use Raxon\Module\File;
 
 class Schema {
 
+
+    public static function entity_create(App $object, string $class, object $role, object|array $node, $options=[]): void
+    {
+        d($class);
+        d($role);
+        d($node);
+    }
+
     /**
      * @throws FileWriteException
      * @throws Exception

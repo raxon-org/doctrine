@@ -112,12 +112,20 @@ class Schema {
                                  */
                                 //move below rename
                                 if($is_entity === false){
-                                    echo 'create entity class' . PHP_EOL;                                    
-                                    SchemaModule::entity2($object,
+                                    echo 'create entity class' . PHP_EOL;    
+                                    SchemaModule::entity_create(
+                                        $object, 
+                                        $options['class'], 
+                                        $options['role'], 
+                                        $options['node']
+                                    );
+                                    /*                                
+                                    SchemaModule::entity($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
-                                    );                                                                       
+                                    );
+                                    */                                                                       
                                     $is_entity = true;
                                 }
                                 if($is_repository === false){
