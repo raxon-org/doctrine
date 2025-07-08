@@ -118,8 +118,7 @@ class Schema {
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
-                                    );
-                                    */                                    
+                                    );                                                                       
                                     $is_entity = true;
                                 }
                                 if($is_repository === false){
