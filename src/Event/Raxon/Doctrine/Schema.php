@@ -94,7 +94,7 @@ class Schema {
                                 foreach($connection->table as $nr => $table){
                                     $file = $dir_backup_file . $table . $object->config('extension.sql');
                                     $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
-                                    d($command);
+                                    // d($command);
                                 }
 
                                 /**
@@ -112,8 +112,7 @@ class Schema {
                                  */
                                 //move below rename
                                 if($is_entity === false){
-                                    echo 'create entity class' . PHP_EOL;    
-                                    echo CliModule::info('why ?') . PHP_EOL;                                                                                                                                        
+                                    echo 'create entity class' . PHP_EOL;                                    
                                     SchemaModule::entity($object,
                                         $options['class'],
                                         $options['role'],

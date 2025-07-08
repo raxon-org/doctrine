@@ -9,7 +9,7 @@ use Raxon\Module\Data;
 use Raxon\Module\Dir;
 use Raxon\Module\File;
 
-class Schema{
+class Schema {
 
     /**
      * @throws FileWriteException
