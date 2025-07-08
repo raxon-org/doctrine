@@ -17,6 +17,7 @@ class Schema{
      */
     public static function entity(App $object, $class, $role, $node, $options=[]): void
     {
+        d($node);
         if (is_object($node)) {
             $node_class = get_class($node);
             switch ($node_class) {
