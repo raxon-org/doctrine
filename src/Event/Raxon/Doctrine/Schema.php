@@ -5,7 +5,7 @@ namespace Event\Raxon\Doctrine;
 use Raxon\App;
 use Raxon\Config;
 
-use Raxon\Module\Cli;
+use Raxon\Module\Cli as CliModule;
 use Raxon\Module\Core;
 use Raxon\Module\Dir;
 use Raxon\Module\File;
@@ -113,15 +113,13 @@ class Schema {
                                 //move below rename
                                 if($is_entity === false){
                                     echo 'create entity class' . PHP_EOL;    
-                                    echo Cli::info('why ?') . PHP_EOL;   
-                                    /*                                                                                                 
+                                    echo CliModule::info('why ?') . PHP_EOL;                                                                                                                                        
                                     SchemaModule::entity($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
                                     );
-                                    */
-                                    ddd($options);
+                                    */                                    
                                     $is_entity = true;
                                 }
                                 if($is_repository === false){
