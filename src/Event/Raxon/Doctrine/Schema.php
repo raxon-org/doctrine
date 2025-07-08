@@ -111,6 +111,7 @@ class Schema {
                                  */
                                 //move below rename
                                 if($is_entity === false){
+                                    echo 'create entity class' . PHP_EOL;
                                     SchemaModule::entity($object,
                                         $options['class'],
                                         $options['role'],
@@ -119,6 +120,7 @@ class Schema {
                                     $is_entity = true;
                                 }
                                 if($is_repository === false){
+                                    echo 'create repository class' . PHP_EOL;
                                     //only create repository class if not exist, resetting means deleting the repository class and rerun this event
                                     SchemaModule::repository($object,
                                         $options['class'],
