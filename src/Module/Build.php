@@ -9,7 +9,7 @@ use Raxon\Module\Data;
 use Raxon\Module\Dir;
 use Raxon\Module\File;
 
-class Schema {
+class Build {
 
     const FILE = __FILE__;
 
@@ -575,7 +575,7 @@ class Schema {
                                         $node_data[] ='class: "' . $column->options->target->node->class . '"';
                                     }
                                     if(property_exists($column->options->target->node, 'class')){
-                                        $node_data[] ='sort: ' . Schema::node_sort($column->options->target->node->sort);
+                                        $node_data[] ='sort: ' . Build::node_sort($column->options->target->node->sort);
                                     }
                                     if(property_exists($column->options->target->node, 'relation')){
                                         if(empty($column->options->target->node->relation)){
@@ -731,7 +731,7 @@ class Schema {
                                         $node_data[] ='class: "' . $column->options->target->node->class . '"';
                                     }
                                     if(property_exists($column->options->target->node, 'class')){
-                                        $node_data[] ='sort: ' . Schema::node_sort($column->options->target->node->sort);
+                                        $node_data[] ='sort: ' . Build::node_sort($column->options->target->node->sort);
                                     }
                                     if(property_exists($column->options->target->node, 'relation')){
                                         if(empty($column->options->target->node->relation)){

@@ -11,7 +11,7 @@ use Raxon\Module\Dir;
 use Raxon\Module\File;
 
 use Raxon\Doctrine\Module\Database;
-use Raxon\Doctrine\Module\Schema as SchemaModule;
+use Raxon\Doctrine\Module\Build;
 use Raxon\Doctrine\Service\Table;
 
 use Raxon\Node\Module\Node;
@@ -113,10 +113,9 @@ class Schema {
                                 //move below rename
                                 if($is_entity === false){
                                     echo 'create entity2 class' . PHP_EOL;    
-                                    d(Database::config($object));
-                                    echo SchemaModule::FILE . PHP_EOL;
+                                    d(Database::config($object));                                    
                                     echo 'strange' . PHP_EOL;
-                                    SchemaModule::entity_create(
+                                    Build::entity(
                                         $object, 
                                         $options['class'], 
                                         $options['role'], 
@@ -134,7 +133,7 @@ class Schema {
                                 if($is_repository === false){
                                     echo 'create repository class' . PHP_EOL;
                                     //only create repository class if not exist, resetting means deleting the repository class and rerun this event
-                                    SchemaModule::repository($object,
+                                    Build::repository($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -157,7 +156,7 @@ class Schema {
 
 
                                 try {
-                                    SchemaModule::sql($object,
+                                    Build::sql($object,
                                         $options['class'],
                                         $options['role'],
                                         $connection,
@@ -178,7 +177,7 @@ class Schema {
                                 */
                             } else {
                                 if($is_entity === false){
-                                    SchemaModule::entity($object,
+                                    Build::entity($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -187,7 +186,7 @@ class Schema {
                                 }
                                 if($is_repository === false){
                                     //only create repository class if not exist, resetting means deleting the repository class and rerun this event
-                                    SchemaModule::repository($object,
+                                    Build::repository($object,
                                         $options['class'],
                                         $options['role'],
                                         $options['node']
@@ -195,7 +194,7 @@ class Schema {
                                     $is_repository = true;
                                 }
                                 try {
-                                    SchemaModule::sql($object,
+                                    Build::sql($object,
                                         $options['class'],
                                         $options['role'],
                                         $connection,
