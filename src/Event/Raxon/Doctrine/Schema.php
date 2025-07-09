@@ -114,6 +114,7 @@ class Schema {
                                 if($is_entity === false){
                                     echo 'create entity2 class' . PHP_EOL;    
                                     echo SchemaModule::FILE . PHP_EOL;
+                                    echo 'strange' . PHP_EOL;
                                     SchemaModule::entity_create(
                                         $object, 
                                         $options['class'], 
