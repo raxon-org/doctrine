@@ -121,6 +121,7 @@ class Schema {
                                         $options['role'], 
                                         $options['node']
                                     ));
+                                    echo 'stranger' . PHP_EOL;
                                     /*                                
                                     SchemaModule::entity($object,
                                         $options['class'],
