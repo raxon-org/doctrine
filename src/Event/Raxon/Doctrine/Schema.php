@@ -115,12 +115,12 @@ class Schema {
                                     echo 'create entity2 class' . PHP_EOL;    
                                     d(Database::config($object));                                    
                                     echo 'strange' . PHP_EOL;
-                                    Build::entity(
+                                    d(Build::entity(
                                         $object, 
                                         $options['class'], 
                                         $options['role'], 
                                         $options['node']
-                                    );
+                                    ));
                                     /*                                
                                     SchemaModule::entity($object,
                                         $options['class'],
