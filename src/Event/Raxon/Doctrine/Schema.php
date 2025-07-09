@@ -112,7 +112,7 @@ class Schema {
                                  */
                                 //move below rename
                                 if($is_entity === false){
-                                    echo 'create entity class' . PHP_EOL;    
+                                    echo 'create entity2 class' . PHP_EOL;    
                                     echo SchemaModule::FILE . PHP_EOL;
                                     SchemaModule::entity_create(
                                         $object, 
