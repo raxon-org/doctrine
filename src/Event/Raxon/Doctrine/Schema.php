@@ -113,6 +113,7 @@ class Schema {
                                 //move below rename
                                 if($is_entity === false){
                                     echo 'create entity class' . PHP_EOL;    
+                                    echo SchemaModule::__FILE__ . PHP_EOL;
                                     SchemaModule::entity_create(
                                         $object, 
                                         $options['class'], 
