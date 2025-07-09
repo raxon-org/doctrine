@@ -11,6 +11,7 @@ use Raxon\Module\File;
 
 class Schema {
 
+    const FILE = __FILE__;
 
     public static function entity_create(App $object, string $class, object $role, object|array $node, $options=[]): void
     {
