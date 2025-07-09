@@ -1001,7 +1001,7 @@ class Build {
      * @throws Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public static function sql(App $object, string $class, object $role, object $connection=null, object $node=null, $options=[]): void
+    public static function sql(App $object, string $class, object $role, object|null  $connection=null, object|null $node=null, $options=[]): void
     {
         if(is_object($node)){
             $node_class = get_class($node);
