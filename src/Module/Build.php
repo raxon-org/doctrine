@@ -13,18 +13,11 @@ class Build {
 
     const FILE = __FILE__;
 
-    public static function entity_create(App $object, string $class, object $role, object|array $node, $options=[]): void
-    {
-        d($class);
-        d($role);
-        d($node);
-    }
-
     /**
      * @throws FileWriteException
      * @throws Exception
      */
-    public static function entity(App $object, $class, $role, $node, $options=[]): void
+    public static function entity(App $object, string $class, object $role, object|array $node, array $options=[]): void
     {
         d($node);
         ddd('found');
@@ -945,7 +938,7 @@ class Build {
      * @throws FileWriteException
      * @throws Exception
      */
-    public static function repository(App $object, $class, $role, $node, $options=[]): void
+    public static function repository(App $object, string $class, object $role, array | object $node, array $options=[]): void
     {
         if(is_object($node)){
             $node_class = get_class($node);
@@ -1001,7 +994,7 @@ class Build {
      * @throws Exception
      * @throws \Doctrine\DBAL\Exception
      */
-    public static function sql(App $object, string $class, object $role, object|null  $connection=null, object|null $node=null, $options=[]): void
+    public static function sql(App $object, string $class, object $role, object|null $connection=null, object|null $node=null, array $options=[]): void
     {
         if(is_object($node)){
             $node_class = get_class($node);
