@@ -18,9 +18,7 @@ class Build {
      * @throws Exception
      */
     public static function entity(App $object, string $class, object $role, object|array $node, array $options=[]): void
-    {
-        d($node);
-        ddd('found');
+    {        
         if (is_object($node)) {
             $node_class = get_class($node);
             switch ($node_class) {
@@ -34,8 +32,7 @@ class Build {
             $node = new Data($node);
         } else {
             return;
-        }
-        d($node);
+        }        
         if ($node->has('table')) {
             $table = $node->get('table');
             $entity = $node->get('entity');
