@@ -199,8 +199,7 @@ class Entity {
     {
         $data = $object->data(sha1($url));
         if($data === null){            
-            $data = $object->parse_read($url, sha1($url));
-            d($data);
+            $data = $object->parse_read($url, sha1($url));            
         }
         if($data){
             $validation = $data->data($type . '.validate');
@@ -208,6 +207,8 @@ class Entity {
                 return false;
             }
             return $validation;
+        } else {
+            throw new Exception('Validation (' . $url .') not found');
         }
         return false;
     }
