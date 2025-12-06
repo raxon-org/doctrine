@@ -102,7 +102,6 @@ class Database {
             ]);
         }
         $connection_array = Core::object($connection, Core::OBJECT_ARRAY);
-        dd($connection_array);
         $connection_array = DriverManager::getConnection($connection_array, $config);
         $eventManager = new EventManager();
         return new EntityManager($connection_array, $config, $eventManager);
