@@ -93,6 +93,9 @@ class Schema {
                                 File::copy($path, $dir_backup_file . File::basename($path));
                                 foreach($connection->table as $nr => $table){
                                     $file = $dir_backup_file . $table . $object->config('extension.sql');
+                                    if(File::exist($file)){
+                                        File::delete($file);
+                                    }
                                     $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
                                     // d($command);
                                 }
