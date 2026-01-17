@@ -182,12 +182,7 @@ trait Setup {
         }
         $node = new Node($object);
         $class = 'System.Doctrine';
-        $config = $node->record($class, $node->role_system());
-        if($config){
-            ddd($config);
-            //maybe patch some stuff
-            return;
-        }
+        $record = $node->record($class, $node->role_system());
         $data = [
             'environment' => '*',
             'proxy' => (object) [
@@ -200,6 +195,27 @@ trait Setup {
                 'prefix'  => '\\Entity\\'
             ]
         ];
+        if($record){
+            if(
+                property_exists($options, 'patch') &&
+                $options->patch === true
+            ){
+                $record->environment = '*';
+                $record->proxy = (object) [
+                    'dir' => '/tmp/doctrine/'
+                ];
+                $record->paths = [
+                    "{{config('project.dir.shared')}}Entity\/"
+                ];
+                $record->entity = (object) [
+                    'prefix'  => '\\Entity\\'
+                ];
+                $result = $node->patch($class, $node->role_system(), $record);
+                ddd($result);
+            }
+            //maybe patch some stuff
+            return;
+        }
         $result = $node->create($class, $node->role_system(), $data);
     }
 
