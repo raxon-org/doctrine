@@ -212,7 +212,6 @@ trait Setup {
                     'prefix'  => '\\Entity\\'
                 ];
                 $result = $node->patch($class, $node->role_system(), $record);
-                ddd($result);
             }
             //maybe patch some stuff
             return;
