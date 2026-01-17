@@ -261,7 +261,7 @@ trait Setup {
                 $record->path = "{{config('project.dir.data')}}Sqlite\/System.db";
                 $record->logging = true;
                 $response = $node->patch($class, $node->role_system(), $record);
-                d($response);
+                ddd($response);
             }
             return;
         }
@@ -273,7 +273,6 @@ trait Setup {
             'logging' => true
         ];
         $response = $node->create($class, $node->role_system(), $data);
-        d($response);
     }
 
 }
