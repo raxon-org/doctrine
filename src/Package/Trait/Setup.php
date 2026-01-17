@@ -193,34 +193,21 @@ trait Setup {
                 $options->patch === true
             ){
                 $record = $response['node'];
-
                 $data = $object->data_read($url);
                 if($data){
                     $default = $data->get('System.Doctrine.0');
-                    ddd($default);
+                    $record = Core::object_merge($default, $record);
                 }
-                d($data);
                 ddd($record);
-
-                /*
-                $record->environment = '*';
-                $record->proxy = (object) [
-                    'dir' => '/tmp/doctrine/'
-                ];
-                $record->paths = [
-                    "{{config('project.dir.shared')}}Entity\/"
-                ];
-                $record->entity = (object) [
-                    'prefix'  => '\\Entity\\'
-                ];
-                */
                 $result = $node->patch($class, $node->role_system(), $record);
             }
             return;
         }
         $data = $object->data_read($url);
-        ddd($data);
-        $result = $node->create($class, $node->role_system(), $data);
+        if($data){
+            $default = $data->get('System.Doctrine.0');
+            $result = $node->create($class, $node->role_system(), $default);
+        }
     }
 
     /**
