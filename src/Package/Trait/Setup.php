@@ -247,48 +247,33 @@ trait Setup {
             'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
             $object->config('extension.json')
         ;
-        if($response){
-            if(
+        if($response) {
+            if (
                 property_exists($options, 'patch') &&
                 $options->patch === true
-            ){
+            ) {
                 $record = $response['node'];
                 $data = $object->data_read($url);
-                if($data){
+                if ($data) {
                     $default = $data->get('System.Doctrine.Environment.0');
                     $record = Core::object_merge($record, $default);
                 }
                 $response = $node->patch($class, $node->role_system(), $record);
             }
-            ddd($response);
-            $config = Database::config($object);
-//            $connection = Schema::connection($object, $connection);
-//            $connection->manager = Database::entity_manager($object, $config, $connection);
-//            $connection->schema_manager = Database::schema_manager($connection->manager);
-
-
-
-
-/*
-            $url = $object->config('project.dir.data') . 'Sqlite/System.db';
-            if(!File::exist($url)){
-                $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
-                exec($command);
+        } else {
+            $data = $object->data_read($url);
+            if($data) {
+                $default = $data->get('System.Doctrine.Environment.0');
+                $response = $node->create($class, $node->role_system(), $default);
             }
-*/
-            return;
         }
-        $data = $object->data_read($url);
-        if($data) {
-            $default = $data->get('System.Doctrine.Environment.0');
-            $response = $node->create($class, $node->role_system(), $default);
+        $connection = $response['node'] ?? null;
+        if(!$connection) {
+            throw new Exception('Could not create System.Doctrine.Environment');
         }
-        /*
-        $url = $object->config('project.dir.data') . 'Sqlite/System.db';
-        if(!File::exist($url)){
-            $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
-            exec($command);
-        }
-        */
+        $config = Database::config($object);
+        $connection = Schema::connection($object, $connection);
+        $connection->manager = Database::entity_manager($object, $config, $connection);
+        $connection->schema_manager = Database::schema_manager($connection->manager);
     }
 }
