@@ -182,7 +182,7 @@ trait Setup {
         }
         $node = new Node($object);
         $class = 'System.Doctrine';
-        $record = $node->record($class, $node->role_system());
+        $response = $node->record($class, $node->role_system());
         $data = [
             'environment' => '*',
             'proxy' => (object) [
@@ -195,11 +195,12 @@ trait Setup {
                 'prefix'  => '\\Entity\\'
             ]
         ];
-        if($record){
+        if($response){
             if(
                 property_exists($options, 'patch') &&
                 $options->patch === true
             ){
+                $record = $response['node'];
                 $record->environment = '*';
                 $record->proxy = (object) [
                     'dir' => '/tmp/doctrine/'
@@ -241,7 +242,7 @@ trait Setup {
         }
         $node = new Node($object);
         $class = 'System.Doctrine.Environment';
-        $config = $node->record($class, $node->role_system(), [
+        $response = $node->record($class, $node->role_system(), [
             'where' => [
                 [
                     'attribute' => 'name',
@@ -250,9 +251,18 @@ trait Setup {
                 ]
             ]
         ]);
-        if($config){
-            ddd($config);
-            //maybe patch some stuff
+        if($response){
+            if(
+                property_exists($options, 'patch') &&
+                $options->patch === true
+            ){
+                $record = $response['node'];
+                $record->environment = '*';
+                $record->driver = 'pdo_sqlite';
+                $record->path = "{{config('project.dir.data')}}Sqlite\/System.db";
+                $record->logging = true;
+                $response = $node->patch($class, $node->role_system(), $record);
+            }
             return;
         }
         $data = [
@@ -262,8 +272,7 @@ trait Setup {
             'path' => "{{config('project.dir.data')}}Sqlite\/System.db",
             'logging' => true
         ];
-        $result = $node->create($class, $node->role_system(), $data);
-        ddd($result);
+        $response = $node->create($class, $node->role_system(), $data);
     }
 
 }
