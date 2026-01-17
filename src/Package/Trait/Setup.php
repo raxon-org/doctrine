@@ -196,10 +196,8 @@ trait Setup {
                 $data = $object->data_read($url);
                 if($data){
                     $default = $data->get('System.Doctrine.0');
-                    $default->environment = '*2';
                     $record = Core::object_merge($record, $default);
                 }
-                ddd($record);
                 $result = $node->patch($class, $node->role_system(), $record);
             }
             return;
@@ -242,27 +240,29 @@ trait Setup {
                 ]
             ]
         ]);
+        $url = $object->config('project.dir.vendor') .
+            'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
+            $object->config('extension.json')
+        ;
         if($response){
             if(
                 property_exists($options, 'patch') &&
                 $options->patch === true
             ){
                 $record = $response['node'];
-                $record->environment = '*';
-                $record->driver = 'pdo_sqlite';
-                $record->path = "{{config('project.dir.data')}}Sqlite\/System.db";
-                $record->logging = true;
+                $data = $object->data_read($url);
+                if($data){
+                    $default = $data->get('System.Doctrine.Environment.0');
+                    $record = Core::object_merge($record, $default);
+                }
                 $response = $node->patch($class, $node->role_system(), $record);
             }
             return;
         }
-        $data = [
-            'name' => 'system',
-            'environment' => '*',
-            'driver' => 'pdo_sqlite',
-            'path' => "{{config('project.dir.data')}}Sqlite\/System.db",
-            'logging' => true
-        ];
-        $response = $node->create($class, $node->role_system(), $data);
+        $data = $object->data_read($url);
+        if($data) {
+            $default = $data->get('System.Doctrine.Environment.0');
+            $response = $node->create($class, $node->role_system(), $default);
+        }
     }
 }
