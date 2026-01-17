@@ -196,6 +196,7 @@ trait Setup {
                 $data = $object->data_read($url);
                 if($data){
                     $default = $data->get('System.Doctrine.0');
+                    $default->environment = '*2';
                     $record = Core::object_merge($default, $record);
                 }
                 ddd($record);
