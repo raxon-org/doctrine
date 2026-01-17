@@ -201,8 +201,52 @@ trait Setup {
             ]
         ];
         $result = $node->create($class, $node->role_system(), $data);
+    }
 
-
+    /**
+     * @throws ObjectException
+     * @throws Exception
+     */
+    public function system_doctrine_environment(object $flags, object $options): void
+    {
+        $object = $this->object();
+        $posix_id = $object->config(Config::POSIX_ID);
+        if (
+            !in_array(
+                $posix_id,
+                [
+                    0,
+                    33
+                ],
+                true
+            )
+        ) {
+            throw new Exception('Access denied...');
+        }
+        $node = new Node($object);
+        $class = 'System.Doctrine.Environment';
+        $config = $node->record($class, $node->role_system(), [
+            'where' => [
+                [
+                    'attribute' => 'name',
+                    'operator' => '===',
+                    'value' => 'system'
+                ]
+            ]
+        ]);
+        if($config){
+            ddd($config);
+            //maybe patch some stuff
+            return;
+        }
+        $data = [
+            'name' => 'system',
+            'environment' => '*',
+            'driver' => 'pdo_sqlite',
+            'path' => "{{config('project.dir.data')}}Sqlite\/System.db",
+            'logging' => true
+        ];
+        $result = $node->create($class, $node->role_system(), $data);
         ddd($result);
     }
 
