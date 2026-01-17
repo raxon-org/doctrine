@@ -258,6 +258,11 @@ trait Setup {
                 }
                 $response = $node->patch($class, $node->role_system(), $record);
             }
+            $url = $object->config('project.dir.data') . 'Sqlite/System.db';
+            if(!File::exist($url)){
+                $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
+                exec($command);
+            }
             return;
         }
         $data = $object->data_read($url);
@@ -265,7 +270,6 @@ trait Setup {
             $default = $data->get('System.Doctrine.Environment.0');
             $response = $node->create($class, $node->role_system(), $default);
         }
-        //test environment with a vacuum if file not exist
         $url = $object->config('project.dir.data') . 'Sqlite/System.db';
         if(!File::exist($url)){
             $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
