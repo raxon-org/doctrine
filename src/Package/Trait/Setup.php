@@ -194,7 +194,7 @@ trait Setup {
                 'dir' => '/tmp/doctrine/'
             ],
             'paths' => [
-                "{{config('project.dir.source')}}Entity\/"
+                "{{config('project.dir.shared')}}Entity\/"
             ],
             'entity'  => (object) [
                 'prefix'  => '\\Entity\\'
