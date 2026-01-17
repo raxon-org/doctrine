@@ -183,7 +183,27 @@ trait Setup {
         $node = new Node($object);
         $class = 'System.Doctrine';
         $config = $node->record($class, $node->role_system());
-        ddd($config);
+        if($config){
+            ddd($config);
+            //maybe patch some stuff
+            return;
+        }
+        $data = [
+            'environment' => '*',
+            'proxy' => (object) [
+                'dir' => '/tmp/doctrine/'
+            ],
+            'paths' => [
+                "{{config('project.dir.source')}}Entity\/"
+            ],
+            'entity'  => (object) [
+                'prefix'  => '\\Entity\\'
+            ]
+        ];
+        $result = $node->create($class, $node->role_system(), $data);
+
+
+        ddd($result);
     }
 
 }
