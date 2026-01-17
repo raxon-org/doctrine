@@ -1,9 +1,11 @@
 <?php
 namespace Package\Raxon\Doctrine\Trait;
 
+use Event\Raxon\Doctrine\Schema;
 use Exception;
 use Raxon\App;
 use Raxon\Config;
+use Raxon\Doctrine\Module\Database;
 use Raxon\Exception\DirectoryCreateException;
 use Raxon\Exception\FileWriteException;
 use Raxon\Exception\ObjectException;
@@ -258,11 +260,22 @@ trait Setup {
                 }
                 $response = $node->patch($class, $node->role_system(), $record);
             }
+            ddd($response);
+            $config = Database::config($object);
+//            $connection = Schema::connection($object, $connection);
+//            $connection->manager = Database::entity_manager($object, $config, $connection);
+//            $connection->schema_manager = Database::schema_manager($connection->manager);
+
+
+
+
+/*
             $url = $object->config('project.dir.data') . 'Sqlite/System.db';
             if(!File::exist($url)){
                 $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
                 exec($command);
             }
+*/
             return;
         }
         $data = $object->data_read($url);
@@ -270,10 +283,12 @@ trait Setup {
             $default = $data->get('System.Doctrine.Environment.0');
             $response = $node->create($class, $node->role_system(), $default);
         }
+        /*
         $url = $object->config('project.dir.data') . 'Sqlite/System.db';
         if(!File::exist($url)){
             $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
             exec($command);
         }
+        */
     }
 }
