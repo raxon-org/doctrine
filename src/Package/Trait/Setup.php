@@ -195,7 +195,10 @@ trait Setup {
                 $record = $response['node'];
 
                 $data = $object->data_read($url);
-
+                if($data){
+                    $default = $data->get('System.Doctrine.0');
+                    ddd($default);
+                }
                 d($data);
                 ddd($record);
 
