@@ -1,0 +1,19 @@
+{
+    "System": {
+        "Doctrine": [
+            {
+                "#class": "System.Doctrine",
+                "environment": "*",
+                "proxy": {
+                    "dir": "\/tmp\/doctrine\/"
+                },
+                "paths": [
+                    "{{config('project.dir.shared')}}Entity\/"
+                ],
+                "entity": {
+                    "prefix": "\\Entity\\"
+                }
+            }
+        ]
+    }
+}

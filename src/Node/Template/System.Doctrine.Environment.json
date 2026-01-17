@@ -1,0 +1,16 @@
+{
+    "System": {
+        "Doctrine": {
+            "Environment": [
+                {
+                    "#class": "System.Doctrine.Environment",
+                    "name": "system",
+                    "environment": "*",
+                    "driver": "pdo_sqlite",
+                    "path": "{{config('project.dir.data')}}Sqlite\/System.db",
+                    "logging": true
+                }
+            ]
+        }
+    }
+}

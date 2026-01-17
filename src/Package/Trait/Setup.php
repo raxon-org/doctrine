@@ -180,27 +180,26 @@ trait Setup {
         ) {
             throw new Exception('Access denied...');
         }
+        $url = $object->config('project.dir.vendor') .
+            'raxon/doctrine/src/Node/Template/System.Doctrine' .
+            $object->config('extension.json')
+        ;
         $node = new Node($object);
         $class = 'System.Doctrine';
         $response = $node->record($class, $node->role_system());
-        $data = [
-            'environment' => '*',
-            'proxy' => (object) [
-                'dir' => '/tmp/doctrine/'
-            ],
-            'paths' => [
-                "{{config('project.dir.shared')}}Entity\/"
-            ],
-            'entity'  => (object) [
-                'prefix'  => '\\Entity\\'
-            ]
-        ];
         if($response){
             if(
                 property_exists($options, 'patch') &&
                 $options->patch === true
             ){
                 $record = $response['node'];
+
+                $data = $object->data_read($url);
+
+                d($data);
+                ddd($record);
+
+                /*
                 $record->environment = '*';
                 $record->proxy = (object) [
                     'dir' => '/tmp/doctrine/'
@@ -211,11 +210,13 @@ trait Setup {
                 $record->entity = (object) [
                     'prefix'  => '\\Entity\\'
                 ];
+                */
                 $result = $node->patch($class, $node->role_system(), $record);
             }
-            //maybe patch some stuff
             return;
         }
+        $data = $object->data_read($url);
+        ddd($data);
         $result = $node->create($class, $node->role_system(), $data);
     }
 
@@ -261,7 +262,6 @@ trait Setup {
                 $record->path = "{{config('project.dir.data')}}Sqlite\/System.db";
                 $record->logging = true;
                 $response = $node->patch($class, $node->role_system(), $record);
-                ddd($response);
             }
             return;
         }
@@ -274,5 +274,4 @@ trait Setup {
         ];
         $response = $node->create($class, $node->role_system(), $data);
     }
-
 }
