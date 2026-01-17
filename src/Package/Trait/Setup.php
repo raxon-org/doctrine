@@ -197,7 +197,7 @@ trait Setup {
                 if($data){
                     $default = $data->get('System.Doctrine.0');
                     $default->environment = '*2';
-                    $record = Core::object_merge($default, $record);
+                    $record = Core::object_merge($record, $default);
                 }
                 ddd($record);
                 $result = $node->patch($class, $node->role_system(), $record);
