@@ -13,6 +13,7 @@ use Raxon\Module\Dir;
 use Raxon\Node\Module\Node;
 
 trait Setup {
+    const SQLITE_COMMAND = 'sqlite3';
 
     /**
      * @throws DirectoryCreateException
@@ -263,6 +264,12 @@ trait Setup {
         if($data) {
             $default = $data->get('System.Doctrine.Environment.0');
             $response = $node->create($class, $node->role_system(), $default);
+        }
+        //test environment with a vacuum if file not exist
+        $url = $object->config('project.dir.data') . 'Sqlite/System.db';
+        if(!File::exist($url)){
+            $command = self::SQLITE_COMMAND . ' ' . $url . ' vacuum';
+            exec($command);
         }
     }
 }
