@@ -314,7 +314,7 @@ trait Setup {
         if($trigger){
             //each record in System.Doctrine.Schema needs to be exported
             $list = $node->list($class, $node->role_system(), ['limit' => 100000]);
-            if($list){
+            if($list['count'] > 0){
                 ddd($list);
             } else {
                 foreach($read as $file){
