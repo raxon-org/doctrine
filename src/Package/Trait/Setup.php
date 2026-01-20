@@ -293,22 +293,34 @@ trait Setup {
         $read = Sort::list($read)->with(['name' => 'ASC']);
         $node = new Node($object);
         $class = 'System.Doctrine.Schema';
+        $trigger = false;
         foreach($read as $file){
             if($file->type === File::TYPE){
-                $entity = File::basename($file->name, $object->config('extension.json'));
+                $file->entity = File::basename($file->name, $object->config('extension.json'));
                 $schema = $node->record($class, $node->role_system(), [
                     'where' => [
                         [
                             'attribute' => 'entity',
                             'operator' => '===',
-                            'value' => $entity,
+                            'value' => $file->entity,
                         ]
                     ]
                 ]);
-                d($entity);
-                d($schema);
-                //foreach file we need to check if it has a corresponding schema
-                ddd($file);
+                if(!$schema){
+                    $trigger = true;
+                }
+            }
+        }
+        if($trigger){
+            //each record in System.Doctrine.Schema needs to be exported
+            $list = $node->list($class, $node->role_system(), ['limit' => 100000]);
+            if($list){
+                ddd($list);
+            } else {
+                foreach($read as $file){
+                    ddd($file);
+                }
+                //new installation
             }
         }
         ddd($read);
