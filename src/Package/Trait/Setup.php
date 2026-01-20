@@ -290,6 +290,8 @@ trait Setup {
         $read = Sort::list($read)->with(['name' => 'ASC']);
         foreach($read as $file){
             if($file->type === File::TYPE){
+                $entity = File::basename($file->name, $object->config('extension.json'));
+                d($entity);
                 //foreach file we need to check if it has a corresponding schema
                 ddd($file);
             }
