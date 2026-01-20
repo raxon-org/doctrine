@@ -5,4 +5,5 @@
 {{$response = Package.Raxon.Doctrine:Setup:system.doctrine(flags(), options())}}
 {{$response = Package.Raxon.Doctrine:Setup:system.doctrine.environment(flags(), options())}}
 {{$response = Package.Raxon.Doctrine:Setup:doctrine.bin(flags(), options())}}
+{{$response = Package.Raxon.Doctrine:Setup:schema.register(flags(), options())}}
 {{/if}}

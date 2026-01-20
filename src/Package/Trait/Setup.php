@@ -276,4 +276,13 @@ trait Setup {
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $connection->schema_manager = Database::schema_manager($connection->manager);
     }
+
+    public function schema_register(object $flags, object $options): void
+    {
+        $object = $this->object();
+        $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
+        $dir = new Dir();
+        $read = $dir->read($dir_schema, true);
+        ddd($read);
+    }
 }
