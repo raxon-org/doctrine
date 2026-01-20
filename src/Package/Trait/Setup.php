@@ -12,6 +12,7 @@ use Raxon\Exception\ObjectException;
 use Raxon\Module\Core;
 use Raxon\Module\File;
 use Raxon\Module\Dir;
+use Raxon\Module\Sort;
 use Raxon\Node\Module\Node;
 
 trait Setup {
@@ -283,6 +284,7 @@ trait Setup {
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
         $dir = new Dir();
         $read = $dir->read($dir_schema, true);
+        $read = Sort::list($read)->with(['name' => 'ASC']);
         foreach($read as $file){
             if($file->type === File::TYPE){
                 //foreach file we need to check if it has a corresponding schema
