@@ -284,6 +284,9 @@ trait Setup {
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
         $dir = new Dir();
         $read = $dir->read($dir_schema, true);
+        if(!$read){
+            return;
+        }
         $read = Sort::list($read)->with(['name' => 'ASC']);
         foreach($read as $file){
             if($file->type === File::TYPE){
