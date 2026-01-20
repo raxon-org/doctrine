@@ -312,17 +312,18 @@ trait Setup {
             }
         }
         if($trigger){
-            //each record in System.Doctrine.Schema needs to be exported
             $list = $node->list($class, $node->role_system(), ['limit' => 100000]);
             if($list['count'] > 0){
+                //each record in System.Doctrine.Schema needs to be exported
                 ddd($list);
             } else {
-                foreach($read as $file){
-                    ddd($file);
-                }
                 //new installation
+                foreach($read as $file){
+                    $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
+                    exec($command, $output);
+                    echo implode(PHP_EOL, $output) . PHP_EOL;
+                }
             }
         }
-        ddd($read);
     }
 }
