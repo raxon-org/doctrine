@@ -278,6 +278,9 @@ trait Setup {
         $connection->schema_manager = Database::schema_manager($connection->manager);
     }
 
+    /**
+     * @throws ObjectException
+     */
     public function schema_register(object $flags, object $options): void
     {
         $object = $this->object();
@@ -288,10 +291,22 @@ trait Setup {
             return;
         }
         $read = Sort::list($read)->with(['name' => 'ASC']);
+        $node = new Node($object);
+        $class = 'System.Doctrine.Schema';
         foreach($read as $file){
             if($file->type === File::TYPE){
                 $entity = File::basename($file->name, $object->config('extension.json'));
+                $schema = $node->record($class, $node->role_system(), [
+                    'where' => [
+                        [
+                            'attribute' => 'entity',
+                            'operator' => '===',
+                            'value' => $entity,
+                        ]
+                    ]
+                ]);
                 d($entity);
+                d($schema);
                 //foreach file we need to check if it has a corresponding schema
                 ddd($file);
             }
