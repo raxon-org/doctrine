@@ -312,7 +312,10 @@ trait Setup {
             }
         }
         if($trigger){
-            $list = $node->list($class, $node->role_system(), ['limit' => 100000, ['relation' => true]]);
+            $list = $node->list($class, $node->role_system(), [
+                'limit' => 100000,
+                'relation' => true
+            ]);
             if($list['count'] > 0){
                 //each record in System.Doctrine.Schema needs to be exported
                 ddd($list);
