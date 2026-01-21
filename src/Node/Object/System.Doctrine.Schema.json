@@ -12,6 +12,10 @@
                 "type": "string"
             },
             {
+                "name": "version",
+                "type": "string"
+            },
+            {
                 "name": "column",
                 "type": "object"
             },
