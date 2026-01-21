@@ -333,6 +333,11 @@ trait Setup {
                 //each record in System.Doctrine.Schema needs to be exported
                 foreach($response['list'] as $schema){
                     d($schema);
+//                    $file = $dir_backup_file . $table . $object->config('extension.sql');
+//                    $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
+
+
+
                 }
             } else {
                 //new installation
