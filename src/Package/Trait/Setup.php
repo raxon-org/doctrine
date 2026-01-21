@@ -310,6 +310,11 @@ trait Setup {
                     $trigger = true;
                 } else {
                     $file->read = $object->data_read($file->url);
+                    if($file->read){
+                        $version = $file->read->get('System.Doctrine.Schema.0.version');
+                        d($version);
+                        ddd($schema['node']->version);
+                    }
                     d($file->read);
 
                     ddd($schema);
