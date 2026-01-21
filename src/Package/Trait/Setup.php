@@ -308,6 +308,8 @@ trait Setup {
                 ]);
                 if(!$schema){
                     $trigger = true;
+                } else {
+                    ddd($schema);
                 }
             }
         }
