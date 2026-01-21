@@ -208,7 +208,6 @@ trait Main {
         }
         $object = $this->object();
         $config = $this->config($options);
-        ddd($config);
         if($config){
             if(
                 property_exists($config, 'name') &&
