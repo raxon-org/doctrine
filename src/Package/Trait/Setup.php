@@ -309,6 +309,9 @@ trait Setup {
                 if(!$schema){
                     $trigger = true;
                 } else {
+                    $file->read = $object->data_read($file->url);
+                    d($file->read);
+
                     ddd($schema);
                 }
             }
