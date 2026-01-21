@@ -325,13 +325,15 @@ trait Setup {
             }
         }
         if($trigger){
-            $list = $node->list($class, $node->role_system(), [
+            $response = $node->list($class, $node->role_system(), [
                 'limit' => 100000,
                 'relation' => true
             ]);
-            if($list['count'] > 0){
+            if($response['count'] > 0){
                 //each record in System.Doctrine.Schema needs to be exported
-                ddd($list);
+                foreach($response['list'] as $schema){
+                    d($schema);
+                }
             } else {
                 //new installation
                 foreach($read as $file){
