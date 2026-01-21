@@ -281,7 +281,7 @@ trait Setup {
     /**
      * @throws ObjectException
      */
-    public function schema_register(object $flags, object $options): void
+    public function schema_update(object $flags, object $options): void
     {
         $object = $this->object();
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
