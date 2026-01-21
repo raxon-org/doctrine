@@ -312,12 +312,15 @@ trait Setup {
                     $file->read = $object->data_read($file->url);
                     if($file->read){
                         $version = $file->read->get('System.Doctrine.Schema.0.version');
-                        d($version);
-                        ddd($schema['node']->version);
+                        if(
+                            $version &&
+                            array_key_exists('node', $schema) &&
+                            property_exists($schema['node'], 'version') &&
+                            $version !== $schema['node']->version
+                        ){
+                            $trigger = true;
+                        }
                     }
-                    d($file->read);
-
-                    ddd($schema);
                 }
             }
         }
