@@ -71,7 +71,6 @@ class Schema {
                             $connection->manager = Database::entity_manager($object, $config, $connection);
                             $connection->schema_manager = Database::schema_manager($connection->manager);
                             $connection->table = $connection->schema_manager->listTableNames();
-                            ddd($connection->table);
                             Build::sql($object,
                                 $options['class'],
                                 $options['role'],
