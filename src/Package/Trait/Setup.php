@@ -373,7 +373,7 @@ trait Setup {
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
                 }
-                $connection_backup = $response['node'] ?? null;
+                $connection_backup = clone $response['node'] ?? null;
                 $connection_backup->name = 'system_backup';
                 $connection_backup->path = $url_system_backup;
                 $config = Database::config($object);
