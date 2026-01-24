@@ -378,7 +378,7 @@ trait Setup {
                 $connection_backup->path = $url_system_backup;
                 $config = Database::config($object);
                 $connection_backup = Schema::connection($object, $connection_backup);
-                $connection_backup->manager = Database::entity_manager($object, $config, $connection);
+                $connection_backup->manager = Database::entity_manager($object, $config, $connection_backup);
                 $connection_backup->schema_manager = Database::schema_manager($connection_backup->manager);
                 foreach($list as $file){
                     if($file->type === File::TYPE && property_exists($file, 'entity')){
