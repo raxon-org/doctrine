@@ -311,7 +311,6 @@ trait Setup {
                 if(!$schema){
                     echo 'Updating, no schema found for: ' . $file->entity . PHP_EOL;
                     $trigger = true;
-                    break;
                 } else {
                     $file->read = $object->data_read($file->url);
                     if($file->read){
@@ -324,7 +323,6 @@ trait Setup {
                         ){
                             echo 'Updating ' . $file->entity . ' from version: '. $schema['node']->version . ' to version: '. $version . PHP_EOL;
                             $trigger = true;
-                            break;
                         }
                     }
                 }
