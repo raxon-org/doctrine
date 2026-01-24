@@ -388,9 +388,10 @@ trait Setup {
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
                         foreach($columns as $column){
                             $column_options = new Data($column->options ?? []);
-                            d($column_options);
+                            if($column_options->has('join.table')){
+                                echo $column_options->get('join.table') . PHP_EOL;
+                            }
                         }
-
                     }
                     elseif($file->type === File::TYPE){
                         d($file);
