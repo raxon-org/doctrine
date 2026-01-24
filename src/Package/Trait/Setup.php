@@ -281,6 +281,7 @@ trait Setup {
 
     /**
      * @throws ObjectException
+     * @throws Exception
      */
     public function schema_update(object $flags, object $options): void
     {
@@ -308,7 +309,9 @@ trait Setup {
                     ]
                 ]);
                 if(!$schema){
+                    echo 'Updating, new schema found...' . PHP_EOL;
                     $trigger = true;
+                    break;
                 } else {
                     $file->read = $object->data_read($file->url);
                     if($file->read){
@@ -319,13 +322,15 @@ trait Setup {
                             property_exists($schema['node'], 'version') &&
                             $version !== $schema['node']->version
                         ){
+                            echo 'Updating ' . $file->entity . ' from version: '. $schema['node']->version . ' to version: '. $version . PHP_EOL;
                             $trigger = true;
+                            break;
                         }
                     }
                 }
             }
         }
-        if($trigger){
+        if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
                 'limit' => 100000,
                 'relation' => true
