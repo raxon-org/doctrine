@@ -443,25 +443,12 @@ trait Main {
                 property_exists($config, 'environment')
             ){
                 $columns = Column::all($object, $config->name, $config->environment, $options_column);
-                $data = [];
-                $data[] = '{';
-                foreach($columns as $column){
-                    $data[] = '    ' . '"' . $column['name'] . '": "' . $column['type'] . '",';
-                }
-                $pop = substr(array_pop($data), 0 ,-1);
-                $data[] = $pop;
-                $data[] = '}';
-                echo implode(PHP_EOL, $data) . PHP_EOL;
                 foreach($list['nodeList'] as $row){
-                    $data = [];
-                    $data[] = '{';
+                    $record = [];
                     foreach($columns as $column){
-                        $data[] = '    ' . '"' . $column['name'] . '": "' . $row[$column['name']] . '",';
+                        $record[$column['name']] = $row[$column['name']];
                     }
-                    $pop = substr(array_pop($data), 0 ,-1);
-                    $data[] = $pop;
-                    $data[] = '}';
-                    echo implode(PHP_EOL, $data) . PHP_EOL;
+                    ddd($record);
                 }
             }
         }
