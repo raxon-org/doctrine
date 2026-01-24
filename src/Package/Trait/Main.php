@@ -465,19 +465,6 @@ trait Main {
                 }
             }
         }
-        ddd($list);
-
-
-        $config = $this->config($options);
-        ddd($config);
-        if($config){
-            if(
-                property_exists($config, 'name') &&
-                property_exists($config, 'environment')
-            ){
-                return Column::all($object, $config->name, $config->environment, $options);
-            }
-        }
         return [];
     }
 
