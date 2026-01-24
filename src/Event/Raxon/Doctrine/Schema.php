@@ -5,6 +5,7 @@ namespace Event\Raxon\Doctrine;
 use Raxon\App;
 use Raxon\Config;
 
+use Raxon\Doctrine\Event\Raxon\Doctrine\Schema_old;
 use Raxon\Module\Cli as CliModule;
 use Raxon\Module\Core;
 use Raxon\Module\Dir;
@@ -64,6 +65,24 @@ class Schema {
                         $options['role'],
                         $options['node']
                     );
+                    foreach($options['node']->environment as $name => $environments) {
+                        foreach ($environments as $environment => $connection) {
+                            $connection = Schema::connection($object, $connection);
+                            $connection->manager = Database::entity_manager($object, $config, $connection);
+                            $connection->schema_manager = Database::schema_manager($connection->manager);
+                            $connection->table = $connection->schema_manager->listTableNames();
+                            ddd($connection->table);
+                            Build::sql($object,
+                                $options['class'],
+                                $options['role'],
+                                $connection,
+                                $options['node'],
+                                [
+                                    'config' => $config,
+                                ]
+                            );
+                        }
+                    }
                 }
             }
         }
