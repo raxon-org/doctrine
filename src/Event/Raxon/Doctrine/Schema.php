@@ -45,11 +45,6 @@ class Schema {
      */
     public static function create(App $object, $event, $options=[]): void
     {
-        ddd('here###############################################################');
-        //if exist rename table
-        $node = false;
-        $is_entity = false;
-        $is_repository = false;
         $config = Database::config($object);
         $node = new Node($object);
         if(array_key_exists('node', $options)){
@@ -58,12 +53,29 @@ class Schema {
                     is_array($options['node']->environment) ||
                     is_object($options['node']->environment)
                 ){
+                    Build::entity($object,
+                        $options['class'],
+                        $options['role'],
+                        $options['node']
+                    );
+                    Build::repository($object,
+                        $options['class'],
+                        $options['role'],
+                        $options['node']
+                    );
+
+
                     foreach($options['node']->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
                             $connection = Schema::connection($object, $connection);
                             $connection->manager = Database::entity_manager($object, $config, $connection);
                             $connection->schema_manager = Database::schema_manager($connection->manager);
                             $connection->table = $connection->schema_manager->listTableNames();
+
+
+
+
+
                             /*
                             $em_connection = $em->getConnection();
                             $schema_manager = $em_connection->createSchemaManager();
