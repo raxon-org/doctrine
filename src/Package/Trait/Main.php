@@ -434,27 +434,7 @@ trait Main {
         $em = Database::entity_manager($object, $config, $connection);
         $entity = str_replace('.', '', Controller::name($table));
         $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
-        $options_column = clone $options;
-        $options_column->table = $table;
-        $config = $this->config($options_column);
-        $result = [];
-        if($config){
-            if(
-                property_exists($config, 'name') &&
-                property_exists($config, 'environment')
-            ){
-                $columns = Column::all($object, $config->name, $config->environment, $options_column);
-                foreach($list['nodeList'] as $row){
-                    ddd($row);
-                    $record = [];
-                    foreach($columns as $column){
-                        $record[$column['name']] = $row[$column['name']] ?? null;
-                    }
-                    $result[] = $record;
-                }
-            }
-        }
-        return $result;
+        return $list['nodeList'] ?? [];
     }
 
     /**
