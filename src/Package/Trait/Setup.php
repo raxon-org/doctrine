@@ -292,11 +292,11 @@ trait Setup {
         if(!$read){
             return;
         }
-        $read = Sort::list($read)->with(['name' => 'ASC']);
+        $list = Sort::list($read)->with(['name' => 'ASC']);
         $node = new Node($object);
         $class = 'System.Doctrine.Schema';
         $trigger = false;
-        foreach($read as $file){
+        foreach($list as $file){
             if($file->type === File::TYPE){
                 $file->entity = str_replace('.', '', File::basename($file->name, $object->config('extension.json')));
                 $schema = $node->record($class, $node->role_system(), [
@@ -337,7 +337,6 @@ trait Setup {
                 $url_system = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds') . 'System.db';
                 $url_system_backup = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds') . 'System.backup.db';
                 File::move($url_system, $url_system_backup);
-
                 $node = new Node($object);
                 $class = 'System.Doctrine.Environment';
                 $response = $node->record($class, $node->role_system(), [
@@ -354,7 +353,7 @@ trait Setup {
                 $connection = Schema::connection($object, $connection);
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
-                foreach($read as $file){
+                foreach($list as $file){
                     if(
                         property_exists($options, 'patch') &&
                         $options->patch === true
@@ -373,7 +372,13 @@ trait Setup {
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
                 }
-                foreach($read as $file){
+                $connection_backup = $response['node'] ?? null;
+                breakpoint($connection_backup);
+                $config = Database::config($object);
+                $connection_backup = Schema::connection($object, $connection_backup);
+                $connection_backup->manager = Database::entity_manager($object, $config, $connection);
+                $connection_backup->schema_manager = Database::schema_manager($connection_backup->manager);
+                foreach($list as $file){
                     if($file->type === File::TYPE && property_exists($file, 'entity')){
                         echo $file->entity . PHP_EOL;
                     }
@@ -381,12 +386,14 @@ trait Setup {
                         d($file);
                     }
                 }
+
+
                 breakpoint('create backup connection');
                 //create backup connection
                 //copy foreach entity to the connection...
             } else {
                 //new installation
-                foreach($read as $file){
+                foreach($list as $file){
                     $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
