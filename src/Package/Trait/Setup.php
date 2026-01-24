@@ -293,6 +293,7 @@ trait Setup {
             return;
         }
         $read = Sort::list($read)->with(['name' => 'ASC']);
+        ddd($read);
         $node = new Node($object);
         $class = 'System.Doctrine.Schema';
         $trigger = false;
