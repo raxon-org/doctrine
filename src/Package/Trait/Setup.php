@@ -333,7 +333,7 @@ trait Setup {
             if($response['count'] > 0){
                 //each record in System.Doctrine.Schema needs to be exported
                 foreach($response['list'] as $schema){
-                    d($schema);
+//                    d($schema);
 //                    $file = $dir_backup_file . $table . $object->config('extension.sql');
 //                    $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
 
@@ -342,6 +342,7 @@ trait Setup {
                 }
                 foreach($read as $file){
                     $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
+                    echo $command . PHP_EOL;
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
                 }
