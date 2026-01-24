@@ -680,6 +680,8 @@ trait Main {
             // - r3m.io.node.put (schema) -> create entity, patch table(s)
             // - r3m.io.node.delete (schema) -> delete entity, drop table(s)
         }
+        d($options);
+        d($class);
         $node = new Node($object);
         $class = 'System.Doctrine.Schema';
         $role = $node->role_system();
