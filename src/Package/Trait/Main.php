@@ -446,7 +446,7 @@ trait Main {
                 $data = [];
                 $data[] = '{';
                 foreach($columns as $column){
-                    $data[] = '"' . $column['name'] . '": "' . $column['type'] . '",' . PHP_EOL;
+                    $data[] = '"' . $column['name'] . '": "' . $column['type'] . '",';
                 }
                 $pop = substr(array_pop($data), 0 ,-1);
                 $data[] = $pop;
