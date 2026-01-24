@@ -446,7 +446,7 @@ trait Main {
                 $data = [];
                 $data[] = '{';
                 foreach($columns as $column){
-                    $data[] = '"' . $column['name'] . '": "' . $column['type'] . '",';
+                    $data[] = "\t" . '"' . $column['name'] . '": "' . $column['type'] . '",';
                 }
                 $pop = substr(array_pop($data), 0 ,-1);
                 $data[] = $pop;
@@ -456,7 +456,7 @@ trait Main {
                     $data = [];
                     $data[] = '{';
                     foreach($columns as $column){
-                        $data[] = '"' . $column['name'] . '": "' . $row[$column['name']] . '",';
+                        $data[] = "\t" . '"' . $column['name'] . '": "' . $row[$column['name']] . '",';
                     }
                     $pop = substr(array_pop($data), 0 ,-1);
                     $data[] = $pop;
