@@ -437,6 +437,7 @@ trait Main {
         $options_column = clone $options;
         $options_column->table = $table;
         $config = $this->config($options_column);
+        $result = [];
         if($config){
             if(
                 property_exists($config, 'name') &&
@@ -448,11 +449,11 @@ trait Main {
                     foreach($columns as $column){
                         $record[$column['name']] = $row[$column['name']] ?? null;
                     }
-                    ddd($record);
+                    $result[] = $record;
                 }
             }
         }
-        return [];
+        return $result;
     }
 
     /**
