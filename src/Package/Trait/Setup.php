@@ -373,7 +373,8 @@ trait Setup {
                     echo implode(PHP_EOL, $output) . PHP_EOL;
                 }
                 $connection_backup = $response['node'] ?? null;
-                breakpoint($connection_backup);
+                $connection_backup->name = 'system_backup';
+                $connection_backup->path = $url_system_backup;
                 $config = Database::config($object);
                 $connection_backup = Schema::connection($object, $connection_backup);
                 $connection_backup->manager = Database::entity_manager($object, $config, $connection);
