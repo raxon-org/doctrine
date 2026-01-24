@@ -293,7 +293,6 @@ trait Setup {
             return;
         }
         $read = Sort::list($read)->with(['name' => 'ASC']);
-        ddd($read);
         $node = new Node($object);
         $class = 'System.Doctrine.Schema';
         $trigger = false;
@@ -331,6 +330,7 @@ trait Setup {
                 }
             }
         }
+        breakpoint('trigger?');
         if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
                 'limit' => 100000,
