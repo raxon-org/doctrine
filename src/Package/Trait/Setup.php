@@ -385,6 +385,8 @@ trait Setup {
 //                        "join": {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
+                        $tables = $connection_backup->schema_manager->listTableNames();
+                        ddd($tables);
                         //get all data from this entity from the backup connection
                         $data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findAll();
                         d($data);
