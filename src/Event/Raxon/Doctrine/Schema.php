@@ -63,7 +63,7 @@ class Schema {
                         $options['role'],
                         $options['node']
                     );
-
+                    die;
 
                     foreach($options['node']->environment as $name => $environments){
                         foreach($environments as $environment => $connection){
