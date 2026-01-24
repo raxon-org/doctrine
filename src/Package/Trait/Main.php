@@ -442,7 +442,7 @@ trait Main {
                 property_exists($config, 'name') &&
                 property_exists($config, 'environment')
             ){
-                $columns = Column::all($object, $config->name, $config->environment, $options);
+                $columns = Column::all($object, $config->name, $config->environment, $options_column);
                 breakpoint($columns);
             }
         }
