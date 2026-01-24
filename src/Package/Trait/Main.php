@@ -435,7 +435,7 @@ trait Main {
         $entity = str_replace('.', '', Controller::name($table));
         $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
         $columns = Column::all($object, $config->name, $config->environment, $options);
-        d($columns);
+        breakpoint($columns);
         ddd($list);
 
 
