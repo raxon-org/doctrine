@@ -433,6 +433,7 @@ trait Main {
         }
         $em = Database::entity_manager($object, $config, $connection);
         $entity = str_replace('.', '', Controller::name($table));
+        d($entity);
         $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
         ddd($list);
 
