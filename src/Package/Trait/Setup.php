@@ -381,7 +381,10 @@ trait Setup {
                 $connection_backup->schema_manager = Database::schema_manager($connection_backup->manager);
                 foreach($list as $file){
                     if($file->type === File::TYPE && property_exists($file, 'entity')){
+//                        "join": {
+//                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
+                        d($file);
                     }
                     elseif($file->type === File::TYPE){
                         d($file);
