@@ -354,6 +354,8 @@ trait Setup {
                 $connection = Schema::connection($object, $connection);
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
+                $tables = $connection->schema_manager->listTableNames();
+                d($tables);
                 foreach($list as $file){
                     if(
                         property_exists($options, 'patch') &&
@@ -406,16 +408,16 @@ trait Setup {
                         d($file);
                     }
                 }
+                $connection = $response['node'] ?? null;
+                $config = Database::config($object);
+                $connection = Schema::connection($object, $connection);
+                $connection->manager = Database::entity_manager($object, $config, $connection);
+                $connection->schema_manager = Database::schema_manager($connection->manager);
                 foreach($list as $file) {
                     if ($file->type === File::TYPE && property_exists($file, 'data')) {
                         if (!empty($file->data)) {
                             foreach ($file->data as $item) {
                                 try {
-                                    $connection = $response['node'] ?? null;
-                                    $config = Database::config($object);
-                                    $connection = Schema::connection($object, $connection);
-                                    $connection->manager = Database::entity_manager($object, $config, $connection);
-                                    $connection->schema_manager = Database::schema_manager($connection->manager);
                                     $connection->manager->persist($item);
                                     $connection->manager->flush();
                                 } catch (Exception $e) {
