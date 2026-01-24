@@ -443,7 +443,20 @@ trait Main {
                 property_exists($config, 'environment')
             ){
                 $columns = Column::all($object, $config->name, $config->environment, $options_column);
-                breakpoint($columns);
+                echo '{' . PHP_EOL;
+                foreach($columns as $column){
+                    echo $column->name . ' (' . $column->type . ')' . PHP_EOL;
+                }
+                echo '}' . PHP_EOL;
+                foreach($list['nodeList'] as $row){
+                    $data = [];
+                    $data[] = '{';
+                    foreach($columns as $column){
+                        $data[] = '"' . $column->name . '":' . $row[$column->name];
+                    }
+                    $data[] = '}';
+                    echo implode('', $data) . PHP_EOL;
+                }
             }
         }
         ddd($list);
