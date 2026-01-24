@@ -341,7 +341,20 @@ trait Setup {
 
                 }
                 foreach($read as $file){
-                    $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
+                    if(
+                        property_exists($options, 'patch') &&
+                        $options->patch === true
+                    ){
+                        $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system -patch';
+                    }
+                    elseif(
+                        property_exists($options, 'force') &&
+                        $options->force === true
+                    ){
+                        $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system -force';
+                    } else {
+                        $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
+                    }
                     echo $command . PHP_EOL;
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
