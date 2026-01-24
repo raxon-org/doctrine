@@ -445,6 +445,7 @@ trait Main {
             ){
                 $columns = Column::all($object, $config->name, $config->environment, $options_column);
                 foreach($list['nodeList'] as $row){
+                    d($row);
                     $record = [];
                     foreach($columns as $column){
                         $record[$column['name']] = $row[$column['name']] ?? null;
