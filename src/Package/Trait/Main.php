@@ -446,7 +446,7 @@ trait Main {
                 foreach($list['nodeList'] as $row){
                     $record = [];
                     foreach($columns as $column){
-                        $record[$column['name']] = $row[$column['name']]  ?? null;
+                        $record[$column['name']] = $row[$column['name']] ?? null;
                     }
                     ddd($record);
                 }
