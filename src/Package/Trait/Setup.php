@@ -309,7 +309,7 @@ trait Setup {
                     ]
                 ]);
                 if(!$schema){
-                    echo 'Updating, new schema found...' . PHP_EOL;
+                    echo 'Updating, no schema found for: ' . $file->entity . PHP_EOL;
                     $trigger = true;
                     break;
                 } else {
