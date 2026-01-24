@@ -663,8 +663,6 @@ class Entity extends Main
             $options->fetchJoinCollection = true;
         }
         $pagination = $object->request('pagination');
-        trace();
-        ddd($object->request());
         $filter = Entity::filter($object, $where, $parameters);
         $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
         $alias = lcfirst($entity);
