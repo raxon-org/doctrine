@@ -385,6 +385,12 @@ trait Setup {
 //                        "join": {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
+                        //get all data from this entity from the backup connection
+                        $data = $connection_backup->manager->getRepository($file->entity)->findAll();
+                        d($data);
+
+
+                        /*
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
                         foreach($columns as $column){
                             $column_options = new Data($column->options ?? []);
@@ -392,6 +398,7 @@ trait Setup {
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
                         }
+                        */
                     }
                     elseif($file->type === File::TYPE){
                         d($file);
