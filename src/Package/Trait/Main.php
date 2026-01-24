@@ -434,7 +434,9 @@ trait Main {
         $em = Database::entity_manager($object, $config, $connection);
         $entity = str_replace('.', '', Controller::name($table));
         $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
-        $config = $this->config($options);
+        $options_column = clone $options;
+        $options_column->table = $table;
+        $config = $this->config($options_column);
         if($config){
             if(
                 property_exists($config, 'name') &&
