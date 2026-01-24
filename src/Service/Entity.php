@@ -663,7 +663,7 @@ class Entity extends Main
             $options->fetchJoinCollection = true;
         }
         $pagination = $object->request('pagination');
-        $filter = Entity::filter($object, $where, $parameters);
+        $filter = Entity::filter($object, $entity, $where, $parameters);
         $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
         $alias = lcfirst($entity);
         $data = [];
@@ -850,7 +850,7 @@ class Entity extends Main
         $request = Permission::request($object, $entity, 'page');
         $entityManager = Database::entityManager($object, ['name' => Main::API]);
         $object->request('delete', 'id');
-        $filter = Entity::filter($object, $where, $parameters);
+        $filter = Entity::filter($object, $entity, $where, $parameters);
         $order = Core::object($object->request('order'), Core::OBJECT_ARRAY);
         $alias = lcfirst($entity);
         $data = [];
@@ -1112,11 +1112,14 @@ class Entity extends Main
 
     /**
      * @throws ObjectException
-     * @throws \ReflectionException
+     * @throws Exception
      */
-    private static function filter(App $object, &$where=[], ArrayCollection|null &$parameters=null){
+    private static function filter(App $object, $entity=null, &$where=[], ArrayCollection|null &$parameters=null){
+        if(empty($entity)){
+            throw new Exception('Entity is required');
+        }
         $request = $object->request('filter') ?? [];
-        $alias = lcfirst($object->request('entity'));
+        $alias = lcfirst($entity);
         $filter = $request ?? [];
         $where = [];
         $parameters = [];
