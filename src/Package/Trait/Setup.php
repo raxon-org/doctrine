@@ -386,9 +386,23 @@ trait Setup {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
                         //get all data from this entity from the backup connection
-                        $data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findAll();
-                        d($data);
-
+                        $data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findBy(
+                            [],
+                            [
+                                'id' => 'ASC'
+                            ]
+                        );
+                        if (!empty($data)) {
+                            foreach ($data as $item) {
+                                try {
+                                    $connection->manager->persist($item);
+                                    $connection->manager->flush();
+                                } catch (Exception $e) {
+                                    echo 'Error copying ' . $file->entity . ': ' . $e->getMessage() . PHP_EOL;
+                                }
+                            }
+                            echo 'Copied ' . count($data) . ' records for ' . $file->entity . PHP_EOL;
+                        }
 
                         /*
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
