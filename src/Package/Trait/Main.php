@@ -434,8 +434,16 @@ trait Main {
         $em = Database::entity_manager($object, $config, $connection);
         $entity = str_replace('.', '', Controller::name($table));
         $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
-        $columns = Column::all($object, $entity, $config->environment, $options);
-        breakpoint($columns);
+        $config = $this->config($options);
+        if($config){
+            if(
+                property_exists($config, 'name') &&
+                property_exists($config, 'environment')
+            ){
+                $columns = Column::all($object, $config->name, $config->environment, $options);
+                breakpoint($columns);
+            }
+        }
         ddd($list);
 
 
