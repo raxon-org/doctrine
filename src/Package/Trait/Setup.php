@@ -11,6 +11,7 @@ use Raxon\Exception\DirectoryCreateException;
 use Raxon\Exception\FileWriteException;
 use Raxon\Exception\ObjectException;
 use Raxon\Module\Core;
+use Raxon\Module\Data;
 use Raxon\Module\File;
 use Raxon\Module\Dir;
 use Raxon\Module\Sort;
@@ -384,7 +385,7 @@ trait Setup {
 //                        "join": {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
-                        $columns = $file->read->get('System.Doctrine.Schema.0.column');
+                        $columns = new Data($file->read->get('System.Doctrine.Schema.0.column'));
                         d($columns);
 
                     }
