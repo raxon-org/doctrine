@@ -48,7 +48,6 @@ class Schema {
     {
         $config = Database::config($object);
         $node = new Node($object);
-        d($options);
         if(array_key_exists('node', $options)){
             if(property_exists($options['node'], 'environment')){
                 if(

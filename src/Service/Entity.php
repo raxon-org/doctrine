@@ -725,6 +725,7 @@ class Entity extends Main
             );
             foreach($result as $node){
                 $record = [];
+                d($node);
                 $record = Entity::output(
                     $object,
                     $node,
