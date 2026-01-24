@@ -376,8 +376,11 @@ trait Setup {
                     echo implode(PHP_EOL, $output) . PHP_EOL;
                 }
                 foreach($read as $file){
-                    if($file->type === File::TYPE){
+                    if($file->type === File::TYPE && property_exists($file, 'entity')){
                         echo $file->entity . PHP_EOL;
+                    }
+                    elseif($file->type === File::TYPE){
+                        d($file);
                     }
                 }
                 breakpoint('create backup connection');
