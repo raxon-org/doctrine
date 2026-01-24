@@ -451,9 +451,7 @@ trait Main {
                 $pop = substr(array_pop($data), 0 ,-1);
                 $data[] = $pop;
                 $data[] = '}';
-
-
-                echo implode('', $data) . PHP_EOL;
+                echo implode(PHP_EOL, $data) . PHP_EOL;
                 foreach($list['nodeList'] as $row){
                     $data = [];
                     $data[] = '{';
@@ -463,7 +461,7 @@ trait Main {
                     $pop = substr(array_pop($data), 0 ,-1);
                     $data[] = $pop;
                     $data[] = '}';
-                    echo implode('', $data) . PHP_EOL;
+                    echo implode(PHP_EOL, $data) . PHP_EOL;
                 }
             }
         }
