@@ -5,6 +5,7 @@ use Event\Raxon\Doctrine\Schema;
 use Exception;
 use Raxon\App;
 use Raxon\Config;
+use Raxon\Doctrine\Module\Build;
 use Raxon\Doctrine\Module\Database;
 use Raxon\Exception\DirectoryCreateException;
 use Raxon\Exception\FileWriteException;
@@ -342,6 +343,17 @@ trait Setup {
             } else {
                 //new installation
                 foreach($read as $file){
+                    ddd($file);
+                    Build::entity($object,
+                        $options['class'],
+                        $options['role'],
+                        $options['node']
+                    );
+                    Build::repository($object,
+                        $options['class'],
+                        $options['role'],
+                        $options['node']
+                    );
                     $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
