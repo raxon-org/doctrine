@@ -409,11 +409,9 @@ trait Setup {
                 $connection = $response['node'] ?? null;
                 $config = Database::config($object);
                 $connection = Schema::connection($object, $connection);
-                d($connection);
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
                 $tables = $connection->schema_manager->listTableNames();
-                d($connection);
                 breakpoint($tables);
                 foreach($list as $file) {
                     if ($file->type === File::TYPE && property_exists($file, 'data')) {
