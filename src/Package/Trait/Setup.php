@@ -386,24 +386,12 @@ trait Setup {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
                         //get all data from this entity from the backup connection
-                        $data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findBy(
+                        $file->data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findBy(
                             [],
                             [
                                 'id' => 'ASC'
                             ]
                         );
-                        if (!empty($data)) {
-                            foreach ($data as $item) {
-                                try {
-                                    $connection->manager->persist($item);
-                                    $connection->manager->flush();
-                                } catch (Exception $e) {
-                                    echo 'Error copying ' . $file->entity . ': ' . $e->getMessage() . PHP_EOL;
-                                }
-                            }
-                            echo 'Copied ' . count($data) . ' records for ' . $file->entity . PHP_EOL;
-                        }
-
                         /*
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
                         foreach($columns as $column){
@@ -418,6 +406,28 @@ trait Setup {
                         d($file);
                     }
                 }
+                $connection = $response['node'] ?? null;
+                $config = Database::config($object);
+                $connection = Schema::connection($object, $connection);
+                $connection->manager = Database::entity_manager($object, $config, $connection);
+                $connection->schema_manager = Database::schema_manager($connection->manager);
+                foreach($list as $file) {
+                    if ($file->type === File::TYPE && property_exists($file, 'data')) {
+                        if (!empty($file->data)) {
+                            foreach ($file->data as $item) {
+                                try {
+                                    $connection->manager->persist($item);
+                                    $connection->manager->flush();
+                                } catch (Exception $e) {
+                                    echo 'Error copying ' . $file->entity . ': ' . $e->getMessage() . PHP_EOL;
+                                }
+                            }
+                            echo 'Copied ' . count($file->data) . ' records for ' . $file->entity . PHP_EOL;
+                        }
+                    }
+                }
+
+
 
 
                 breakpoint('create backup connection');
