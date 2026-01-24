@@ -386,7 +386,7 @@ trait Setup {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
                         //get all data from this entity from the backup connection
-                        $data = $connection_backup->manager->getRepository($file->entity)->findAll();
+                        $data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findAll();
                         d($data);
 
 
