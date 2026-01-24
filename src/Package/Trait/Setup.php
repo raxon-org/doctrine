@@ -298,7 +298,7 @@ trait Setup {
         $trigger = false;
         foreach($read as $file){
             if($file->type === File::TYPE){
-                $file->entity = File::basename($file->name, $object->config('extension.json'));
+                $file->entity = str_replace('.', '', File::basename($file->name, $object->config('extension.json')));
                 $schema = $node->record($class, $node->role_system(), [
                     'where' => [
                         [
