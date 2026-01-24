@@ -354,8 +354,6 @@ trait Setup {
                 $connection = Schema::connection($object, $connection);
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
-                $tables = $connection->schema_manager->listTableNames();
-                d($tables);
                 foreach($list as $file){
                     if(
                         property_exists($options, 'patch') &&
@@ -413,6 +411,8 @@ trait Setup {
                 $connection = Schema::connection($object, $connection);
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
+                $tables = $connection->schema_manager->listTableNames();
+                d($tables);
                 foreach($list as $file) {
                     if ($file->type === File::TYPE && property_exists($file, 'data')) {
                         if (!empty($file->data)) {
