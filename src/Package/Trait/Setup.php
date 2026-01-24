@@ -330,22 +330,32 @@ trait Setup {
                 }
             }
         }
-        breakpoint('trigger?');
         if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
                 'limit' => 100000,
                 'relation' => true
             ]);
             if($response['count'] > 0){
-                //each record in System.Doctrine.Schema needs to be exported
-                foreach($response['list'] as $schema){
-//                    d($schema);
-//                    $file = $dir_backup_file . $table . $object->config('extension.sql');
-//                    $command = 'app raxon/doctrine table export -table=' . $table . ' -connection=' . $connection->uuid . ' -url=' . $file;
+                $url_system = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds') . 'System.db';
+                $url_system_backup = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds') . 'System.backup.db';
+                File::move($url_system, $url_system_backup);
 
-
-
-                }
+                $node = new Node($object);
+                $class = 'System.Doctrine.Environment';
+                $response = $node->record($class, $node->role_system(), [
+                    'where' => [
+                        [
+                            'attribute' => 'name',
+                            'operator' => '===',
+                            'value' => 'system'
+                        ]
+                    ]
+                ]);
+                $connection = $response['node'] ?? null;
+                $config = Database::config($object);
+                $connection = Schema::connection($object, $connection);
+                $connection->manager = Database::entity_manager($object, $config, $connection);
+                $connection->schema_manager = Database::schema_manager($connection->manager);
                 foreach($read as $file){
                     if(
                         property_exists($options, 'patch') &&
@@ -365,6 +375,12 @@ trait Setup {
                     exec($command, $output);
                     echo implode(PHP_EOL, $output) . PHP_EOL;
                 }
+                foreach($read as $file){
+                    echo $file->entity . PHP_EOL;
+                }
+                breakpoint('create backup connection');
+                //create backup connection
+                //copy foreach entity to the connection...
             } else {
                 //new installation
                 foreach($read as $file){
