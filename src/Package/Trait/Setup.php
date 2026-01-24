@@ -385,8 +385,11 @@ trait Setup {
 //                        "join": {
 //                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
-                        $columns = new Data($file->read->get('System.Doctrine.Schema.0.column'));
-                        d($columns);
+                        $columns = $file->read->get('System.Doctrine.Schema.0.column');
+                        foreach($columns as $column){
+                            $column_options = new Data($column->options ?? []);
+                            d($column_options);
+                        }
 
                     }
                     elseif($file->type === File::TYPE){
