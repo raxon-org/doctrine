@@ -434,6 +434,8 @@ trait Main {
         $em = Database::entity_manager($object, $config, $connection);
         $entity = str_replace('.', '', Controller::name($table));
         $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
+        $columns = Column::all($object, $config->name, $config->environment, $options);
+        d($columns);
         ddd($list);
 
 
