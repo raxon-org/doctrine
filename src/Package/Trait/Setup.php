@@ -396,9 +396,13 @@ trait Setup {
                         foreach($columns as $column){
                             $column_options = new Data($column->options ?? []);
                             if($column_options->has('join.table')){
-                                $sql = 'SELECT count(*) FROM ' . $column_options->get('join.table');
-                                $count = $connection_backup->manager->getConnection()->fetchColumn($sql);
-                                ddd($count);
+                                $query = 'SELECT count(*) FROM ' . $column_options->get('join.table');
+                                $stmt = $connection_backup->getConnection()->prepare($query);
+//                                $stmt->bindValue('id', $userId);
+                                $stmt->execute();
+                                while ($row = $stmt->fetch()) {
+                                    ddd($row);
+                                }
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
                         }
