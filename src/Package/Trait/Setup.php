@@ -409,7 +409,7 @@ trait Setup {
                                 if($pages < 0){
                                     $pages = 1;
                                 }
-                                for($i = 0; $i < $pages; $i++){
+                                for($i = 0; $i <= $pages; $i++){
                                     $offset = $i * $limit;
                                     $query = 'SELECT * FROM ' . $column_options->get('join.table') . ' LIMIT ?, ?';
                                     $stmt = $connection_backup->manager->getConnection()->prepare($query);
