@@ -400,7 +400,15 @@ trait Setup {
 //                                $stmt->bindValue('id', $userId);
                                 $result_set = $stmt->executeQuery();
                                 while ($row = $result_set->fetchAssociative()) {
-                                    ddd($row);
+                                    $query = 'INSERT INTO ' . $column_options->get('join.table') . ' VALUES (?, ?)';
+                                    $stmt = $connection->manager->getConnection()->prepare($query);
+                                    $bind_nr = 1;
+                                    foreach($row as $key => $value){
+                                        $stmt->bindValue($bind_nr, $value);
+                                        $bind_nr++;
+                                    }
+                                    $result_set = $stmt->executeQuery();
+                                    ddd($result_set);
                                 }
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
