@@ -399,7 +399,7 @@ trait Setup {
                                 $query = 'SELECT count(*) FROM ' . $column_options->get('join.table');
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
 //                                $stmt->bindValue('id', $userId);
-                                $stmt->execute();
+                                $stmt->executeQuery();
                                 while ($row = $stmt->fetch()) {
                                     File::delete($url_system);
                                     File::move($url_system_backup, $url_system);
