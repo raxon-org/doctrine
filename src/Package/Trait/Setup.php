@@ -329,6 +329,7 @@ trait Setup {
                 }
             }
         }
+        $trigger = true; //force update for testing...
         if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
                 'limit' => 100000,
