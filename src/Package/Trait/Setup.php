@@ -411,7 +411,7 @@ trait Setup {
                                 }
                                 for($i = 0; $i < $pages; $i++){
                                     $offset = $i * $limit;
-                                    $query = 'SELECT * FROM ? LIMIT ?, ?';
+                                    $query = 'SELECT * FROM ' . $column_options->get('join.table') . ' LIMIT ?, ?';
                                     $stmt = $connection_backup->manager->getConnection()->prepare($query);
                                     $stmt->bindValue(1, $column_options->has('join.table'));
                                     $stmt->bindValue(2, $offset);
