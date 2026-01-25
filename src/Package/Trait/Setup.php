@@ -409,13 +409,12 @@ trait Setup {
                                 if($pages < 0){
                                     $pages = 1;
                                 }
-                                for($i = 0; $i <= $pages; $i++){
+                                for($i = 0; $i < $pages; $i++){
                                     $offset = $i * $limit;
-                                    $query = 'SELECT * FROM ' . $column_options->get('join.table') . ' LIMIT ?, ?';
+                                    $query = 'SELECT * FROM ' . $column_options->get('join.table') . ' LIMIT ?';
                                     $stmt = $connection_backup->manager->getConnection()->prepare($query);
                                     $stmt->bindValue(1, $column_options->has('join.table'));
-                                    $stmt->bindValue(2, $offset);
-                                    $stmt->bindValue(3, $limit);
+                                    $stmt->bindValue(2, $offset . ', ' . $limit);
                                     $result_set = $stmt->executeQuery();
 
                                     while ($row = $result_set->fetchAssociative()) {
