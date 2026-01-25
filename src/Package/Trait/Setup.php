@@ -409,7 +409,7 @@ trait Setup {
                                         $stmt->bindValue($bind_nr, $value);
                                         $bind_nr++;
                                     }
-                                    $result_set = $stmt->executeQuery();
+                                    $stmt->executeQuery();
                                 }
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
