@@ -383,8 +383,6 @@ trait Setup {
                 $connection_backup->schema_manager = Database::schema_manager($connection_backup->manager);
                 foreach($list as $file){
                     if($file->type === File::TYPE && property_exists($file, 'entity')){
-//                        "join": {
-//                            "table": "application_extension",
                         echo $file->entity . PHP_EOL;
                         //get all data from this entity from the backup connection
                         $file->data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findBy(
@@ -393,7 +391,6 @@ trait Setup {
                                 'id' => 'ASC'
                             ]
                         );
-                        /*
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
                         foreach($columns as $column){
                             $column_options = new Data($column->options ?? []);
@@ -401,7 +398,6 @@ trait Setup {
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
                         }
-                        */
                     }
                     elseif($file->type === File::TYPE){
                         d($file);
