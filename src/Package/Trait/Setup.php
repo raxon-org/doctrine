@@ -395,34 +395,13 @@ trait Setup {
                         foreach($columns as $column){
                             $column_options = new Data($column->options ?? []);
                             if($column_options->has('join.table')){
-                                $query = 'SELECT count(*) FROM ' . $column_options->get('join.table');
+                                $query = 'SELECT * FROM ' . $column_options->get('join.table');
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
 //                                $stmt->bindValue('id', $userId);
                                 $result_set = $stmt->executeQuery();
-                                $record = $result_set->fetchAssociative();
-                                $count = reset($record);
-//                                File::delete($url_system);
-//                                File::move($url_system_backup, $url_system);
-                                $limit = 2;
-                                $pages = $count / $limit;
-                                if($pages < 0){
-                                    $pages = 1;
+                                while ($row = $result_set->fetchAssociative()) {
+                                    ddd($row);
                                 }
-                                for($i = 0; $i < $pages; $i++){
-                                    $offset = $i * $limit;
-                                    $query = 'SELECT * FROM ' . $column_options->get('join.table') . ' LIMIT ?';
-                                    $stmt = $connection_backup->manager->getConnection()->prepare($query);
-                                    $stmt->bindValue(1, $column_options->has('join.table'));
-                                    $stmt->bindValue(2, $offset . ', ' . $limit);
-                                    $result_set = $stmt->executeQuery();
-
-                                    while ($row = $result_set->fetchAssociative()) {
-                                        ddd($row);
-                                    }
-                                }
-                                ddd($count);
-                                $query = 'SELECT * FROM ' . $column_options->get('join.table');
-
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
                         }
