@@ -399,9 +399,9 @@ trait Setup {
                                 $query = 'SELECT count(*) FROM ' . $column_options->get('join.table');
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
 //                                $stmt->bindValue('id', $userId);
-                                $stmt->executeQuery();
+                                $result_set = $stmt->executeQuery();
 
-                                while ($row = $stmt->fetchAssociative()) {
+                                while ($row = $result_set->fetchAssociative()) {
                                     File::delete($url_system);
                                     File::move($url_system_backup, $url_system);
 
