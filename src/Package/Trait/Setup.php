@@ -401,6 +401,10 @@ trait Setup {
 //                                $stmt->bindValue('id', $userId);
                                 $stmt->execute();
                                 while ($row = $stmt->fetch()) {
+                                    File::delete($url_system);
+                                    File::move($url_system_backup, $url_system);
+
+
                                     ddd($row);
                                 }
                                 echo $column_options->get('join.table') . PHP_EOL;
