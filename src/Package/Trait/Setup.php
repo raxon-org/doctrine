@@ -411,11 +411,11 @@ trait Setup {
                                 }
                                 for($i = 0; $i < $pages; $i++){
                                     $offset = $i * $limit;
-                                    $query = 'SELECT * FROM :table LIMIT :offset, :limit';
+                                    $query = 'SELECT * FROM ? LIMIT ?, ?';
                                     $stmt = $connection_backup->manager->getConnection()->prepare($query);
-                                    $stmt->bindValue('table', $column_options->has('join.table'));
-                                    $stmt->bindValue('offset', $offset);
-                                    $stmt->bindValue('limit', $limit);
+                                    $stmt->bindValue(1, $column_options->has('join.table'));
+                                    $stmt->bindValue(2, $offset);
+                                    $stmt->bindValue(3, $limit);
                                     $result_set = $stmt->executeQuery();
 
                                     while ($row = $result_set->fetchAssociative()) {
