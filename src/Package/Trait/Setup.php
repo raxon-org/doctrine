@@ -400,7 +400,8 @@ trait Setup {
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
 //                                $stmt->bindValue('id', $userId);
                                 $stmt->executeQuery();
-                                while ($row = $stmt->fetch()) {
+
+                                while ($row = $stmt->fetchAssociative()) {
                                     File::delete($url_system);
                                     File::move($url_system_backup, $url_system);
 
