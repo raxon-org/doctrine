@@ -400,14 +400,31 @@ trait Setup {
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
 //                                $stmt->bindValue('id', $userId);
                                 $result_set = $stmt->executeQuery();
-
-                                while ($row = $result_set->fetchAssociative()) {
-                                    File::delete($url_system);
-                                    File::move($url_system_backup, $url_system);
-
-
-                                    ddd($row);
+                                $record = $result_set->fetchAssociative();
+                                $count = reset($record);
+                                File::delete($url_system);
+                                File::move($url_system_backup, $url_system);
+                                $limit = 2;
+                                $pages = $count / $limit;
+                                if($pages < 0){
+                                    $pages = 1;
                                 }
+                                for($i = 0; $i < $pages; $i++){
+                                    $offset = $i * $limit;
+                                    $query = 'SELECT * FROM :table LIMIT :offset, :limit';
+                                    $stmt = $connection_backup->manager->getConnection()->prepare($query);
+                                    $stmt->bindValue('table', $column_options->has('join.table'));
+                                    $stmt->bindValue('offset', $offset);
+                                    $stmt->bindValue('limit', $limit);
+                                    $result_set = $stmt->executeQuery();
+
+                                    while ($row = $result_set->fetchAssociative()) {
+                                        ddd($row);
+                                    }
+                                }
+                                ddd($count);
+                                $query = 'SELECT * FROM ' . $column_options->get('join.table');
+
                                 echo $column_options->get('join.table') . PHP_EOL;
                             }
                         }
