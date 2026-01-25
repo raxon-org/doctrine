@@ -397,7 +397,7 @@ trait Setup {
                             $column_options = new Data($column->options ?? []);
                             if($column_options->has('join.table')){
                                 $query = 'SELECT count(*) FROM ' . $column_options->get('join.table');
-                                $stmt = $connection_backup->manager->prepare($query);
+                                $stmt = $connection_backup->manager->getConnection()->prepare($query);
 //                                $stmt->bindValue('id', $userId);
                                 $stmt->execute();
                                 while ($row = $stmt->fetch()) {
