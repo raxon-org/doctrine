@@ -397,7 +397,6 @@ trait Setup {
                             if($column_options->has('join.table')){
                                 $query = 'SELECT * FROM ' . $column_options->get('join.table');
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
-//                                $stmt->bindValue('id', $userId);
                                 $result_set = $stmt->executeQuery();
                                 while ($row = $result_set->fetchAssociative()) {
                                     $key_count = count($row);
