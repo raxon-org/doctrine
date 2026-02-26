@@ -84,7 +84,9 @@ class Database {
             if($object->config('framework.environment') === Config::MODE_DEVELOPMENT){
                 $logger->info('Logger initialised.');
             }
-            $config->setMiddlewares([new Logging\Middleware($logger)]);
+            if($config){
+                $config->setMiddlewares([new Logging\Middleware($logger)]);
+            }
         }
         if(
             property_exists($connection, 'driver') &&
