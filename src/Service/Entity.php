@@ -978,6 +978,7 @@ class Entity extends Main
     {
         d($toArray);
         d($record);
+        d($entity . ':' . $function);
         if(!is_array($toArray)){
             return $record;
         }
