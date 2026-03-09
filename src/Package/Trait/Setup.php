@@ -398,6 +398,7 @@ trait Setup {
                                 $query = 'SELECT * FROM ' . $column_options->get('join.table');
                                 $stmt = $connection_backup->manager->getConnection()->prepare($query);
                                 $result_set = $stmt->executeQuery();
+                                $key_count = 0;
                                 while ($row = $result_set->fetchAssociative()) {
                                     $key_count = count($row);
                                     $values = str_repeat('?,', $key_count - 1) . '?';
@@ -415,7 +416,7 @@ trait Setup {
                         }
                     }
                     elseif($file->type === File::TYPE){
-                        d($file);
+//                        d($file);
                     }
                 }
                 $connection = $response['node'] ?? null;
