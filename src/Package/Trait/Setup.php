@@ -424,7 +424,6 @@ trait Setup {
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
                 $tables = $connection->schema_manager->listTableNames();
-                breakpoint($tables);
                 foreach($list as $file) {
                     if ($file->type === File::TYPE && property_exists($file, 'data')) {
                         if (!empty($file->data)) {
@@ -440,11 +439,7 @@ trait Setup {
                         }
                     }
                 }
-
-
-
-
-                breakpoint('create backup connection');
+//                breakpoint('create backup connection');
                 //create backup connection
                 //copy foreach entity to the connection...
             } else {
