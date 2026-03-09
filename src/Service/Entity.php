@@ -976,6 +976,8 @@ class Entity extends Main
      */
     public static function output(App $object, $node, $toArray=[], $entity='', $function='', $record=[], $internalRole=false): array
     {
+        d($toArray);
+        d($record);
         if(!is_array($toArray)){
             return $record;
         }
