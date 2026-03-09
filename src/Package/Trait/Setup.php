@@ -444,7 +444,7 @@ trait Setup {
                     }
 
                 }
-                if(Dir::is($dir_system_backup)){
+                if(!Dir::is($dir_system_backup)){
                     Dir::create($dir_system_backup, Dir::CHMOD);
                     File::permission($object, [
                         'dir' => $dir_system_backup,
