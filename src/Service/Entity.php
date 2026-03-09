@@ -820,6 +820,7 @@ class Entity extends Main
                 $entity . '.'. $options->function . '.output'
             );
             foreach ($paginator as $node) {
+                d($node);
                 $record = [];
                 $record = Entity::output(
                     $object,
