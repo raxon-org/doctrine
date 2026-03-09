@@ -1019,6 +1019,7 @@ class Entity extends Main
                                     $action->role === $role->name
                                 )
                             ) {
+                                d($action);
                                 if (
                                     property_exists($action, 'property') &&
                                     is_array($action->property)
