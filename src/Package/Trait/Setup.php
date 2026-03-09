@@ -336,9 +336,12 @@ trait Setup {
                 'relation' => true
             ]);
             if($response['count'] > 0){
-                $url_system = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds') . 'System.db';
-                $url_system_backup = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds') . 'System.backup.db';
-                File::move($url_system, $url_system_backup);
+                $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
+                $url_system = $dir_sqlite. 'System.db';
+                $url_system_backup_temp = $dir_sqlite . 'System.backup.db';
+                $dir_system_backup = $dir_sqlite . 'Backup' . $object->config('ds');
+                $url_system_backup_write = $dir_system_backup .'System.backup.' . date('Y.m.d') . '.db';
+                File::move($url_system, $url_system_backup_temp);
                 $node = new Node($object);
                 $class = 'System.Doctrine.Environment';
                 $response = $node->record($class, $node->role_system(), [
@@ -376,7 +379,7 @@ trait Setup {
                 }
                 $connection_backup = clone $response['node'] ?? null;
                 $connection_backup->name = 'system_backup';
-                $connection_backup->path = $url_system_backup;
+                $connection_backup->path = $url_system_backup_temp;
                 $config = Database::config($object);
                 $connection_backup = Schema::connection($object, $connection_backup);
                 $connection_backup->manager = Database::entity_manager($object, $config, $connection_backup);
@@ -439,10 +442,18 @@ trait Setup {
                             echo 'Copied ' . count($file->data) . ' records for ' . $file->entity . PHP_EOL;
                         }
                     }
+
                 }
-//                breakpoint('create backup connection');
-                //create backup connection
-                //copy foreach entity to the connection...
+                if(Dir::is($dir_system_backup)){
+                    Dir::create($dir_system_backup, Dir::CHMOD);
+                    File::permission($object, [
+                        'dir' => $dir_system_backup,
+                    ]);
+                }
+                File::move($url_system_backup_temp, $url_system_backup_write);
+                File::permission($object, [
+                    'file' => $url_system_backup_write,
+                ]);
             } else {
                 //new installation
                 foreach($list as $file){
