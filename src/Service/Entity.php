@@ -819,7 +819,6 @@ class Entity extends Main
                 $entity,
                 $entity . '.'. $options->function . '.output'
             );
-            breakpoint($expose);
             foreach ($paginator as $node) {
                 $record = [];
                 $record = Entity::output(
