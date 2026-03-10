@@ -1005,6 +1005,7 @@ class Entity extends Main
                 foreach ($permissions as $permission) {
                     if(property_exists($permission, 'name')){
                         foreach ($toArray as $action) {
+                            d($permission->name . ' : ' . $entity . '.' . $function);
                             if (
                                 (
                                     $permission->name === $entity . ':' . $function &&
