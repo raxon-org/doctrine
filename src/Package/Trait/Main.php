@@ -1,25 +1,19 @@
 <?php
 namespace Package\Raxon\Doctrine\Trait;
 
+use Exception;
 use Raxon\Config;
-
-use Raxon\Doctrine\Service\Entity;
-use Raxon\Module\Controller;
-use Raxon\Module\Core;
-use Raxon\Module\Event;
-use Raxon\Module\File;
-
+use Raxon\Doctrine\Module\Entity;
 use Raxon\Doctrine\Module\Database;
-use Raxon\Node\Module\Node;
-
 use Raxon\Doctrine\Service\Table;
 use Raxon\Doctrine\Service\Index;
 use Raxon\Doctrine\Service\Column;
 use Raxon\Doctrine\Service\Sequence;
-
-
-use Exception;
-
+use Raxon\Module\Controller;
+use Raxon\Module\Core;
+use Raxon\Module\Event;
+use Raxon\Module\File;
+use Raxon\Node\Module\Node;
 use Raxon\Exception\ObjectException;
 
 trait Main {
