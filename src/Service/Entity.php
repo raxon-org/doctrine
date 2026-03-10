@@ -1047,6 +1047,7 @@ class Entity extends Main
                                             }
                                             $method = 'get' . implode($methods);
                                         }
+                                        breakpoint($method);
                                         if (
                                             property_exists($action, 'object') &&
                                             property_exists($action->object, $attribute) &&
