@@ -696,7 +696,6 @@ class Entity {
                                     property_exists($action, 'property') &&
                                     is_array($action->property)
                                 ) {
-                                    breakpoint($action->property);
                                     foreach ($action->property as $attribute) {
                                         $assertion = $attribute;
                                         $explode = explode(':', $attribute, 2);
@@ -727,6 +726,8 @@ class Entity {
                                             }
                                             $method = 'get' . implode('', $methods);
                                         }
+                                        d($method);
+                                        breakpoint($action->object->$attribute ?? null);
                                         if (
                                             property_exists($action, 'object') &&
                                             property_exists($action->object, $attribute) &&
