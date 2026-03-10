@@ -5,7 +5,6 @@ use Event\Raxon\Doctrine\Schema;
 use Exception;
 use Raxon\App;
 use Raxon\Config;
-use Raxon\Doctrine\Module\Build;
 use Raxon\Doctrine\Module\Database;
 use Raxon\Exception\DirectoryCreateException;
 use Raxon\Exception\FileWriteException;
