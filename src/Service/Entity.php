@@ -976,7 +976,6 @@ class Entity extends Main
      */
     public static function output(App $object, $node, $toArray=[], $entity='', $function='', $record=[], $internalRole=false): array
     {
-        d($entity . ':' . $function);
         if(!is_array($toArray)){
             return $record;
         }
@@ -1005,7 +1004,6 @@ class Entity extends Main
                 foreach ($permissions as $permission) {
                     if(property_exists($permission, 'name')){
                         foreach ($toArray as $action) {
-                            d($permission->name . ' : ' . $entity . '.' . $function);
                             if (
                                 (
                                     $permission->name === $entity . ':' . $function &&
@@ -1021,7 +1019,6 @@ class Entity extends Main
                                     $action->role === $role->name
                                 )
                             ) {
-                                breakpoint('yes');
                                 if (
                                     property_exists($action, 'property') &&
                                     is_array($action->property)
@@ -1064,9 +1061,11 @@ class Entity extends Main
                                             ) {
                                                 $record[$attribute] = [];
                                                 $array = $node->$method();
-                                                d($method);
-                                                d($array);
                                                 foreach ($array as $child) {
+                                                    if(Core::is_uuid($child)){
+                                                        //role for example
+                                                        continue;
+                                                    }
                                                     $child_entity = explode('Entity\\', get_class($child));
                                                     $child_record = [];
                                                     $child_record = Entity::output(
