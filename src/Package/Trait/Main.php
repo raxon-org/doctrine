@@ -429,9 +429,6 @@ trait Main {
         $entity = str_replace('.', '', Controller::name($table));
         $object->request('entity', $entity);
         $list = Entity::list($object, $em, $node->role_system(), $options);
-
-//        $list = Entity::list($object, $em, $node->role_system(), $entity, $options);
-        d($list);
         return $list['nodeList'] ?? [];
     }
 
