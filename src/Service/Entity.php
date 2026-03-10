@@ -1062,6 +1062,7 @@ class Entity extends Main
                                                 $array = $node->$method();
                                                 foreach ($array as $child) {
                                                     if(Core::is_uuid($child)){
+                                                        $record[$attribute][] = $child;
                                                         //role for example
                                                         continue;
                                                     }
