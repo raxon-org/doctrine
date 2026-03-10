@@ -1005,7 +1005,6 @@ class Entity extends Main
                 foreach ($permissions as $permission) {
                     if(property_exists($permission, 'name')){
                         foreach ($toArray as $action) {
-                            d($action->role . ' :  ' . $role->name);
                             if (
                                 (
                                     $permission->name === $entity . ':' . $function &&
@@ -1021,7 +1020,7 @@ class Entity extends Main
                                     $action->role === $role->name
                                 )
                             ) {
-                                d($action);
+                                breakpoint('yes');
                                 if (
                                     property_exists($action, 'property') &&
                                     is_array($action->property)
