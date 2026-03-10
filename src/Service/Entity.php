@@ -976,8 +976,6 @@ class Entity extends Main
      */
     public static function output(App $object, $node, $toArray=[], $entity='', $function='', $record=[], $internalRole=false): array
     {
-        d($toArray);
-        d($record);
         d($entity . ':' . $function);
         if(!is_array($toArray)){
             return $record;
@@ -1007,6 +1005,7 @@ class Entity extends Main
                 foreach ($permissions as $permission) {
                     if(property_exists($permission, 'name')){
                         foreach ($toArray as $action) {
+                            d($action->role . ' :  ' . $role->name);
                             if (
                                 (
                                     $permission->name === $entity . ':' . $function &&
