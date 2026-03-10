@@ -1064,8 +1064,8 @@ class Entity extends Main
                                             ) {
                                                 $record[$attribute] = [];
                                                 $array = $node->$method();
+                                                d($array);
                                                 foreach ($array as $child) {
-                                                    d($child);
                                                     $child_entity = explode('Entity\\', get_class($child));
                                                     $child_record = [];
                                                     $child_record = Entity::output(
