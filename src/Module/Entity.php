@@ -727,7 +727,7 @@ class Entity {
                                             $method = 'get' . implode('', $methods);
                                         }
                                         d($method);
-                                        breakpoint($action->object->$attribute ?? null);
+                                        breakpoint($attribute ?? null);
                                         if (
                                             property_exists($action, 'object') &&
                                             property_exists($action->object, $attribute) &&
