@@ -909,8 +909,6 @@ class Entity {
             $options = Core::object($options, Core::OBJECT);
         }
         if(!property_exists($options, 'function')){
-            trace();
-            ddd($options);
             $options->function = __FUNCTION__;
         }
         if(!property_exists($options, 'fetchJoinCollection')){
