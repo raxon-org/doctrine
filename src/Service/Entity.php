@@ -831,7 +831,6 @@ class Entity extends Main
                     $record,
                     $role
                 );
-                d($record);
                 $data['nodeList'][] = $record;
             }
             $data['max'] = (int) ceil($data['count'] / $data['limit']);
