@@ -426,7 +426,7 @@ trait Main {
             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
         }
         $em = Database::entity_manager($object, $config, $connection);
-        $entity = 'Entity\\' . str_replace('.', '', Controller::name($table));
+        $entity = str_replace('.', '', Controller::name($table));
         $object->request('entity', $entity);
         $list = Entity::list($object, $em, $node->role_system(), $options);
 
