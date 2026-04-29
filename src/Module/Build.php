@@ -479,6 +479,7 @@ class Build {
                         $data_columns[] = '';
                         if ($is_add) {
                             if ($is_encrypted) {
+                                //remove last s on column name
                                 $add = [];
                                 $add[] = '/**';
                                 $add[] = '* @throws Exception';
@@ -513,6 +514,7 @@ class Build {
                                 $add[] = '    */';
                                 $add[] = '}';
                             } else {
+                                //remove last s on column name
                                 $add = [];
                                 $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '=null): void';
                                 $add[] = '{';
@@ -683,6 +685,7 @@ class Build {
                         }
                         if ($is_add) {
                             if ($is_encrypted) {
+                                //remove last s on column name
                                 $add = [];
                                 $add[] = '/**';
                                 $add[] = '* @throws Exception';
@@ -717,6 +720,7 @@ class Build {
                                 $add[] = '    */';
                                 $add[] = '}';
                             } else {
+                                //remove last s on column name
                                 $add = [];
                                 $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '): void';
                                 $add[] = '{';
