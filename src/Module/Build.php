@@ -720,11 +720,9 @@ class Build {
                                 $add = [];
                                 $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '): void';
                                 $add[] = '{';
-                                $add[] = '    if($' . $column->name . '){';
-                                $add[] = '        $list = $this->get' . str_replace('.', '', Controller::name($column->name)) . '();';
-                                $add[] = '        $list[] = $' . $column->name . ';';
-                                $add[] = '        $this->set' . str_replace('.', '', Controller::name($column->name)) . '($list);';
-                                $add[] = '    }';
+                                $add[] = '     $list = $this->get' . str_replace('.', '', Controller::name($column->name)) . '();';
+                                $add[] = '     $list[] = $' . $column->name . ';';
+                                $add[] = '     $this->set' . str_replace('.', '', Controller::name($column->name)) . '($list);';
                                 $add[] = '}';
                             }
                             $data_functions[] = $add;
