@@ -681,6 +681,54 @@ class Build {
                         } else {
                             $data_columns[] = 'protected ' . $type . ' $' . $column->name . ';';
                         }
+                        if ($is_add) {
+                            if ($is_encrypted) {
+                                $add = [];
+                                $add[] = '/**';
+                                $add[] = '* @throws Exception';
+                                $add[] = '* @throws FileWriteException';
+                                $add[] = '* @throws BadFormatException';
+                                $add[] = '* @throws EnvironmentIsBrokenException';
+                                $add[] = '* @throws WrongKeyOrModifiedCiphertextException';
+                                $add[] = '*/';
+                                $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '): void';
+                                $add[] = '{';
+                                $add[] = '    $object = $this->object();';
+                                $add[] = '    if(!$object){';
+                                $add[] = '        throw new Exception(\'Object not set...\');';
+                                $add[] = '    }';
+                                $add[] = '    throw new Exception(\'Not implemented yet...\');';
+                                $add[] = '    /**';
+                                $add[] = '    $this->' . $column->name . ' = $' . $column->name . ';';
+                                $add[] = '    $url = $object->config(\'project.dir.data\') . \'Defuse/Email.key\';';
+                                $add[] = '    if(File::exist($url)){';
+                                $add[] = '        $key = Core::key($url);';
+                                $add[] = '        if(is_array($this->' . $column->name . ')){';
+                                $add[] = '            foreach($this->' . $column->name . ' as $nr => $value){';
+                                $add[] = '                $this->' . $column->name . '[$nr] = Crypto::encrypt($value, $key);';
+                                $add[] = '            }';
+                                $add[] = '        } else {';
+                                $add[] = '            $this->' . $column->name . ' = Crypto::encrypt($this->' . $column->name . ', $key);';
+                                $add[] = '        }';
+                                $add[] = '        $this->is_encrypted_' . mb_strtolower($column->name) . ' = true;';
+                                $add[] = '    } else {';
+                                $add[] = '        throw new Exception(\'Key not found...\');';
+                                $add[] = '    }';
+                                $add[] = '    */';
+                                $add[] = '}';
+                            } else {
+                                $add = [];
+                                $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '): void';
+                                $add[] = '{';
+                                $add[] = '    if($' . $column->name . '){';
+                                $add[] = '        $list = $this->get' . str_replace('.', '', Controller::name($column->name)) . '();';
+                                $add[] = '        $list[] = $' . $column->name . ';';
+                                $add[] = '        $this->set' . str_replace('.', '', Controller::name($column->name)) . '($list);';
+                                $add[] = '    }';
+                                $add[] = '}';
+                            }
+                            $data_functions[] = $add;
+                        }
                         if ($is_set) {
                             if ($is_encrypted) {
                                 $set = [];
