@@ -479,6 +479,15 @@ class Build {
                         $data_columns[] = '';
                         if ($is_add) {
                             if ($is_encrypted) {
+                                $function_name = 'add' . str_replace('.', '', Controller::name($column->name));
+                                if(substr($function_name, -1) === 's'){
+                                    $function_name = substr($function_name, 0, -1);
+                                }
+                                $parameter_name = $column->name;
+                                if(substr($parameter_name, -1) === 's'){
+                                    $parameter_name = substr($parameter_name, 0, -1);
+                                }
+                                //change set to add and fix the millions of key files
                                 //remove last s on column name
                                 $add = [];
                                 $add[] = '/**';
@@ -488,7 +497,7 @@ class Build {
                                 $add[] = '* @throws EnvironmentIsBrokenException';
                                 $add[] = '* @throws WrongKeyOrModifiedCiphertextException';
                                 $add[] = '*/';
-                                $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '=null): void';
+                                $add[] = 'public function ' . $function_name . '(' . $type . ' $' . $parameter_name . '=null): void';
                                 $add[] = '{';
                                 $add[] = '    $object = $this->object();';
                                 $add[] = '    if(!$object){';
@@ -515,12 +524,20 @@ class Build {
                                 $add[] = '}';
                             } else {
                                 //remove last s on column name
+                                $function_name = 'add' . str_replace('.', '', Controller::name($column->name));
+                                if(substr($function_name, -1) === 's'){
+                                    $function_name = substr($function_name, 0, -1);
+                                }
+                                $parameter_name = $column->name;
+                                if(substr($parameter_name, -1) === 's'){
+                                    $parameter_name = substr($parameter_name, 0, -1);
+                                }
                                 $add = [];
-                                $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '=null): void';
+                                $add[] = 'public function ' . $function_name . '(' . $type . ' $' . $parameter_name . '=null): void';
                                 $add[] = '{';
                                 $add[] = '    if($' . $column->name . ' !== null){';
                                 $add[] = '        $list = $this->get' . str_replace('.', '', Controller::name($column->name)) . '();';
-                                $add[] = '        $list[] = $' . $column->name . ';';
+                                $add[] = '        $list[] = $' . $parameter_name . ';';
                                 $add[] = '        $this->set' . str_replace('.', '', Controller::name($column->name)) . '($list);';
                                 $add[] = '    }';
                                 $add[] = '}';
@@ -685,6 +702,7 @@ class Build {
                         }
                         if ($is_add) {
                             if ($is_encrypted) {
+                                //change set to add and fix the millions of key files
                                 //remove last s on column name
                                 $add = [];
                                 $add[] = '/**';
@@ -720,12 +738,19 @@ class Build {
                                 $add[] = '    */';
                                 $add[] = '}';
                             } else {
-                                //remove last s on column name
+                                $function_name = 'add' . str_replace('.', '', Controller::name($column->name));
+                                if(substr($function_name, -1) === 's'){
+                                    $function_name = substr($function_name, 0, -1);
+                                }
+                                $parameter_name = $column->name;
+                                if(substr($parameter_name, -1) === 's'){
+                                    $parameter_name = substr($parameter_name, 0, -1);
+                                }
                                 $add = [];
-                                $add[] = 'public function add' . str_replace('.', '', Controller::name($column->name)) . '(' . $type . ' $' . $column->name . '): void';
+                                $add[] = 'public function ' . $function_name . '(' . $type . ' $' . $parameter_name . '): void';
                                 $add[] = '{';
                                 $add[] = '     $list = $this->get' . str_replace('.', '', Controller::name($column->name)) . '();';
-                                $add[] = '     $list[] = $' . $column->name . ';';
+                                $add[] = '     $list[] = $' . $parameter_name . ';';
                                 $add[] = '     $this->set' . str_replace('.', '', Controller::name($column->name)) . '($list);';
                                 $add[] = '}';
                             }
