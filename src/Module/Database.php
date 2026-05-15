@@ -73,6 +73,9 @@ class Database {
                 $connection->path = $parameters[0];
             }
         }
+        if(!$config){
+            throw new Exception('Config is not null.');
+        }
         if (
             property_exists($connection, 'logging') &&
             !empty($connection->logging)
