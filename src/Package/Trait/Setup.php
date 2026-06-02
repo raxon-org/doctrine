@@ -142,7 +142,6 @@ trait Setup {
         }
         $node = new Node($object);
         $config = $node->record('System.Config', $node->role_system());
-        ddd($config);
         if(
             $config &&
             is_array($config) &&
@@ -159,6 +158,7 @@ trait Setup {
                 is_array($config) &&
                 array_key_exists('node', $config)
             ){
+                ddd($config);
                 //nothing
             } else {
                 throw new Exception('Could not patch node System.Config');
