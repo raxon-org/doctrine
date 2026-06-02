@@ -8,7 +8,6 @@
  *     -    all
  */
 
-use Exception;
 use Raxon\App;
 use Raxon\Config;
 use Raxon\Doctrine\Module\Database;
@@ -44,6 +43,9 @@ try {
     $app = new App($autoload, $config);
     echo App::run($app);
     $options = App::options($app);
+    if(!property_exists($options, 'connection')) {
+        $options->connection = 'system';
+    }
     $config = Database::config($app);
     $environments = $app->config('doctrine.environment');
     $framework_environment = $app->config('framework.environment');
@@ -60,7 +62,11 @@ try {
             }
         }
     }
-    $connection->manager = Database::entity_manager($app, $config, $connection);
+    if($connection){
+        $connection->manager = Database::entity_manager($app, $config, $connection);
+    } else {
+
+    }
 } catch (Exception | LocateException | ObjectException $exception) {
     echo $exception;
 }
