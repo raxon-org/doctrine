@@ -158,7 +158,6 @@ trait Setup {
                 is_array($config) &&
                 array_key_exists('node', $config)
             ){
-                ddd($config);
                 //nothing
             } else {
                 throw new Exception('Could not patch node System.Config');
@@ -209,9 +208,11 @@ trait Setup {
             return;
         }
         $data = $object->data_read($url);
+        d($data);
         if($data){
             $default = $data->get('System.Doctrine.0');
             $result = $node->create($class, $node->role_system(), $default);
+            ddd($result);
         }
     }
 
