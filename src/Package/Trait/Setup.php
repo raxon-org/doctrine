@@ -464,7 +464,7 @@ trait Setup {
                         'file' => $url_system_backup_write,
                 ]);
                 $bytes = File::size($url_system);
-                echo Cli::info('Size:') . ' ' . $bytes . ' bytes in: ' . $url_system . PHP_EOL;
+                echo Cli::info('Size:') . ' ' . File::size_format($bytes) . ' in: ' . $url_system . PHP_EOL;
             } else {
                 //new installation
                 foreach($list as $file){
@@ -479,7 +479,7 @@ trait Setup {
                     }
                 }
                 $bytes = File::size($url_system);
-                echo Cli::info('Size:') . ' ' . $bytes . ' bytes in: ' . $url_system . PHP_EOL;
+                echo Cli::info('Size:') . ' ' . File::size_format($bytes) . ' in: ' . $url_system . PHP_EOL;
             }
         }
         return 'Schema updated...';
