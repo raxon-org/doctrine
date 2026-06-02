@@ -345,6 +345,7 @@ trait Setup {
                 'limit' => 100000,
                 'relation' => true
             ]);
+            ddd($response);
             if($response['count'] > 0){
                 $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
                 $url_system = $dir_sqlite. 'System.db';
