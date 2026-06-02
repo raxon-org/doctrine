@@ -269,14 +269,10 @@ trait Setup {
                 $response = $node->create($class, $node->role_system(), $default);
             }
         }
-        //we need te response into the config from here for database::config call
         //reload config to include the doctrine configuration
-
         Config::configure($object, (object) [
             'clear' => true
         ]);
-        d($object->config());
-        dd($response);
         $connection = $response['node'] ?? null;
         //good
         d($connection);
@@ -285,7 +281,7 @@ trait Setup {
         }
         $config = Database::config($object);
         //false
-        d($config);
+        ddd($config);
         $connection = Schema::connection($object, $connection);
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $connection->schema_manager = Database::schema_manager($connection->manager);
