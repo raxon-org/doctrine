@@ -464,7 +464,6 @@ trait Setup {
                         'file' => $url_system_backup_write,
                 ]);
             } else {
-                breakpoint($list);
                 //new installation
                 foreach($list as $file){
                     $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . escapeshellcmd($file->url) . '" -connection=system';
@@ -477,7 +476,7 @@ trait Setup {
                     }
                 }
                 $command = "doctrine orm:generate-entities --force " . escapeshellcmd($dir_entity);
-                echo Cli::alert($command) . PHP_EOL;
+                echo Cli::alert('Command:') . ' ' . $command . PHP_EOL;
                 breakpoint('test');
                 //doctrine entity create command:
 
