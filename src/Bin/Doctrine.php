@@ -8,15 +8,17 @@
  *     -    all
  */
 
+use Exception;
 use Raxon\App;
 use Raxon\Config;
-use Raxon\Module\Database;
+use Raxon\Doctrine\Module\Database;
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
+use Raxon\Module\Cli;
 
 $dir = dirname(__DIR__);
 $dir_vendor =
@@ -27,6 +29,11 @@ $dir_vendor =
 
 $autoload = $dir_vendor . 'autoload.php';
 $autoload = require $autoload;
+
+$commands = [
+    'help'
+];
+
 try {
     $config = new Config(
         [
@@ -37,15 +44,30 @@ try {
     $app = new App($autoload, $config);
     echo App::run($app);
     $options = App::options($app);
-    $commands = [];
-    $entityManager = Database::entityManager($app, $options);
+    $config = Database::config($app);
+    $environments = $app->config('doctrine.environment');
+    $framework_environment = $app->config('framework.environment');
+    $connection = false;
+    foreach($environments as $name => $list){
+        if($name === $options->connection){
+            foreach($list as $environment => $connection){
+                if($environment === $framework_environment){
+                    break 2;
+                }
+                elseif($environment === '*'){
+                    break 2;
+                }
+            }
+        }
+    }
+    $connection->manager = Database::entity_manager($app, $config, $connection);
 } catch (Exception | LocateException | ObjectException $exception) {
     echo $exception;
 }
-if(empty($entityManager)){
-    return;
+if(empty($connection->manager)){
+   echo  Cli::error('error:'). ' No connection found...';
 }
 ConsoleRunner::run(
-    new SingleManagerProvider($entityManager),
+    new SingleManagerProvider($connection->manager),
     $commands
 );
