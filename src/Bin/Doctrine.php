@@ -12,8 +12,10 @@ use Raxon\App;
 use Raxon\Config;
 use Raxon\Doctrine\Module\Database;
 
+use Doctrine\ORM\Version;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use Symfony\Component\Console\Application;
 
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
@@ -28,10 +30,6 @@ $dir_vendor =
 
 $autoload = $dir_vendor . 'autoload.php';
 $autoload = require $autoload;
-
-$commands = [
-    'help'
-];
 
 try {
     $config = new Config(
@@ -73,7 +71,19 @@ try {
 if(empty($connection->manager)){
    echo  Cli::error('error:'). ' No connection found...';
 }
+$helperSet = ConsoleRunner::createHelperSet($connection->manager);
+$cli = ConsoleRunner::createApplication($helperSet);
+// Runs console application
+$cli->setCatchExceptions(true);
+$cli->addCommands([
+    (new Package\Raxon\Doctrine\Command\Version())
+]);
+$cli->run();
+//$cli->setHelperSet($helperSet);
+//$cli = new Application('Doctrine Command Line Interface', Version::VERSION);
+/*
 ConsoleRunner::run(
     new SingleManagerProvider($connection->manager),
     $commands
 );
+*/
