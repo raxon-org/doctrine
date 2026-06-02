@@ -73,9 +73,7 @@ if(empty($connection->manager)){
    echo  Cli::error('error:'). ' No connection found...';
 }
 
-$helperSet = new HelperSet([
-    'db' => new DBALConsole\Helper\ConnectionHelper($connection->manager),
-]);
+$helperSet = ConsoleRunner::createHelperSet($connection->manager);
 
 $cli = ConsoleRunner::createApplication($helperSet);
 // Runs console application
