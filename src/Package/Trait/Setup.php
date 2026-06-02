@@ -172,7 +172,7 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function system_doctrine(object $flags, object $options): null|string
+    public function system_doctrine(object $flags, object $options): string
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
@@ -208,7 +208,7 @@ trait Setup {
                 }
                 $result = $node->patch($class, $node->role_system(), $record);
             }
-            return null;
+            return '';
         }
         $data = $object->data_read($url);
         if($data){
