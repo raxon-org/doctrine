@@ -345,7 +345,6 @@ trait Setup {
                 'limit' => 100000,
                 'relation' => true
             ]);
-            ddd($response);
             if($response['count'] > 0){
                 $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
                 $url_system = $dir_sqlite. 'System.db';
@@ -465,6 +464,7 @@ trait Setup {
                         'file' => $url_system_backup_write,
                 ]);
             } else {
+                breakpoint($list);
                 //new installation
                 foreach($list as $file){
                     $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . escapeshellcmd($file->url) . '" -connection=system';
