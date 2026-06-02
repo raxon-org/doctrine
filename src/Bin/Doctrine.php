@@ -15,6 +15,7 @@ use Raxon\Doctrine\Module\Database;
 use Doctrine\ORM\Version;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+use Doctrine\DBAL\Tools\Console as DBALConsole;
 use Symfony\Component\Console\Helper\HelperSet;
 
 use Raxon\Exception\LocateException;
