@@ -8,7 +8,7 @@
                     "environment": "*",
                     "driver": "pdo_sqlite",
                     "path": "{{config('project.dir.data')}}Sqlite\/System.db",
-                    "logging": true
+                    "logging": "{{environment.logging()}}"
                 }
             ]
         }

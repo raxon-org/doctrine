@@ -50,6 +50,8 @@ class Database {
         if(array_key_exists(0, $parameters)){
             $proxyDir = $parameters[0];
         }
+        d($paths);
+        d($proxyDir);
         if(empty($paths)){
             return false;
         }
@@ -74,7 +76,8 @@ class Database {
             }
         }
         if(!$config){
-            throw new Exception('Config is not null.');
+            //clean installs have config null
+            throw new Exception('Config is null.');
         }
         if (
             property_exists($connection, 'logging') &&
