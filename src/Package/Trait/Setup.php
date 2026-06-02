@@ -269,7 +269,12 @@ trait Setup {
                 $response = $node->create($class, $node->role_system(), $default);
             }
         }
-        //we need te response into the config from here for databas::config call
+        //we need te response into the config from here for database::config call
+        //reload config to include the doctrine configuration
+
+        Config::configure($object, (object) [
+            'clear' => true
+        ]);
         d($object->config());
         dd($response);
         $connection = $response['node'] ?? null;
