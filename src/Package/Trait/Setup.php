@@ -249,7 +249,6 @@ trait Setup {
             'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
             $object->config('extension.json')
         ;
-        d($response);
         if($response) {
             if (
                 property_exists($options, 'patch') &&
@@ -262,21 +261,21 @@ trait Setup {
                     $record = Core::object_merge($record, $default);
                 }
                 $response = $node->patch($class, $node->role_system(), $record);
-                d($response);
             }
         } else {
             $data = $object->data_read($url);
             if($data) {
                 $default = $data->get('System.Doctrine.Environment.0');
                 $response = $node->create($class, $node->role_system(), $default);
-                d($response);
             }
         }
         $connection = $response['node'] ?? null;
+        d($connection);
         if(!$connection) {
             throw new Exception('Could not create System.Doctrine.Environment');
         }
         $config = Database::config($object);
+        d($config);
         $connection = Schema::connection($object, $connection);
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $connection->schema_manager = Database::schema_manager($connection->manager);
