@@ -270,6 +270,7 @@ trait Setup {
             }
         }
         //we need te response into the config from here for databas::config call
+        d($object->config());
         dd($response);
         $connection = $response['node'] ?? null;
         //good
