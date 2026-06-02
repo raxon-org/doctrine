@@ -345,9 +345,9 @@ trait Setup {
                 'limit' => 100000,
                 'relation' => true
             ]);
+            $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
+            $url_system = $dir_sqlite. 'System.db';
             if($response['count'] > 0){
-                $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
-                $url_system = $dir_sqlite. 'System.db';
                 $url_system_backup_temp = $dir_sqlite . 'System.backup.db';
                 $dir_system_backup = $dir_sqlite . 'Backup' . $object->config('ds');
                 $url_system_backup_write = $dir_system_backup .'System.backup.' . date('Y.m.d') . '.db';
@@ -463,6 +463,8 @@ trait Setup {
                 File::permission($object, [
                         'file' => $url_system_backup_write,
                 ]);
+                $bytes = File::size($url_system);
+                echo Cli::info('Size:') . ' ' . $bytes . ' bytes in: ' . $url_system . PHP_EOL;
             } else {
                 //new installation
                 foreach($list as $file){
@@ -476,11 +478,8 @@ trait Setup {
                         echo $notification . PHP_EOL;
                     }
                 }
-                $command = "doctrine orm:generate-entities --force " . escapeshellcmd($dir_entity);
-                echo Cli::alert('Command:') . ' ' . $command . PHP_EOL;
-                breakpoint('test');
-                //doctrine entity create command:
-
+                $bytes = File::size($url_system);
+                echo Cli::info('Size:') . ' ' . $bytes . ' bytes in: ' . $url_system . PHP_EOL;
             }
         }
         return 'Schema updated...';
