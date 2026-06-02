@@ -9,6 +9,7 @@ use Raxon\Doctrine\Module\Database;
 use Raxon\Exception\DirectoryCreateException;
 use Raxon\Exception\FileWriteException;
 use Raxon\Exception\ObjectException;
+use Raxon\Module\Cli;
 use Raxon\Module\Core;
 use Raxon\Module\Data;
 use Raxon\Module\File;
@@ -296,7 +297,6 @@ trait Setup {
         $object = $this->object();
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
         $dir_entity = $object->config('project.dir.shared') . 'Entity' . $object->config('ds');
-        breakpoint($dir_entity);
         $dir = new Dir();
         $read = $dir->read($dir_schema, true);
         if(!$read){
@@ -478,6 +478,7 @@ trait Setup {
                 }
                 $command = "doctrine orm:generate-entities --force " . escapeshellcmd($dir_entity);
                 echo Cli::alert($command) . PHP_EOL;
+                breakpoint('test');
                 //doctrine entity create command:
 
             }
