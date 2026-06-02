@@ -124,7 +124,7 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function system_config(object $flags, object $options): void
+    public function system_config(object $flags, object $options): string
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
@@ -163,6 +163,7 @@ trait Setup {
                 throw new Exception('Could not patch node System.Config');
             }
         }
+        return "Added doctrine to the config..." . PHP_EOL;
     }
 
     /**
