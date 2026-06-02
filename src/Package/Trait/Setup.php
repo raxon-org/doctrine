@@ -466,7 +466,8 @@ trait Setup {
             } else {
                 //new installation
                 foreach($list as $file){
-                    $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . escapeshellcmd($file->url) . '" -connection=system';
+                    $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
+                    echo Cli::alert('Command:') . ' ' . $command . PHP_EOL;
                     Core::execute($object, $command, $output, $notification);
                     if($output){
                         echo $output . PHP_EOL;
