@@ -11,6 +11,7 @@
         "ext-pdo": "*",
         "raxon/framework": ">=2024.09.04",
         "doctrine/orm": "3.6.7",
+        "symfony/var-exporter": "*",
         "symfony/cache": "*"
     },
     "license" : "MIT",
