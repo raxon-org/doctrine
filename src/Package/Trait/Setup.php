@@ -208,11 +208,9 @@ trait Setup {
             return;
         }
         $data = $object->data_read($url);
-        d($data);
         if($data){
             $default = $data->get('System.Doctrine.0');
             $result = $node->create($class, $node->role_system(), $default);
-            ddd($result);
         }
     }
 
@@ -251,6 +249,7 @@ trait Setup {
             'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
             $object->config('extension.json')
         ;
+        d($response);
         if($response) {
             if (
                 property_exists($options, 'patch') &&
@@ -263,12 +262,14 @@ trait Setup {
                     $record = Core::object_merge($record, $default);
                 }
                 $response = $node->patch($class, $node->role_system(), $record);
+                d($response);
             }
         } else {
             $data = $object->data_read($url);
             if($data) {
                 $default = $data->get('System.Doctrine.Environment.0');
                 $response = $node->create($class, $node->role_system(), $default);
+                d($response);
             }
         }
         $connection = $response['node'] ?? null;
