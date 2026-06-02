@@ -92,7 +92,7 @@ trait Setup {
     /**
      * @throws Exception
      */
-    public function doctrine_bin(object $flags, object $options): void
+    public function doctrine_bin(object $flags, object $options): string
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
@@ -118,6 +118,7 @@ trait Setup {
         File::permission($object, [
                 'url_target' => $url_target,
         ]);
+        return 'Doctrine binary reachable: "' . $url_bin_target .'"; use doctrine help for more information...';
     }
 
     /**
@@ -163,14 +164,14 @@ trait Setup {
                 throw new Exception('Could not patch node System.Config');
             }
         }
-        return "Added doctrine to the config..." . PHP_EOL;
+        return "Added doctrine to the config...";
     }
 
     /**
      * @throws ObjectException
      * @throws Exception
      */
-    public function system_doctrine(object $flags, object $options): void
+    public function system_doctrine(object $flags, object $options): null|string
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
@@ -206,20 +207,21 @@ trait Setup {
                 }
                 $result = $node->patch($class, $node->role_system(), $record);
             }
-            return;
+            return null;
         }
         $data = $object->data_read($url);
         if($data){
             $default = $data->get('System.Doctrine.0');
             $result = $node->create($class, $node->role_system(), $default);
         }
+        return "System Doctrine added...";
     }
 
     /**
      * @throws ObjectException
      * @throws Exception
      */
-    public function system_doctrine_environment(object $flags, object $options): void
+    public function system_doctrine_environment(object $flags, object $options): string
     {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
@@ -238,13 +240,13 @@ trait Setup {
         $node = new Node($object);
         $class = 'System.Doctrine.Environment';
         $response = $node->record($class, $node->role_system(), [
-                'where' => [
-                        [
-                                'attribute' => 'name',
-                                'operator' => '===',
-                                'value' => 'system'
-                        ]
+            'where' => [
+                [
+                    'attribute' => 'name',
+                    'operator' => '===',
+                    'value' => 'system'
                 ]
+            ]
         ]);
         $url = $object->config('project.dir.vendor') .
                 'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
@@ -252,8 +254,8 @@ trait Setup {
         ;
         if($response) {
             if (
-                    property_exists($options, 'patch') &&
-                    $options->patch === true
+                property_exists($options, 'patch') &&
+                $options->patch === true
             ) {
                 $record = $response['node'];
                 $data = $object->data_read($url);
@@ -282,6 +284,7 @@ trait Setup {
         $connection = Schema::connection($object, $connection);
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $connection->schema_manager = Database::schema_manager($connection->manager);
+        return "System Doctrine Environment added...";
     }
 
     /**
@@ -292,6 +295,8 @@ trait Setup {
     {
         $object = $this->object();
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
+        $dir_entity = $object->config('project.dir.entity') . $object->config('ds');
+        ddd($dir_entity);
         $dir = new Dir();
         $read = $dir->read($dir_schema, true);
         if(!$read){
@@ -305,13 +310,13 @@ trait Setup {
             if($file->type === File::TYPE){
                 $file->entity = str_replace('.', '', File::basename($file->name, $object->config('extension.json')));
                 $schema = $node->record($class, $node->role_system(), [
-                        'where' => [
-                                [
-                                        'attribute' => 'entity',
-                                        'operator' => '===',
-                                        'value' => $file->entity,
-                                ]
+                    'where' => [
+                        [
+                            'attribute' => 'entity',
+                            'operator' => '===',
+                            'value' => $file->entity,
                         ]
+                    ]
                 ]);
                 if(!$schema){
                     echo 'Updating, no schema found for: ' . $file->entity . PHP_EOL;
@@ -333,11 +338,12 @@ trait Setup {
                 }
             }
         }
+        //@remove trigerr = true
         $trigger = true; //force update for testing...
         if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
-                    'limit' => 100000,
-                    'relation' => true
+                'limit' => 100000,
+                'relation' => true
             ]);
             if($response['count'] > 0){
                 $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
@@ -349,13 +355,13 @@ trait Setup {
                 $node = new Node($object);
                 $class = 'System.Doctrine.Environment';
                 $response = $node->record($class, $node->role_system(), [
-                        'where' => [
-                                [
-                                        'attribute' => 'name',
-                                        'operator' => '===',
-                                        'value' => 'system'
-                                ]
+                    'where' => [
+                        [
+                            'attribute' => 'name',
+                            'operator' => '===',
+                            'value' => 'system'
                         ]
+                    ]
                 ]);
                 $connection = $response['node'] ?? null;
                 $config = Database::config($object);
@@ -364,14 +370,14 @@ trait Setup {
                 $connection->schema_manager = Database::schema_manager($connection->manager);
                 foreach($list as $file){
                     if(
-                            property_exists($options, 'patch') &&
-                            $options->patch === true
+                        property_exists($options, 'patch') &&
+                        $options->patch === true
                     ){
                         $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system -patch';
                     }
                     elseif(
-                            property_exists($options, 'force') &&
-                            $options->force === true
+                        property_exists($options, 'force') &&
+                        $options->force === true
                     ){
                         $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system -force';
                     } else {
@@ -393,10 +399,10 @@ trait Setup {
                         echo $file->entity . PHP_EOL;
                         //get all data from this entity from the backup connection
                         $file->data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findBy(
-                                [],
-                                [
-                                        'id' => 'ASC'
-                                ]
+                            [],
+                            [
+                                'id' => 'ASC'
+                            ]
                         );
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
                         foreach($columns as $column){
@@ -461,10 +467,19 @@ trait Setup {
             } else {
                 //new installation
                 foreach($list as $file){
-                    $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system';
-                    exec($command, $output);
-                    echo implode(PHP_EOL, $output) . PHP_EOL;
+                    $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . escapeshellcmd($file->url) . '" -connection=system';
+                    Core::execute($object, $command, $output, $notification);
+                    if($output){
+                        echo $output . PHP_EOL;
+                    }
+                    if($notification){
+                        echo $notification . PHP_EOL;
+                    }
                 }
+                $command = "doctrine orm:generate-entities --force " . escapeshellcmd($dir_entity);
+                echo Cli::alert($command) . PHP_EOL;
+                //doctrine entity create command:
+
             }
         }
     }
