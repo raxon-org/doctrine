@@ -71,7 +71,10 @@ try {
 if(empty($connection->manager)){
    echo  Cli::error('error:'). ' No connection found...';
 }
-$helperSet = ConsoleRunner::createHelperSet($connection->manager);
+$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($connection->manager->getConnection()),
+    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($connection->manager)
+));
 $cli = ConsoleRunner::createApplication($helperSet);
 // Runs console application
 $cli->setCatchExceptions(true);
