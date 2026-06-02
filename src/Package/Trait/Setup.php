@@ -274,14 +274,10 @@ trait Setup {
             'clear' => true
         ]);
         $connection = $response['node'] ?? null;
-        //good
-        d($connection);
         if(!$connection) {
             throw new Exception('Could not create System.Doctrine.Environment');
         }
         $config = Database::config($object);
-        //false
-        ddd($config);
         $connection = Schema::connection($object, $connection);
         $connection->manager = Database::entity_manager($object, $config, $connection);
         $connection->schema_manager = Database::schema_manager($connection->manager);
