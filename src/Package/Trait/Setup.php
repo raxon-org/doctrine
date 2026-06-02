@@ -295,8 +295,8 @@ trait Setup {
     {
         $object = $this->object();
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
-        $dir_entity = $object->config('project.dir.entity') . $object->config('ds');
-        ddd($dir_entity);
+        $dir_entity = $object->config('project.dir.shared') . 'Entity' . $object->config('ds');
+        breakpoint($dir_entity);
         $dir = new Dir();
         $read = $dir->read($dir_schema, true);
         if(!$read){
@@ -338,7 +338,7 @@ trait Setup {
                 }
             }
         }
-        //@remove trigerr = true
+        //@remove trigger = true
         $trigger = true; //force update for testing...
         if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
