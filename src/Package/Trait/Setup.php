@@ -292,7 +292,7 @@ trait Setup {
      * @throws ObjectException
      * @throws Exception
      */
-    public function schema_update(object $flags, object $options): void
+    public function schema_update(object $flags, object $options): string
     {
         $object = $this->object();
         $dir_schema =  $object->config('project.dir.shared') . 'Schema' . $object->config('ds');
@@ -300,7 +300,7 @@ trait Setup {
         $dir = new Dir();
         $read = $dir->read($dir_schema, true);
         if(!$read){
-            return;
+            return Cli::error('Error:') . ' Could not read directory: ' . $dir_schema;
         }
         $list = Sort::list($read)->with(['name' => 'ASC']);
         $node = new Node($object);
@@ -319,19 +319,19 @@ trait Setup {
                     ]
                 ]);
                 if(!$schema){
-                    echo 'Updating, no schema found for: ' . $file->entity . PHP_EOL;
+                    echo Cli::info('Updating: ') .' No schema found for: ' . $file->entity . PHP_EOL;
                     $trigger = true;
                 } else {
                     $file->read = $object->data_read($file->url);
                     if($file->read){
                         $version = $file->read->get('System.Doctrine.Schema.0.version');
                         if(
-                                $version &&
-                                array_key_exists('node', $schema) &&
-                                property_exists($schema['node'], 'version') &&
-                                $version !== $schema['node']->version
+                            $version &&
+                            array_key_exists('node', $schema) &&
+                            property_exists($schema['node'], 'version') &&
+                            $version !== $schema['node']->version
                         ){
-                            echo 'Updating ' . $file->entity . ' from version: '. $schema['node']->version . ' to version: '. $version . PHP_EOL;
+                            echo Cli::info('Updating:') . ' ' . $file->entity . ' from version: '. $schema['node']->version . ' to version: '. $version . PHP_EOL;
                             $trigger = true;
                         }
                     }
@@ -453,7 +453,6 @@ trait Setup {
                             echo 'Copied ' . count($file->data) . ' records for ' . $file->entity . PHP_EOL;
                         }
                     }
-
                 }
                 if(!Dir::is($dir_system_backup)){
                     Dir::create($dir_system_backup, Dir::CHMOD);
@@ -484,5 +483,6 @@ trait Setup {
 
             }
         }
+        return 'Schema updated...';
     }
 }
