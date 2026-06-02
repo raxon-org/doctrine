@@ -142,6 +142,7 @@ trait Setup {
         }
         $node = new Node($object);
         $config = $node->record('System.Config', $node->role_system());
+        ddd($config);
         if(
             $config &&
             is_array($config) &&
