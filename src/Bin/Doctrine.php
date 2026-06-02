@@ -15,7 +15,7 @@ use Raxon\Doctrine\Module\Database;
 use Doctrine\ORM\Version;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
-use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Helper\HelperSet;
 
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
@@ -71,10 +71,11 @@ try {
 if(empty($connection->manager)){
    echo  Cli::error('error:'). ' No connection found...';
 }
-$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
-    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($connection->manager->getConnection()),
-    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($connection->manager)
-));
+
+$helperSet = new HelperSet([
+    'db' => new DBALConsole\Helper\ConnectionHelper($connection->manager),
+]);
+
 $cli = ConsoleRunner::createApplication($helperSet);
 // Runs console application
 $cli->setCatchExceptions(true);
