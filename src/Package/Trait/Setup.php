@@ -34,7 +34,7 @@ trait Setup {
         }
     }
 
-     /**
+    /**
      * @throws Exception
      */
     public function register(): bool
@@ -44,19 +44,19 @@ trait Setup {
         $options = App::options($object);
         $node = new Node($object);
         $record_options = [
-            'where' => [
-                [
-                    'value' => $object->request('package'),
-                    'attribute' => 'name',
-                    'operator' => '===',
+                'where' => [
+                        [
+                                'value' => $object->request('package'),
+                                'attribute' => 'name',
+                                'operator' => '===',
+                        ]
                 ]
-            ]
         ];
         $class = 'System.Installation';
         $response = $node->record($class, $node->role_system(), $record_options);
         if(
-            $response &&
-            array_key_exists('node', $response)
+                $response &&
+                array_key_exists('node', $response)
         ){
             if(property_exists($options, 'force')){
                 $record = $response['node'];
@@ -78,9 +78,9 @@ trait Setup {
         } else {
             $time = time();
             $record = (object) [
-                'name' => $object->request('package'),
-                'ctime' => $time,
-                'mtime' => $time,
+                    'name' => $object->request('package'),
+                    'ctime' => $time,
+                    'mtime' => $time,
             ];
             $response = $node->create($class, $node->role_system(), $record);
             echo 'Registering ' . $object->request('package') . ' installation...' . PHP_EOL;
@@ -97,13 +97,13 @@ trait Setup {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
         if(
-            !in_array(
-                $posix_id,
-                [
-                    0,
-                ],
-                true
-            )
+                !in_array(
+                        $posix_id,
+                        [
+                                0,
+                        ],
+                        true
+                )
         ){
             throw new Exception('Access denied...');
         }
@@ -116,7 +116,7 @@ trait Setup {
         $command = 'chmod +x ' . $url_bin_target;
         exec($command);
         File::permission($object, [
-            'url_target' => $url_target,
+                'url_target' => $url_target,
         ]);
     }
 
@@ -129,34 +129,34 @@ trait Setup {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
         if(
-            !in_array(
-                $posix_id,
-                [
-                    0,
-                    33
-                ],
-                true
-            )
+                !in_array(
+                        $posix_id,
+                        [
+                                0,
+                                33
+                        ],
+                        true
+                )
         ){
             throw new Exception('Access denied...');
         }
         $node = new Node($object);
         $config = $node->record('System.Config', $node->role_system());
         if(
-            $config &&
-            is_array($config) &&
-            array_key_exists('node', $config) &&
-            property_exists($config['node'], 'uuid') // &&
+                $config &&
+                is_array($config) &&
+                array_key_exists('node', $config) &&
+                property_exists($config['node'], 'uuid') // &&
 //            !property_exists($config['node'], 'doctrine')
         ){
             $patch = (object) [
-                'uuid' => $config['node']->uuid,
-                'doctrine' => '*'
+                    'uuid' => $config['node']->uuid,
+                    'doctrine' => '*'
             ];
             $config = $node->patch('System.Config', $node->role_system(), $patch);
             if(
-                is_array($config) &&
-                array_key_exists('node', $config)
+                    is_array($config) &&
+                    array_key_exists('node', $config)
             ){
                 //nothing
             } else {
@@ -174,28 +174,28 @@ trait Setup {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
         if (
-            !in_array(
-                $posix_id,
-                [
-                    0,
-                    33
-                ],
-                true
-            )
+                !in_array(
+                        $posix_id,
+                        [
+                                0,
+                                33
+                        ],
+                        true
+                )
         ) {
             throw new Exception('Access denied...');
         }
         $url = $object->config('project.dir.vendor') .
-            'raxon/doctrine/src/Node/Template/System.Doctrine' .
-            $object->config('extension.json')
+                'raxon/doctrine/src/Node/Template/System.Doctrine' .
+                $object->config('extension.json')
         ;
         $node = new Node($object);
         $class = 'System.Doctrine';
         $response = $node->record($class, $node->role_system());
         if($response){
             if(
-                property_exists($options, 'patch') &&
-                $options->patch === true
+                    property_exists($options, 'patch') &&
+                    $options->patch === true
             ){
                 $record = $response['node'];
                 $data = $object->data_read($url);
@@ -223,36 +223,36 @@ trait Setup {
         $object = $this->object();
         $posix_id = $object->config(Config::POSIX_ID);
         if (
-            !in_array(
-                $posix_id,
-                [
-                    0,
-                    33
-                ],
-                true
-            )
+                !in_array(
+                        $posix_id,
+                        [
+                                0,
+                                33
+                        ],
+                        true
+                )
         ) {
             throw new Exception('Access denied...');
         }
         $node = new Node($object);
         $class = 'System.Doctrine.Environment';
         $response = $node->record($class, $node->role_system(), [
-            'where' => [
-                [
-                    'attribute' => 'name',
-                    'operator' => '===',
-                    'value' => 'system'
+                'where' => [
+                        [
+                                'attribute' => 'name',
+                                'operator' => '===',
+                                'value' => 'system'
+                        ]
                 ]
-            ]
         ]);
         $url = $object->config('project.dir.vendor') .
-            'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
-            $object->config('extension.json')
+                'raxon/doctrine/src/Node/Template/System.Doctrine.Environment' .
+                $object->config('extension.json')
         ;
         if($response) {
             if (
-                property_exists($options, 'patch') &&
-                $options->patch === true
+                    property_exists($options, 'patch') &&
+                    $options->patch === true
             ) {
                 $record = $response['node'];
                 $data = $object->data_read($url);
@@ -269,12 +269,16 @@ trait Setup {
                 $response = $node->create($class, $node->role_system(), $default);
             }
         }
+        //we need te response into the config from here for databas::config call
+        dd($response);
         $connection = $response['node'] ?? null;
+        //good
         d($connection);
         if(!$connection) {
             throw new Exception('Could not create System.Doctrine.Environment');
         }
         $config = Database::config($object);
+        //false
         d($config);
         $connection = Schema::connection($object, $connection);
         $connection->manager = Database::entity_manager($object, $config, $connection);
@@ -302,13 +306,13 @@ trait Setup {
             if($file->type === File::TYPE){
                 $file->entity = str_replace('.', '', File::basename($file->name, $object->config('extension.json')));
                 $schema = $node->record($class, $node->role_system(), [
-                    'where' => [
-                        [
-                            'attribute' => 'entity',
-                            'operator' => '===',
-                            'value' => $file->entity,
+                        'where' => [
+                                [
+                                        'attribute' => 'entity',
+                                        'operator' => '===',
+                                        'value' => $file->entity,
+                                ]
                         ]
-                    ]
                 ]);
                 if(!$schema){
                     echo 'Updating, no schema found for: ' . $file->entity . PHP_EOL;
@@ -318,10 +322,10 @@ trait Setup {
                     if($file->read){
                         $version = $file->read->get('System.Doctrine.Schema.0.version');
                         if(
-                            $version &&
-                            array_key_exists('node', $schema) &&
-                            property_exists($schema['node'], 'version') &&
-                            $version !== $schema['node']->version
+                                $version &&
+                                array_key_exists('node', $schema) &&
+                                property_exists($schema['node'], 'version') &&
+                                $version !== $schema['node']->version
                         ){
                             echo 'Updating ' . $file->entity . ' from version: '. $schema['node']->version . ' to version: '. $version . PHP_EOL;
                             $trigger = true;
@@ -333,8 +337,8 @@ trait Setup {
         $trigger = true; //force update for testing...
         if($trigger === true){
             $response = $node->list($class, $node->role_system(), [
-                'limit' => 100000,
-                'relation' => true
+                    'limit' => 100000,
+                    'relation' => true
             ]);
             if($response['count'] > 0){
                 $dir_sqlite = $object->config('project.dir.data') . 'Sqlite' . $object->config('ds');
@@ -346,13 +350,13 @@ trait Setup {
                 $node = new Node($object);
                 $class = 'System.Doctrine.Environment';
                 $response = $node->record($class, $node->role_system(), [
-                    'where' => [
-                        [
-                            'attribute' => 'name',
-                            'operator' => '===',
-                            'value' => 'system'
+                        'where' => [
+                                [
+                                        'attribute' => 'name',
+                                        'operator' => '===',
+                                        'value' => 'system'
+                                ]
                         ]
-                    ]
                 ]);
                 $connection = $response['node'] ?? null;
                 $config = Database::config($object);
@@ -361,14 +365,14 @@ trait Setup {
                 $connection->schema_manager = Database::schema_manager($connection->manager);
                 foreach($list as $file){
                     if(
-                        property_exists($options, 'patch') &&
-                        $options->patch === true
+                            property_exists($options, 'patch') &&
+                            $options->patch === true
                     ){
                         $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system -patch';
                     }
                     elseif(
-                        property_exists($options, 'force') &&
-                        $options->force === true
+                            property_exists($options, 'force') &&
+                            $options->force === true
                     ){
                         $command = Core::binary($object) . ' raxon/doctrine schema import -url="' . $file->url . '" -connection=system -force';
                     } else {
@@ -390,10 +394,10 @@ trait Setup {
                         echo $file->entity . PHP_EOL;
                         //get all data from this entity from the backup connection
                         $file->data = $connection_backup->manager->getRepository('Entity\\' . $file->entity)->findBy(
-                            [],
-                            [
-                                'id' => 'ASC'
-                            ]
+                                [],
+                                [
+                                        'id' => 'ASC'
+                                ]
                         );
                         $columns = $file->read->get('System.Doctrine.Schema.0.column');
                         foreach($columns as $column){
@@ -448,12 +452,12 @@ trait Setup {
                 if(!Dir::is($dir_system_backup)){
                     Dir::create($dir_system_backup, Dir::CHMOD);
                     File::permission($object, [
-                        'dir' => $dir_system_backup,
+                            'dir' => $dir_system_backup,
                     ]);
                 }
                 File::move($url_system_backup_temp, $url_system_backup_write);
                 File::permission($object, [
-                    'file' => $url_system_backup_write,
+                        'file' => $url_system_backup_write,
                 ]);
             } else {
                 //new installation
