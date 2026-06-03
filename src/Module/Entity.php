@@ -992,7 +992,6 @@ class Entity {
             $data['filter'] = Entity::castValue($filter);
             $data['order'] = $object->request('order');
         } else {
-            breakpoint('pagination');
             if($object->request('page')){
                 $page = (int) $object->request('page');
             } else {
