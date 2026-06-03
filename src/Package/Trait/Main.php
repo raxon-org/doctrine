@@ -415,6 +415,7 @@ trait Main {
         $object = $this->object();
         if(property_exists($options, 'limit')){
             $object->request('limit',  (int) $options->limit);
+            unset($options->limit);
         }
         if(property_exists($options, 'page')){
             $object->request('page', (int) $options->page);
