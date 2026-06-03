@@ -16,7 +16,6 @@ use Doctrine\ORM\Version;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 use Doctrine\DBAL\Tools\Console as DBALConsole;
-use Symfony\Component\Console\Helper\HelperSet;
 
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;
@@ -72,15 +71,12 @@ try {
 if(empty($connection->manager)){
    echo  Cli::error('error:'). ' No connection found...';
 }
-
-$helperSet = ConsoleRunner::createHelperSet($connection->manager);
-
-$cli = ConsoleRunner::createApplication($helperSet);
+$cli = ConsoleRunner::createApplication(  new SingleManagerProvider($connection->manager), []);
 // Runs console application
 $cli->setCatchExceptions(true);
 $cli->addCommands([
     (new Package\Raxon\Doctrine\Command\Version())
-]);
+], );
 $cli->run();
 //$cli->setHelperSet($helperSet);
 //$cli = new Application('Doctrine Command Line Interface', Version::VERSION);
