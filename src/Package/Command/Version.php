@@ -12,10 +12,11 @@ class Version extends \Symfony\Component\Console\Command\Command {
         parent::__construct($name);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         echo 'symfony/console: ' . InstalledVersions::getVersion('symfony/console') . PHP_EOL;
         echo 'doctrine/orm: ' .InstalledVersions::getVersion('doctrine/orm') . PHP_EOL;
         echo 'doctrine/dbal: ' .InstalledVersions::getVersion('doctrine/dbal') . PHP_EOL;
+        return 0;
     }
 }
