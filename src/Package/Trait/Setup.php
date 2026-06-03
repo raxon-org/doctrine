@@ -45,13 +45,13 @@ trait Setup {
         $options = App::options($object);
         $node = new Node($object);
         $record_options = [
-                'where' => [
-                        [
-                                'value' => $object->request('package'),
-                                'attribute' => 'name',
-                                'operator' => '===',
-                        ]
+            'where' => [
+                [
+                    'value' => $object->request('package'),
+                    'attribute' => 'name',
+                    'operator' => '===',
                 ]
+            ]
         ];
         $class = 'System.Installation';
         $response = $node->record($class, $node->role_system(), $record_options);
