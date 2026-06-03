@@ -15,6 +15,7 @@ class Version extends \Symfony\Component\Console\Command\Command {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         echo 'symfony/console: ' . InstalledVersions::getVersion('symfony/console') . PHP_EOL;
+        echo 'symfony/var-exporter: ' . InstalledVersions::getVersion('symfony/var-exporter') . PHP_EOL;
         echo 'doctrine/orm: ' .InstalledVersions::getVersion('doctrine/orm') . PHP_EOL;
         echo 'doctrine/dbal: ' .InstalledVersions::getVersion('doctrine/dbal') . PHP_EOL;
         return 0;
