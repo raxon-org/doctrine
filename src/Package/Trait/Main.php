@@ -412,7 +412,17 @@ trait Main {
         if(!property_exists($options, 'table')){
             throw new Exception('Option: table not set...');
         }
+        if(property_exists($options, 'limit')){
+            $options->limit = (int) $options->limit;
+        }
+        if(property_exists($options, 'limit')){
+            $options->limit = (int) $options->limit;
+        }
         $object = $this->object();
+        if(property_exists($options, 'page')){
+            $object->request('page', (int) $options->page);
+            unset($options->page);
+        }
         $node = new Node($object);
         $table = $options->table;
         unset($options->table);
