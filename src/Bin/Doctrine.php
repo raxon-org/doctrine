@@ -75,7 +75,7 @@ $cli = ConsoleRunner::createApplication(  new SingleManagerProvider($connection-
 // Runs console application
 $cli->setCatchExceptions(true);
 $cli->addCommands([
-    (new Package\Raxon\Doctrine\Command\Version())
+    (new Package\Raxon\Doctrine\Command\Version('version'))
 ], );
 $cli->run();
 //$cli->setHelperSet($helperSet);
