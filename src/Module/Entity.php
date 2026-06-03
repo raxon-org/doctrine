@@ -922,6 +922,7 @@ class Entity {
             $pagination === false ||
             $pagination === 'false'
         ){
+            breakpoint('no-pagination');
             $data['nodeList'] = [];
             $qb = $entityManager->createQueryBuilder();
             $entityName = $object->config('doctrine.entity.prefix') . $entity;
@@ -991,6 +992,7 @@ class Entity {
             $data['filter'] = Entity::castValue($filter);
             $data['order'] = $object->request('order');
         } else {
+            breakpoint('pagination');
             if($object->request('page')){
                 $page = (int) $object->request('page');
             } else {
