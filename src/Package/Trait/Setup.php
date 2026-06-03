@@ -351,6 +351,19 @@ trait Setup {
                 $url_system_backup_temp = $dir_sqlite . 'System.backup.db';
                 $dir_system_backup = $dir_sqlite . 'Backup' . $object->config('ds');
                 $url_system_backup_write = $dir_system_backup .'System.backup.' . date('Y.m.d') . '.db';
+                if(File::exist($url_system_backup_temp)){
+                    $url_system_backup_temp_target = $dir_system_backup . 'System.backup.' . 'System.backup' . date('Y.m.d') . '.db';
+                    $nr = 1;
+                    while(File::exist($url_system_backup_temp_target)){
+                        $url_system_backup_temp_target = $dir_system_backup . 'System.backup.' . 'System.backup' . date('Y.m.d') . '.' . $nr . '.db';
+                        $nr++;
+                        if($nr < 0){
+                            break;
+                        }
+                    }
+                    File::move($url_system_backup_temp, $url_system_backup_temp_target);
+                    //move to backup directory and check for multiple a day
+                }
                 File::move($url_system, $url_system_backup_temp);
                 $node = new Node($object);
                 $class = 'System.Doctrine.Environment';
