@@ -472,6 +472,14 @@ trait Setup {
                             'dir' => $dir_system_backup,
                     ]);
                 }
+                $nr = 1;
+                while(File::exist($url_system_backup_write)){
+                    $url_system_backup_write = $dir_system_backup . 'System.backup.' . date('Y.m.d') . '.' . $nr . '.db';
+                    $nr++;
+                    if($nr < 0){
+                        break;
+                    }
+                }
                 File::move($url_system_backup_temp, $url_system_backup_write);
                 File::permission($object, [
                         'file' => $url_system_backup_write,
