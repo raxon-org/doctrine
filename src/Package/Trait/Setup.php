@@ -352,10 +352,10 @@ trait Setup {
                 $dir_system_backup = $dir_sqlite . 'Backup' . $object->config('ds');
                 $url_system_backup_write = $dir_system_backup .'System.backup.' . date('Y.m.d') . '.db';
                 if(File::exist($url_system_backup_temp)){
-                    $url_system_backup_temp_target = $dir_system_backup . 'System.backup.' . 'System.backup' . date('Y.m.d') . '.db';
+                    $url_system_backup_temp_target = $dir_system_backup . 'System.backup.' . date('Y.m.d') . '.db';
                     $nr = 1;
                     while(File::exist($url_system_backup_temp_target)){
-                        $url_system_backup_temp_target = $dir_system_backup . 'System.backup.' . 'System.backup' . date('Y.m.d') . '.' . $nr . '.db';
+                        $url_system_backup_temp_target = $dir_system_backup . 'System.backup.' . date('Y.m.d') . '.' . $nr . '.db';
                         $nr++;
                         if($nr < 0){
                             break;
