@@ -12,10 +12,8 @@ use Raxon\App;
 use Raxon\Config;
 use Raxon\Doctrine\Module\Database;
 
-use Doctrine\ORM\Version;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
-use Doctrine\DBAL\Tools\Console as DBALConsole;
 
 use Raxon\Exception\LocateException;
 use Raxon\Exception\ObjectException;

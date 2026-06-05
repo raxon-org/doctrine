@@ -112,7 +112,9 @@ class Database {
         $connection_array = Core::object($connection, Core::OBJECT_ARRAY);
         $connection_array = DriverManager::getConnection($connection_array, $config);
         $eventManager = new EventManager();
-        return new EntityManager($connection_array, $config, $eventManager);
+        $em = new EntityManager($connection_array, $config, $eventManager);
+        $em->enableNativeLazyObjects(true);
+        return $em;
     }
 
     public static function schema_manager(EntityManager $em): mixed

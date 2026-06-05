@@ -451,17 +451,31 @@ trait Setup {
                 $connection->manager = Database::entity_manager($object, $config, $connection);
                 $connection->schema_manager = Database::schema_manager($connection->manager);
                 $tables = $connection->schema_manager->listTableNames();
+                $transaction_count = 0;
                 foreach($list as $file) {
                     if ($file->type === File::TYPE && property_exists($file, 'data')) {
                         if (!empty($file->data)) {
+                            $nr = 0;
+                            $chunk_size = 50;
+                            $connection->manager->getConnection()->beginTransaction();
+                            $transaction_count++;
                             foreach ($file->data as $item) {
                                 try {
                                     $connection->manager->persist($item);
                                     $connection->manager->flush();
+                                    $nr++;
+                                    if ($nr % $chunk_size === 0) {
+                                        $connection->manager->getConnection()->commit();
+                                        $connection->manager->getConnection()->beginTransaction();
+                                        $transaction_count++;
+                                    }
                                 } catch (Exception $e) {
+                                    d($e);
                                     echo 'Error copying ' . $file->entity . ': ' . $e->getMessage() . PHP_EOL;
+                                    continue;
                                 }
                             }
+                            $connection->manager->getConnection()->commit();
                             echo 'Copied ' . count($file->data) . ' records for ' . $file->entity . PHP_EOL;
                         }
                     }
