@@ -113,7 +113,7 @@ class Database {
         $connection_array = DriverManager::getConnection($connection_array, $config);
         $eventManager = new EventManager();
         $em = new EntityManager($connection_array, $config, $eventManager);
-        $em->enableNativeLazyObjects(true);
+        $em->getConfiguration()->enableNativeLazyObjects(true);
         return $em;
     }
 
