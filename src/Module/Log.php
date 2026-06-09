@@ -14,7 +14,7 @@ class Log
         $this->object($object);
     }
 
-    public function object(App $object=null): null|App
+    public function object(null|App $object=null): null|App
     {
         if($object !== null){
             $this->object = $object;
