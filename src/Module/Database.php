@@ -90,7 +90,7 @@ class Database {
                 is_string($connection->logging) &&
                 $connection->logging === '{{environment.logging()}}'
             ){
-                $log = new Log();
+                $log = new Log($object);
                 $connection->logging = $log->environment_logging();
 //                $class = '\\Plugin\\Environment_Logging';
 //                $el = new $class()
