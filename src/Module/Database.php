@@ -83,8 +83,6 @@ class Database {
             property_exists($connection, 'logging') &&
             !empty($connection->logging)
         ){
-            /*
-             *
              if(is_string($connection->logging)){
                 if($connection->logging === '{{environment.logging()}}'){
                     $log = new Log($object);
@@ -94,12 +92,7 @@ class Database {
                     $log = new Log($object);
                     $connection->logging = $log->environment_logging(true);
                 }
-                $connection->logging = false;
             }
-             */
-            $connection->logging = false;
-
-            ddd($connection->logging);
             $logger = new Logger(\Raxon\Module\Database::LOGGER_DOCTRINE);
             $logger->pushHandler(new StreamHandler($object->config('project.dir.log') . 'sql.log', Logger::DEBUG));
             $logger->pushProcessor(new PsrLogMessageProcessor(null, true));
