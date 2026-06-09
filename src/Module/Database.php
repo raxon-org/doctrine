@@ -86,20 +86,16 @@ class Database {
             property_exists($connection, 'logging') &&
             !empty($connection->logging)
         ){
-            if(
-                is_string($connection->logging) &&
-                $connection->logging === '{{environment.logging()}}'
-            ){
-                $log = new Log($object);
-                $connection->logging = $log->environment_logging();
-//                $class = '\\Plugin\\Environment_Logging';
-//                $el = new $class()
-//                d(class_exists($class));
-
-                //load plugin
+            if(is_string($connection->logging)){
+                if($connection->logging === '{{environment.logging()}}'){
+                    $log = new Log($object);
+                    $connection->logging = $log->environment_logging();
+                }
+                elseif($connection->logging === '{{environment.logging(true)}}'){
+                    $log = new Log($object);
+                    $connection->logging = $log->environment_logging(true);
+                }
             }
-
-
             ddd($connection->logging);
             $logger = new Logger(\Raxon\Module\Database::LOGGER_DOCTRINE);
             $logger->pushHandler(new StreamHandler($object->config('project.dir.log') . 'sql.log', Logger::DEBUG));
