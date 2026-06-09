@@ -95,6 +95,7 @@ class Database {
                     $log = new Log($object);
                     $connection->logging = $log->environment_logging(true);
                 }
+                $connection->logging = false;
             }
             $logger = new Logger(\Raxon\Module\Database::LOGGER_DOCTRINE);
             $logger->pushHandler(new StreamHandler($object->config('project.dir.log') . 'sql.log', Logger::DEBUG));
