@@ -28,7 +28,6 @@ use Doctrine\DBAL\Platforms\SQLServerPlatform;
 
 use Doctrine\ORM\ORMSetup;
 
-use Plugin\Environment_Logging;
 use Raxon\App;
 use Raxon\Config;
 use Raxon\Module\Core;
@@ -38,8 +37,6 @@ use Raxon\Module\File;
 use Exception;
 
 class Database {
-
-    use Environment_Logging;
 
     /**
      * @throws Exception
@@ -86,7 +83,9 @@ class Database {
             property_exists($connection, 'logging') &&
             !empty($connection->logging)
         ){
-            if(is_string($connection->logging)){
+            /*
+             *
+             if(is_string($connection->logging)){
                 if($connection->logging === '{{environment.logging()}}'){
                     $log = new Log($object);
                     $connection->logging = $log->environment_logging();
@@ -97,6 +96,10 @@ class Database {
                 }
                 $connection->logging = false;
             }
+             */
+            $connection->logging = false;
+
+            ddd($connection->logging);
             $logger = new Logger(\Raxon\Module\Database::LOGGER_DOCTRINE);
             $logger->pushHandler(new StreamHandler($object->config('project.dir.log') . 'sql.log', Logger::DEBUG));
             $logger->pushProcessor(new PsrLogMessageProcessor(null, true));
