@@ -59,7 +59,6 @@ class Database {
             return false;
         }
         $cache = null;
-        ddd($parameters);
         return ORMSetup::createAttributeMetadataConfiguration($paths, false, $proxyDir, $cache);
     }
 
@@ -84,6 +83,7 @@ class Database {
             property_exists($connection, 'logging') &&
             !empty($connection->logging)
         ){
+            ddd($connection->logging);
             $logger = new Logger(\Raxon\Module\Database::LOGGER_DOCTRINE);
             $logger->pushHandler(new StreamHandler($object->config('project.dir.log') . 'sql.log', Logger::DEBUG));
             $logger->pushProcessor(new PsrLogMessageProcessor(null, true));
