@@ -93,7 +93,6 @@ class Database {
                     $connection->logging = $log->environment_logging(true);
                 }
             }
-             /*
             $logger = new Logger(\Raxon\Module\Database::LOGGER_DOCTRINE);
             $logger->pushHandler(new StreamHandler($object->config('project.dir.log') . 'sql.log', Logger::DEBUG));
             $logger->pushProcessor(new PsrLogMessageProcessor(null, true));
@@ -104,7 +103,6 @@ class Database {
             if($config){
                 $config->setMiddlewares([new Logging\Middleware($logger)]);
             }
-             */
         }
         if(
             property_exists($connection, 'driver') &&
