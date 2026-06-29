@@ -10,7 +10,7 @@
         "ext-iconv": "*",
         "ext-pdo": "*",
         "raxon/framework": ">=2024.09.04",
-        "doctrine/orm": "remco-pc:patch-1",
+        "doctrine/orm": "3.6.7",
         "doctrine/persistence": "4.2.0",
         "symfony/var-exporter": "^v7.4.9",
         "symfony/cache": "*"
