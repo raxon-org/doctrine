@@ -59,7 +59,8 @@ class Database {
             return false;
         }
         $cache = null;
-        return ORMSetup::createAttributeMetadataConfiguration($paths, false, $proxyDir, $cache);
+        $config = ORMSetup::createAttributeMetadataConfiguration($paths, false, $proxyDir, $cache);
+        dd($config);
     }
 
     /**
