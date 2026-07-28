@@ -50,7 +50,7 @@ class Database {
         if(array_key_exists(0, $parameters)){
             $proxyDir = $parameters[0];
         }
-        dd($proxyDir);
+        ddd($proxyDir);
         //new installations does not have paths defined
         //new installations does not have a proxy dir (yet ???)
         if(empty($paths)){
