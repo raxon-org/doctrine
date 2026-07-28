@@ -151,4 +151,28 @@ class Database {
         }
         return false;
     }
+
+    public static function connection(App $object, object $flags, null|object $options = null): object
+    {
+        $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+        }
+        if($connection === null){
+            throw new Exception('Connection not found aborting...');
+        }$connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
+        if($connection === null){
+            $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
+        }
+        if($connection === null){
+            throw new Exception('Connection not found aborting...');
+        }
+        foreach($connection as $key => $value){
+            if(substr($key, 0, 1) === '#'){
+                unset($connection->{$key});
+            }
+        }
+        return $connection;
+    }
+
 }
