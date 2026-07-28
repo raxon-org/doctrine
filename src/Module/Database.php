@@ -60,7 +60,7 @@ class Database {
         }
         $cache = null;
         $config = ORMSetup::createAttributeMetadataConfiguration($paths, false, $proxyDir, $cache);
-        dd($config);
+        ddd($config);
     }
 
     /**
