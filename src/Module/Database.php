@@ -152,8 +152,29 @@ class Database {
         return false;
     }
 
+
+
+
+    /*
+     *
+     */
     public static function connection(App $object, object $flags, null|object $options = null): object
     {
+        $config = Database::config($object);
+        $environments = $object->config('doctrine.environment');
+        $connection = false;
+        if(!property_exists($environments, $options->connection)){
+            throw new Exception('Connection not found: ' . $options->connection);
+        }
+        $connection = $environments->{$options->connection}->{$options->environment};
+        foreach($connection as $property => $value){
+            if(substr($property, 0, 1) === '#'){
+                unset($connection->{$property});
+            }
+        }
+        $connection->manager = Database::entity_manager($object, $config, $connection);
+
+        /*
         $connection = $object->config('doctrine.environment.' . $options->connection . '.' . $options->environment);
         if($connection === null){
             $connection = $object->config('doctrine.environment.' . $options->connection . '.' . '*');
@@ -172,6 +193,7 @@ class Database {
                 unset($connection->{$key});
             }
         }
+        */
         return $connection;
     }
 
