@@ -163,7 +163,6 @@ class Database {
         if(!property_exists($environments, $options->connection)){
             throw new Exception('Connection not found: ' . $options->connection);
         }
-        d($environments);
         if(is_array($environments)){
             ddd($options->connection);
             $connection = $environments[$options->connection];
@@ -177,7 +176,6 @@ class Database {
         elseif(is_object($connection) && property_exists($connection, $options->environment)){
             $connection = $connection->{$options->environment};
         }
-        d($connection);
         foreach($connection as $property => $value){
             if(substr($property, 0, 1) === '#'){
                 unset($connection->{$property});
