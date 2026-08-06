@@ -155,7 +155,7 @@ class Database {
     /**
      * @throws Exception
      */
-    public static function connection(App $object, object $flags, null|object $options = null): object
+    public static function connection(App $object, object $flags, object $options = null): object
     {
         $config = Database::config($object);
         $environments = $object->config('doctrine.environment');
@@ -163,6 +163,7 @@ class Database {
         if(!property_exists($environments, $options->connection)){
             throw new Exception('Connection not found: ' . $options->connection);
         }
+        d($environments);
         $connection = $environments->{$options->connection}->{$options->environment};
         d($connection);
         foreach($connection as $property => $value){
