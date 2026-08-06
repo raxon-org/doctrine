@@ -164,7 +164,18 @@ class Database {
             throw new Exception('Connection not found: ' . $options->connection);
         }
         d($environments);
-        $connection = $environments->{$options->connection}->{$options->environment};
+        if(is_array($environments)){
+            $connection = $environments[$options->connection];
+        }
+        elseif(is_object($environments)){
+            $connection = $environments->{$options->connection};
+        }
+        if(is_array($connection) && array_key_exists($options->environment, $connection)){
+            $connection = $connection[$options->environment];
+        }
+        elseif(is_object($connection) && property_exists($connection, $options->environment)){
+            $connection = $connection->{$options->environment};
+        }
         d($connection);
         foreach($connection as $property => $value){
             if(substr($property, 0, 1) === '#'){
