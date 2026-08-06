@@ -165,6 +165,7 @@ class Database {
         }
         d($environments);
         if(is_array($environments)){
+            ddd($options->connection);
             $connection = $environments[$options->connection];
         }
         elseif(is_object($environments)){
