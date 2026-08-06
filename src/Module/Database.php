@@ -155,7 +155,7 @@ class Database {
     /**
      * @throws Exception
      */
-    public static function connection(App $object, object $flags, object $options = null): object
+    public static function connection(App $object, object $flags, object $options): object
     {
         $config = Database::config($object);
         $environments = $object->config('doctrine.environment');
