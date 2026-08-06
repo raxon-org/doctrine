@@ -152,11 +152,8 @@ class Database {
         return false;
     }
 
-
-
-
-    /*
-     *
+    /**
+     * @throws Exception
      */
     public static function connection(App $object, object $flags, null|object $options = null): object
     {
@@ -167,6 +164,7 @@ class Database {
             throw new Exception('Connection not found: ' . $options->connection);
         }
         $connection = $environments->{$options->connection}->{$options->environment};
+        d($connection);
         foreach($connection as $property => $value){
             if(substr($property, 0, 1) === '#'){
                 unset($connection->{$property});
