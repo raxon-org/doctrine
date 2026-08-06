@@ -879,12 +879,18 @@ class Entity {
      * @throws NonUniqueResultException
      * @throws Exception
      */
-    public static function record(App $object, EntityManager $entityManager, $role, $options=[]): array
+    public static function record(App $object, object $connection, $role, $options=[]): array
     {
+        if(!is_object($connection)){
+            throw new Exception('Connection is not an object');
+        }
+        if(!property_exists($connection, 'manager')){
+            throw new Exception('Connection does not have a manager');
+        }
         $object->request('limit', 1);
         $list = Entity::list(
             $object,
-            $entityManager,
+            $connection->manager,
             $role,
             $options
         );
